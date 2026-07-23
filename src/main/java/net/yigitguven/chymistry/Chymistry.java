@@ -5,6 +5,9 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
+import net.yigitguven.chymistry.block.ModBlocks;
+import net.yigitguven.chymistry.item.ModItems;
+import net.yigitguven.chymistry.item.ModCreativeModeTabs;
 
 @Mod(Chymistry.MODID)
 public class Chymistry {
@@ -12,6 +15,8 @@ public class Chymistry {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Chymistry(IEventBus modEventBus, ModContainer modContainer) {
-        // Initialization code goes here
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
+        ModCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
     }
 }
