@@ -8,6 +8,10 @@ import net.neoforged.fml.ModContainer;
 import net.yigitguven.chymistry.block.ModBlocks;
 import net.yigitguven.chymistry.item.ModItems;
 import net.yigitguven.chymistry.item.ModCreativeModeTabs;
+import net.yigitguven.chymistry.block.ModBlockEntities;
+import net.yigitguven.chymistry.menu.ModMenus;
+import net.yigitguven.chymistry.recipe.ModRecipes;
+import net.yigitguven.chymistry.network.ModNetworking;
 
 @Mod(Chymistry.MODID)
 public class Chymistry {
@@ -18,5 +22,11 @@ public class Chymistry {
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        ModMenus.MENUS.register(modEventBus);
+        ModRecipes.SERIALIZERS.register(modEventBus);
+        ModRecipes.TYPES.register(modEventBus);
+
+        modEventBus.addListener(ModNetworking::register);
     }
 }

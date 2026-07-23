@@ -10,5 +10,5 @@ import net.yigitguven.chymistry.block.ModBlocks;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Chymistry.MODID);
 
-    public static final DeferredItem<BlockItem> MORTAR = ITEMS.register("mortar", () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> MORTAR = ITEMS.registerSimpleBlockItem("mortar", ModBlocks.MORTAR);
 }
