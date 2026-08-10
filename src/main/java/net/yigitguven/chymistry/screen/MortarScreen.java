@@ -27,11 +27,9 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
     private static final Identifier MESH_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Chymistry.MODID,
             "textures/gui/mesh_button_pressed.png");
 
-    // TODO: Update these coordinates if they are incorrect!
-    // I set the button below the indicator by default.
-    private static final int BUTTON_X = 72;
-    private static final int BUTTON_Y = 62;
-    private static final int BUTTON_SIZE = 32;
+    private static final int BUTTON_X = 74;
+    private static final int BUTTON_Y = 53;
+    private static final int BUTTON_SIZE = 27;
 
     private boolean isButtonPressed = false;
 
@@ -57,7 +55,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
             net.minecraft.client.Minecraft.getInstance().getConnection()
                     .send(new MeshButtonPressedPayload(this.menu.blockEntity.getBlockPos()));
             this.isButtonPressed = true;
-            return true; // handled
+            return true;
         }
         return super.mouseClicked(event, handled);
     }
@@ -75,12 +73,9 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
         super.extractBackground(pGraphics, pMouseX, pMouseY, pPartialTick);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        // Fix: Use the actual image dimensions (176x166) for texture width/height
-        // instead of 256x256
         pGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0f, 0f, this.imageWidth, this.imageHeight,
                 this.imageWidth, this.imageHeight);
 
-        // Draw indicator
         int indicatorX = x + 72;
         int indicatorY = y + 32;
 
@@ -94,7 +89,6 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
             }
         }
 
-        // Draw button
         int btnX = x + BUTTON_X;
         int btnY = y + BUTTON_Y;
         boolean isHovered = pMouseX >= btnX && pMouseX <= btnX + BUTTON_SIZE && pMouseY >= btnY

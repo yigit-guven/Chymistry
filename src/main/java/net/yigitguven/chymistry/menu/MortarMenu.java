@@ -25,15 +25,14 @@ public class MortarMenu extends AbstractContainerMenu {
         blockEntity = (MortarBlockEntity) entity;
         this.data = data;
 
-        this.addSlot(new Slot(blockEntity, 0, 44, 35)); // Input slot
+        this.addSlot(new Slot(blockEntity, 0, 44, 35));
         this.addSlot(new Slot(blockEntity, 1, 116, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
             }
-        }); // Output slot
+        });
 
-        // Add player inventory slots
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
         
@@ -89,14 +88,13 @@ public class MortarMenu extends AbstractContainerMenu {
 
     public int getScaledProgress() {
         int progress = this.data.get(0);
-        int maxProgress = this.data.get(1);  // Max Progress
-        int progressArrowSize = 21; // width of arrow to draw
+        int maxProgress = this.data.get(1);
+        int progressArrowSize = 21;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
     public boolean hasError() {
-        // We'll calculate this in the Screen or via data. For now let's just expose a method
         return this.data.get(1) == -1; 
     }
 
