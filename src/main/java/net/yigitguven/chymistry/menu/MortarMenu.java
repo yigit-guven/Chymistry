@@ -25,8 +25,8 @@ public class MortarMenu extends AbstractContainerMenu {
         blockEntity = (MortarBlockEntity) entity;
         this.data = data;
 
-        this.addSlot(new Slot(blockEntity, 0, 43, 34)); // Input slot
-        this.addSlot(new Slot(blockEntity, 1, 115, 34) {
+        this.addSlot(new Slot(blockEntity, 0, 44, 35)); // Input slot
+        this.addSlot(new Slot(blockEntity, 1, 116, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -76,14 +76,14 @@ public class MortarMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 7 + l * 18, 83 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 7 + i * 18, 141));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
 

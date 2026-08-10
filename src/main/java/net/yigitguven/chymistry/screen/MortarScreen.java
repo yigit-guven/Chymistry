@@ -12,20 +12,25 @@ import net.yigitguven.chymistry.network.MeshButtonPressedPayload;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
-    private static final Identifier TEXTURE =
-            Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/mortar_gui.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(Chymistry.MODID,
+            "textures/gui/mortar_gui.png");
 
-    private static final Identifier ERROR_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/error_arrow.png");
-    private static final Identifier FULL_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/full_arrow.png");
+    private static final Identifier ERROR_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID,
+            "textures/gui/error_arrow.png");
+    private static final Identifier FULL_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID,
+            "textures/gui/full_arrow.png");
 
-    private static final Identifier MESH_BUTTON = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/mesh_button.png");
-    private static final Identifier MESH_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/mesh_button_hover.png");
-    private static final Identifier MESH_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/mesh_button_pressed.png");
+    private static final Identifier MESH_BUTTON = Identifier.fromNamespaceAndPath(Chymistry.MODID,
+            "textures/gui/mesh_button.png");
+    private static final Identifier MESH_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Chymistry.MODID,
+            "textures/gui/mesh_button_hover.png");
+    private static final Identifier MESH_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Chymistry.MODID,
+            "textures/gui/mesh_button_pressed.png");
 
-    // TODO: Update these coordinates if they are incorrect! 
+    // TODO: Update these coordinates if they are incorrect!
     // I set the button below the indicator by default.
     private static final int BUTTON_X = 72;
-    private static final int BUTTON_Y = 56;
+    private static final int BUTTON_Y = 62;
     private static final int BUTTON_SIZE = 32;
 
     private boolean isButtonPressed = false;
@@ -43,12 +48,14 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
     public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean handled) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        
+
         double pMouseX = event.x();
         double pMouseY = event.y();
 
-        if (pMouseX >= x + BUTTON_X && pMouseX <= x + BUTTON_X + BUTTON_SIZE && pMouseY >= y + BUTTON_Y && pMouseY <= y + BUTTON_Y + BUTTON_SIZE) {
-            net.minecraft.client.Minecraft.getInstance().getConnection().send(new MeshButtonPressedPayload(this.menu.blockEntity.getBlockPos()));
+        if (pMouseX >= x + BUTTON_X && pMouseX <= x + BUTTON_X + BUTTON_SIZE && pMouseY >= y + BUTTON_Y
+                && pMouseY <= y + BUTTON_Y + BUTTON_SIZE) {
+            net.minecraft.client.Minecraft.getInstance().getConnection()
+                    .send(new MeshButtonPressedPayload(this.menu.blockEntity.getBlockPos()));
             this.isButtonPressed = true;
             return true; // handled
         }
@@ -68,7 +75,10 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
         super.extractBackground(pGraphics, pMouseX, pMouseY, pPartialTick);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        pGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0f, 0f, this.imageWidth, this.imageHeight, 256, 256);
+        // Fix: Use the actual image dimensions (176x166) for texture width/height
+        // instead of 256x256
+        pGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0f, 0f, this.imageWidth, this.imageHeight,
+                this.imageWidth, this.imageHeight);
 
         // Draw indicator
         int indicatorX = x + 72;
@@ -79,14 +89,16 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
         } else {
             int progress = this.menu.getScaledProgress();
             if (progress > 0) {
-                pGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, indicatorX, indicatorY, 0f, 0f, progress, 21, 28, 21);
+                pGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, indicatorX, indicatorY, 0f, 0f, progress, 21,
+                        28, 21);
             }
         }
 
         // Draw button
         int btnX = x + BUTTON_X;
         int btnY = y + BUTTON_Y;
-        boolean isHovered = pMouseX >= btnX && pMouseX <= btnX + BUTTON_SIZE && pMouseY >= btnY && pMouseY <= btnY + BUTTON_SIZE;
+        boolean isHovered = pMouseX >= btnX && pMouseX <= btnX + BUTTON_SIZE && pMouseY >= btnY
+                && pMouseY <= btnY + BUTTON_SIZE;
 
         Identifier buttonTexture;
         if (this.isButtonPressed && isHovered) {
@@ -97,6 +109,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
             buttonTexture = MESH_BUTTON;
         }
 
-        pGraphics.blit(RenderPipelines.GUI_TEXTURED, buttonTexture, btnX, btnY, 0f, 0f, BUTTON_SIZE, BUTTON_SIZE, BUTTON_SIZE, BUTTON_SIZE);
+        pGraphics.blit(RenderPipelines.GUI_TEXTURED, buttonTexture, btnX, btnY, 0f, 0f, BUTTON_SIZE, BUTTON_SIZE,
+                BUTTON_SIZE, BUTTON_SIZE);
     }
 }
