@@ -42,11 +42,8 @@ public class MortarBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
-            if (entity instanceof MortarBlockEntity) {
-                ((net.minecraft.server.level.ServerPlayer) player).openMenu(new SimpleMenuProvider(
-                        (id, inv, p) -> new MortarMenu(id, inv, (MortarBlockEntity) entity),
-                        Component.translatable("block.chymistry.mortar")
-                ), pos);
+            if (entity instanceof MortarBlockEntity mortar) {
+                ((net.minecraft.server.level.ServerPlayer) player).openMenu(mortar, pos);
             }
         }
         return InteractionResult.SUCCESS;

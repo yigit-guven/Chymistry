@@ -3,8 +3,11 @@ package net.yigitguven.chymistry.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -22,9 +25,34 @@ public class MortarBlockEntity extends BaseContainerBlockEntity {
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     private int currentPresses = 0;
+    private int maxPresses = 0; // 0 means no recipe, -1 means invalid recipe
+    protected final ContainerData data;
 
     public MortarBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MORTAR_BE.get(), pos, state);
+        this.data = new ContainerData() {
+            @Override
+            public int get(int pIndex) {
+                return switch (pIndex) {
+                    case 0 -> MortarBlockEntity.this.currentPresses;
+                    case 1 -> MortarBlockEntity.this.maxPresses;
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int pIndex, int pValue) {
+                switch (pIndex) {
+                    case 0 -> MortarBlockEntity.this.currentPresses = pValue;
+                    case 1 -> MortarBlockEntity.this.maxPresses = pValue;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        };
     }
 
     public void handleMeshPress() {
@@ -33,9 +61,20 @@ public class MortarBlockEntity extends BaseContainerBlockEntity {
         SingleRecipeInput input = new SingleRecipeInput(this.getItem(0));
         Optional<RecipeHolder<MortarRecipe>> recipe = ((net.minecraft.server.level.ServerLevel)this.level).recipeAccess().getRecipeFor(ModRecipes.MORTAR_TYPE.get(), input, this.level);
 
-        if (recipe.isPresent()) {
+        if (this.getItem(0).isEmpty()) {
+            this.maxPresses = 0;
+            this.currentPresses = 0;
+        } else if (recipe.isEmpty()) {
+            this.maxPresses = -1; // -1 indicates error (invalid recipe for input)
+            this.currentPresses = 0;
+        } else {
+            this.maxPresses = recipe.get().value().presses();
             this.currentPresses++;
-            if (this.currentPresses >= recipe.get().value().presses()) {
+            
+            // Play crushing sound
+            this.level.playSound(null, this.worldPosition, SoundEvents.GRAVEL_STEP, SoundSource.BLOCKS, 1.0f, 1.0f);
+
+            if (this.currentPresses >= this.maxPresses) {
                 // Craft
                 ItemStack result = recipe.get().value().assemble(input);
                 ItemStack outputSlot = this.getItem(1);
@@ -48,14 +87,17 @@ public class MortarBlockEntity extends BaseContainerBlockEntity {
                         outputSlot.grow(result.getCount());
                     }
                     this.currentPresses = 0; // Reset
+                    
+                    // Reset max presses if input is now empty
+                    if (this.getItem(0).isEmpty()) {
+                        this.maxPresses = 0;
+                    }
                 } else {
                     this.currentPresses--; // Revert if output is full
                 }
             }
-            setChanged();
-        } else {
-            this.currentPresses = 0; // Reset if invalid
         }
+        setChanged();
     }
 
     @Override
@@ -87,7 +129,7 @@ public class MortarBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory playerInventory) {
-        return new MortarMenu(id, playerInventory, this);
+        return new MortarMenu(id, playerInventory, this, this.data);
     }
 
     @Override
