@@ -4,5 +4,6 @@
   "item.chymistry.ash": "Ash",
   "item.chymistry.niter_dust": "Niter Dust",
   "item.chymistry.tinted_glass_bottle": "Tinted Glass Bottle",
-  "item.chymistry.elixir_of_vitriol": "Elixir of Vitriol"
+  "item.chymistry.elixir_of_vitriol": "Elixir of Vitriol",
+  "effect.chymistry.vitriol_immunity": "Vitriol Immunity"
 }

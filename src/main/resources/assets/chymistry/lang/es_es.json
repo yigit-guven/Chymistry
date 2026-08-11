@@ -5,5 +5,6 @@
   "item.chymistry.ash": "Ceniza",
   "item.chymistry.niter_dust": "Polvo de Nitro",
   "item.chymistry.tinted_glass_bottle": "Botella de Vidrio Tintado",
-  "item.chymistry.elixir_of_vitriol": "Elixir de Vitriolo"
+  "item.chymistry.elixir_of_vitriol": "Elixir de Vitriolo",
+  "effect.chymistry.vitriol_immunity": "Inmunidad al Vitriolo"
 }

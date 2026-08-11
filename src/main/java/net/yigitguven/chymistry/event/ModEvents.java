@@ -20,4 +20,12 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onEffectAdded(MobEffectEvent.Added event) {
+        if (event.getEffectInstance().getEffect().equals(ModMobEffects.VITRIOL_IMMUNITY)) {
+            event.getEntity().removeEffect(MobEffects.POISON);
+            event.getEntity().removeEffect(MobEffects.WITHER);
+        }
+    }
 }
