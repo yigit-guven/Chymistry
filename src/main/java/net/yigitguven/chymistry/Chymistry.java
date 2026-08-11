@@ -26,6 +26,7 @@ public class Chymistry {
         ModMenus.MENUS.register(modEventBus);
         ModRecipes.SERIALIZERS.register(modEventBus);
         ModRecipes.TYPES.register(modEventBus);
+        net.yigitguven.chymistry.effect.ModMobEffects.MOB_EFFECTS.register(modEventBus);
 
         modEventBus.addListener(ModNetworking::register);
     }

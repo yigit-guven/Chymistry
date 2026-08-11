@@ -15,7 +15,15 @@ public class ModItems {
     public static final DeferredItem<Item> ASH = ITEMS.registerSimpleItem("ash");
     public static final DeferredItem<Item> NITER_DUST = ITEMS.registerSimpleItem("niter_dust");
     public static final DeferredItem<Item> TINTED_GLASS_BOTTLE = ITEMS.registerSimpleItem("tinted_glass_bottle");
-    public static final DeferredItem<Item> ELIXIR_OF_VITRIOL = ITEMS.registerItem("elixir_of_vitriol", properties -> new Item(properties) {
+    public static final DeferredItem<Item> ELIXIR_OF_VITRIOL = ITEMS.registerItem("elixir_of_vitriol", properties -> new Item(properties
+            .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
+            .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
+                .animation(net.minecraft.world.item.ItemUseAnimation.DRINK)
+                .sound(net.minecraft.sounds.SoundEvents.GENERIC_DRINK)
+                .onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(new net.minecraft.world.effect.MobEffectInstance(net.yigitguven.chymistry.effect.ModMobEffects.VITRIOL_IMMUNITY, 600, 0), 1.0f))
+                .onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.SLOWNESS, 100, 0), 1.0f))
+                .build())
+            .usingConvertsTo(TINTED_GLASS_BOTTLE.get())) {
         @Override
         public Component getName(ItemStack pStack) {
             return super.getName(pStack).copy().withStyle(style -> style.withColor(0x8B008B));
