@@ -28,6 +28,14 @@ public class ModItems {
         public Component getName(ItemStack pStack) {
             return super.getName(pStack).copy().withStyle(style -> style.withColor(0x8B008B));
         }
+
+        @Override
+        public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, java.util.function.Consumer<Component> pTooltipComponents, net.minecraft.world.item.TooltipFlag pTooltipFlag) {
+            super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.empty());
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable(net.yigitguven.chymistry.effect.ModMobEffects.VITRIOL_IMMUNITY.value().getDescriptionId()).append(" (0:30)").withStyle(net.minecraft.ChatFormatting.BLUE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable(net.minecraft.world.effect.MobEffects.SLOWNESS.value().getDescriptionId()).append(" (0:05)").withStyle(net.minecraft.ChatFormatting.RED));
+        }
     });
 
     public static final DeferredItem<BlockItem> MORTAR = ITEMS.registerSimpleBlockItem("mortar", ModBlocks.MORTAR);
