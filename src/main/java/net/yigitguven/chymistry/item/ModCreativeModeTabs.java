@@ -15,7 +15,7 @@ public class ModCreativeModeTabs {
 
     public static final Supplier<CreativeModeTab> CHYMISTRY_TAB = CREATIVE_MODE_TABS.register("chymistry_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("creativetab.chymistry"))
-            .icon(() -> new ItemStack(ModBlocks.MORTAR.get()))
+            .icon(() -> new ItemStack(ModItems.ELIXIR_OF_VITRIOL.get()))
             .displayItems((parameters, output) -> {
                 output.accept(ModBlocks.MORTAR.get());
                 output.accept(ModItems.ASH.get());
