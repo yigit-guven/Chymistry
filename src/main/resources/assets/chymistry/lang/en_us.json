@@ -5,5 +5,6 @@
   "item.chymistry.niter_dust": "Niter Dust",
   "item.chymistry.tinted_glass_bottle": "Tinted Glass Bottle",
   "item.chymistry.elixir_of_vitriol": "Elixir of Vitriol",
-  "effect.chymistry.vitriol_immunity": "Vitriol Immunity"
+  "effect.chymistry.vitriol_immunity": "Vitriol Immunity",
+  "tooltip.chymistry.vitriol_immunity.modifier": "Poison & Wither Immunity"
 }

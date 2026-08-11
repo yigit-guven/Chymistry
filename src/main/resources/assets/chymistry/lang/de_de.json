@@ -6,5 +6,6 @@
   "item.chymistry.niter_dust": "Salpeterstaub",
   "item.chymistry.tinted_glass_bottle": "Getönte Glasflasche",
   "item.chymistry.elixir_of_vitriol": "Elixier des Vitriols",
-  "effect.chymistry.vitriol_immunity": "Vitriol-Immunität"
+  "effect.chymistry.vitriol_immunity": "Vitriol-Immunität",
+  "tooltip.chymistry.vitriol_immunity.modifier": "Gift- & Wither-Immunität"
 }

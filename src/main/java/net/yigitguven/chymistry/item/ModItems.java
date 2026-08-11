@@ -32,9 +32,13 @@ public class ModItems {
         @Override
         public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, java.util.function.Consumer<Component> pTooltipComponents, net.minecraft.world.item.TooltipFlag pTooltipFlag) {
             super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
-            pTooltipComponents.accept(net.minecraft.network.chat.Component.empty());
             pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable(net.yigitguven.chymistry.effect.ModMobEffects.VITRIOL_IMMUNITY.value().getDescriptionId()).append(" (0:30)").withStyle(net.minecraft.ChatFormatting.BLUE));
             pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable(net.minecraft.world.effect.MobEffects.SLOWNESS.value().getDescriptionId()).append(" (0:05)").withStyle(net.minecraft.ChatFormatting.RED));
+            
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.empty());
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("potion.whenDrank").withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.vitriol_immunity.modifier").withStyle(net.minecraft.ChatFormatting.BLUE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.literal("-15% ").append(net.minecraft.network.chat.Component.translatable(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED.value().getDescriptionId())).withStyle(net.minecraft.ChatFormatting.RED));
         }
     });
 

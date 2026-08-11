@@ -6,5 +6,6 @@
   "item.chymistry.niter_dust": "Güherçile Tozu",
   "item.chymistry.tinted_glass_bottle": "Renkli Cam Şişe",
   "item.chymistry.elixir_of_vitriol": "Vitriol İksiri",
-  "effect.chymistry.vitriol_immunity": "Vitriol Bağışıklığı"
+  "effect.chymistry.vitriol_immunity": "Vitriol Bağışıklığı",
+  "tooltip.chymistry.vitriol_immunity.modifier": "Zehir ve Wither Bağışıklığı"
 }

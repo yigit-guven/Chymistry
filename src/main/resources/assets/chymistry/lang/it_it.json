@@ -6,5 +6,6 @@
   "item.chymistry.niter_dust": "Polvere di Salnitro",
   "item.chymistry.tinted_glass_bottle": "Bottiglia di Vetro Colorato",
   "item.chymistry.elixir_of_vitriol": "Elisir di Vetriolo",
-  "effect.chymistry.vitriol_immunity": "Immunità al Vetriolo"
+  "effect.chymistry.vitriol_immunity": "Immunità al Vetriolo",
+  "tooltip.chymistry.vitriol_immunity.modifier": "Immunità a Veleno e Wither"
 }
