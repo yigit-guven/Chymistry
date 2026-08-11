@@ -1,5 +1,9 @@
 {
   "itemGroup.chymistry.chymistry_tab": "Chymistry",
   "block.chymistry.mortar": "Mortier",
-  "item.chymistry.mortar": "Mortier"
+  "item.chymistry.mortar": "Mortier",
+  "item.chymistry.ash": "Cendre",
+  "item.chymistry.niter_dust": "Poussière de Salpêtre",
+  "item.chymistry.tinted_glass_bottle": "Bouteille en Verre Teinté",
+  "item.chymistry.elixir_of_vitriol": "Élixir de Vitriol"
 }

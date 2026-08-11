@@ -1,4 +1,8 @@
 {
   "block.chymistry.mortar": "Mortar",
-  "creativetab.chymistry": "Chymistry"
+  "creativetab.chymistry": "Chymistry",
+  "item.chymistry.ash": "Ash",
+  "item.chymistry.niter_dust": "Niter Dust",
+  "item.chymistry.tinted_glass_bottle": "Tinted Glass Bottle",
+  "item.chymistry.elixir_of_vitriol": "Elixir of Vitriol"
 }

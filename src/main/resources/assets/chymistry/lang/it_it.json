@@ -1,5 +1,9 @@
 {
   "itemGroup.chymistry.chymistry_tab": "Chymistry",
   "block.chymistry.mortar": "Mortaio",
-  "item.chymistry.mortar": "Mortaio"
+  "item.chymistry.mortar": "Mortaio",
+  "item.chymistry.ash": "Cenere",
+  "item.chymistry.niter_dust": "Polvere di Salnitro",
+  "item.chymistry.tinted_glass_bottle": "Bottiglia di Vetro Colorato",
+  "item.chymistry.elixir_of_vitriol": "Elisir di Vetriolo"
 }

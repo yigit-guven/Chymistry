@@ -1,5 +1,9 @@
 {
   "itemGroup.chymistry.chymistry_tab": "Chymistry",
   "block.chymistry.mortar": "Havan",
-  "item.chymistry.mortar": "Havan"
+  "item.chymistry.mortar": "Havan",
+  "item.chymistry.ash": "Kül",
+  "item.chymistry.niter_dust": "Güherçile Tozu",
+  "item.chymistry.tinted_glass_bottle": "Renkli Cam Şişe",
+  "item.chymistry.elixir_of_vitriol": "Vitriol İksiri"
 }
