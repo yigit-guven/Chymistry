@@ -7,6 +7,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -16,17 +17,17 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
-public record MortarRecipe(Ingredient input, ItemStack output, int presses) implements Recipe<SingleRecipeInput> {
+public record MortarRecipe(Ingredient input, ItemStackTemplate output, int presses) implements Recipe<SingleRecipeInput> {
 
     public static final MapCodec<MortarRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("input").forGetter(MortarRecipe::input),
-            ItemStack.CODEC.fieldOf("output").forGetter(MortarRecipe::output),
+            ItemStackTemplate.CODEC.fieldOf("output").forGetter(MortarRecipe::output),
             Codec.INT.fieldOf("presses").forGetter(MortarRecipe::presses)
     ).apply(inst, MortarRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MortarRecipe> STREAM_CODEC = StreamCodec.composite(
             Ingredient.CONTENTS_STREAM_CODEC, MortarRecipe::input,
-            ItemStack.STREAM_CODEC, MortarRecipe::output,
+            ItemStackTemplate.STREAM_CODEC, MortarRecipe::output,
             ByteBufCodecs.INT, MortarRecipe::presses,
             MortarRecipe::new
     );
@@ -38,7 +39,7 @@ public record MortarRecipe(Ingredient input, ItemStack output, int presses) impl
 
     @Override
     public ItemStack assemble(SingleRecipeInput pInput) {
-        return this.output.copy();
+        return this.output.create();
     }
 
     @Override
