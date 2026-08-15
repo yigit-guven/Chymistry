@@ -1,9 +1,0 @@
-{
-  "type": "chymistry:mortar",
-  "input": "minecraft:stone",
-  "output": {
-    "id": "minecraft:cobblestone",
-    "count": 1
-  },
-  "presses": 3
-}

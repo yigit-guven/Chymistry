@@ -14,31 +14,40 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
-public record MortarRecipe(Ingredient input, ItemStackTemplate output, int presses) implements Recipe<SingleRecipeInput> {
+import java.util.List;
+
+public record MortarRecipe(List<SizedIngredient> inputs, ClickType clickType, ItemStackTemplate output, int presses) implements Recipe<MortarRecipeInput> {
 
     public static final MapCodec<MortarRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Ingredient.CODEC.fieldOf("input").forGetter(MortarRecipe::input),
+            SizedIngredient.CODEC.listOf().fieldOf("inputs").forGetter(MortarRecipe::inputs),
+            ClickType.CODEC.fieldOf("clickType").forGetter(MortarRecipe::clickType),
             ItemStackTemplate.CODEC.fieldOf("output").forGetter(MortarRecipe::output),
             Codec.INT.fieldOf("presses").forGetter(MortarRecipe::presses)
     ).apply(inst, MortarRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MortarRecipe> STREAM_CODEC = StreamCodec.composite(
-            Ingredient.CONTENTS_STREAM_CODEC, MortarRecipe::input,
+            SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), MortarRecipe::inputs,
+            ClickType.STREAM_CODEC.cast(), MortarRecipe::clickType,
             ItemStackTemplate.STREAM_CODEC, MortarRecipe::output,
             ByteBufCodecs.INT, MortarRecipe::presses,
             MortarRecipe::new
     );
 
     @Override
-    public boolean matches(SingleRecipeInput pInput, Level pLevel) {
-        return this.input.test(pInput.item());
+    public boolean matches(MortarRecipeInput pInput, Level pLevel) {
+        if (this.inputs.size() != pInput.size()) return false;
+        for (int i = 0; i < this.inputs.size(); i++) {
+            if (!this.inputs.get(i).test(pInput.getItem(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput pInput) {
+    public ItemStack assemble(MortarRecipeInput pInput) {
         return this.output.create();
     }
 
@@ -53,18 +62,19 @@ public record MortarRecipe(Ingredient input, ItemStackTemplate output, int press
     }
 
     @Override
-    public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() {
+    public RecipeSerializer<? extends Recipe<MortarRecipeInput>> getSerializer() {
         return ModRecipes.MORTAR_SERIALIZER.get();
     }
 
     @Override
-    public RecipeType<? extends Recipe<SingleRecipeInput>> getType() {
+    public RecipeType<? extends Recipe<MortarRecipeInput>> getType() {
         return ModRecipes.MORTAR_TYPE.get();
     }
 
     @Override
     public PlacementInfo placementInfo() {
-        return PlacementInfo.create(this.input);
+        // Just extract ingredients from our sized ingredients
+        return PlacementInfo.create(this.inputs.stream().map(SizedIngredient::ingredient).toList());
     }
 
     @Override

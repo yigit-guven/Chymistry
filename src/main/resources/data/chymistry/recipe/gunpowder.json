@@ -1,0 +1,23 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "minecraft:sulfur",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:charcoal",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:niter_dust",
+      "count": 5
+    }
+  ],
+  "clickType": "slow",
+  "presses": 5,
+  "output": {
+    "id": "minecraft:gunpowder",
+    "count": 7
+  }
+}
