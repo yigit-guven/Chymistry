@@ -10,5 +10,6 @@
   "jei.chymistry.mortar.clicks": "%sx",
   "jei.chymistry.mortar.speed.fast": "Fast",
   "jei.chymistry.mortar.speed.slow": "Slow",
-  "jei.chymistry.mortar.speed.any": "Any"
+  "jei.chymistry.mortar.speed.tooltip.fast": "Requires clicking quickly in succession",
+  "jei.chymistry.mortar.speed.tooltip.slow": "Requires waiting briefly between clicks"
 }

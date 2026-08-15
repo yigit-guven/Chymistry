@@ -7,5 +7,10 @@
   "item.chymistry.tinted_glass_bottle": "Botella de Vidrio Tintado",
   "item.chymistry.elixir_of_vitriol": "Elixir de Vitriolo",
   "effect.chymistry.vitriol_immunity": "Inmunidad al Vitriolo",
-  "tooltip.chymistry.vitriol_immunity.modifier": "Inmunidad a Veneno y Wither"
+  "tooltip.chymistry.vitriol_immunity.modifier": "Inmunidad a Veneno y Wither",
+  "jei.chymistry.mortar.clicks": "%sx",
+  "jei.chymistry.mortar.speed.fast": "Rápido",
+  "jei.chymistry.mortar.speed.slow": "Lento",
+  "jei.chymistry.mortar.speed.tooltip.fast": "Requiere hacer clic rápidamente en sucesión",
+  "jei.chymistry.mortar.speed.tooltip.slow": "Requiere esperar brevemente entre clics"
 }

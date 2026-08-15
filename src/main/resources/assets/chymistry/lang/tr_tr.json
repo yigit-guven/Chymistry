@@ -7,5 +7,10 @@
   "item.chymistry.tinted_glass_bottle": "Renkli Cam Şişe",
   "item.chymistry.elixir_of_vitriol": "Vitriol İksiri",
   "effect.chymistry.vitriol_immunity": "Vitriol Bağışıklığı",
-  "tooltip.chymistry.vitriol_immunity.modifier": "Zehir ve Wither Bağışıklığı"
+  "tooltip.chymistry.vitriol_immunity.modifier": "Zehir ve Wither Bağışıklığı",
+  "jei.chymistry.mortar.clicks": "%sx",
+  "jei.chymistry.mortar.speed.fast": "Hızlı",
+  "jei.chymistry.mortar.speed.slow": "Yavaş",
+  "jei.chymistry.mortar.speed.tooltip.fast": "Art arda hızlı tıklama gerektirir",
+  "jei.chymistry.mortar.speed.tooltip.slow": "Tıklamalar arasında kısa bir süre beklemeyi gerektirir"
 }

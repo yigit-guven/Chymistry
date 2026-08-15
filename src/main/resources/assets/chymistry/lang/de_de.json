@@ -7,5 +7,10 @@
   "item.chymistry.tinted_glass_bottle": "Getönte Glasflasche",
   "item.chymistry.elixir_of_vitriol": "Elixier des Vitriols",
   "effect.chymistry.vitriol_immunity": "Vitriol-Immunität",
-  "tooltip.chymistry.vitriol_immunity.modifier": "Gift- & Wither-Immunität"
+  "tooltip.chymistry.vitriol_immunity.modifier": "Gift- & Wither-Immunität",
+  "jei.chymistry.mortar.clicks": "%sx",
+  "jei.chymistry.mortar.speed.fast": "Schnell",
+  "jei.chymistry.mortar.speed.slow": "Langsam",
+  "jei.chymistry.mortar.speed.tooltip.fast": "Erfordert schnelles Klicken hintereinander",
+  "jei.chymistry.mortar.speed.tooltip.slow": "Erfordert eine kurze Pause zwischen den Klicks"
 }

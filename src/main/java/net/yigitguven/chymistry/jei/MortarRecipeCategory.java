@@ -87,13 +87,15 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
         guiGraphics.pose().popMatrix();
         
         // Draw speed indicator above the arrow
-        String speedKey = "jei.chymistry.mortar.speed." + recipe.clickType().name().toLowerCase(java.util.Locale.ROOT);
-        net.minecraft.network.chat.Component speedText = net.minecraft.network.chat.Component.translatable(speedKey);
-        int speedWidth = font.width(speedText);
-        
-        // Top right corner
-        int speedX = 111 - speedWidth - 2;
-        guiGraphics.text(font, speedText, speedX, 1, 0xFF808080, false);
+        if (recipe.clickType() != net.yigitguven.chymistry.recipe.ClickType.ANY) {
+            String speedKey = "jei.chymistry.mortar.speed." + recipe.clickType().name().toLowerCase(java.util.Locale.ROOT);
+            net.minecraft.network.chat.Component speedText = net.minecraft.network.chat.Component.translatable(speedKey);
+            int speedWidth = font.width(speedText);
+            
+            // Top right corner
+            int speedX = 111 - speedWidth - 2;
+            guiGraphics.text(font, speedText, speedX, 1, 0xFF808080, false);
+        }
     }
 
     @Override
@@ -124,5 +126,23 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
 
         builder.addInvisibleIngredients(RecipeIngredientRole.CRAFTING_STATION)
           .add(new ItemStack(ModBlocks.MORTAR.get()));
+    }
+
+    @Override
+    public void getTooltip(mezz.jei.api.gui.builder.ITooltipBuilder tooltip, net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        MortarRecipe recipe = recipeHolder.value();
+        if (recipe.clickType() != net.yigitguven.chymistry.recipe.ClickType.ANY) {
+            net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
+            String speedKey = "jei.chymistry.mortar.speed." + recipe.clickType().name().toLowerCase(java.util.Locale.ROOT);
+            net.minecraft.network.chat.Component speedText = net.minecraft.network.chat.Component.translatable(speedKey);
+            int speedWidth = font.width(speedText);
+            int speedX = 111 - speedWidth - 2;
+            int speedY = 1;
+
+            if (mouseX >= speedX && mouseX <= speedX + speedWidth && mouseY >= speedY && mouseY <= speedY + 9) {
+                String tooltipKey = "jei.chymistry.mortar.speed.tooltip." + recipe.clickType().name().toLowerCase(java.util.Locale.ROOT);
+                tooltip.add(net.minecraft.network.chat.Component.translatable(tooltipKey));
+            }
+        }
     }
 }
