@@ -15,7 +15,7 @@ import net.yigitguven.chymistry.recipe.SizedIngredient;
 
 import java.util.List;
 
-public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
+public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>> {
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -28,7 +28,7 @@ public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
     }
 
     @Override
-    public RecipeType<MortarRecipe> getRecipeType() {
+    public RecipeType<net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>> getRecipeType() {
         return ChymistryJeiPlugin.MORTAR;
     }
 
@@ -62,20 +62,20 @@ public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
     }
 
     @Override
-    public void draw(MortarRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+    public void draw(net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+        MortarRecipe recipe = recipeHolder.value();
         this.arrow.draw(guiGraphics, 33, 9);
         
         net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
         
         // Draw press count in bottom right
-        net.minecraft.network.chat.Component pressesText = net.minecraft.network.chat.Component.literal(recipe.presses() + " Presses");
+        net.minecraft.network.chat.Component pressesText = net.minecraft.network.chat.Component.translatable("jei.chymistry.mortar.clicks", recipe.presses());
         int textWidth = font.width(pressesText);
         guiGraphics.text(font, pressesText, 111 - textWidth - 2, 48, 0xFF808080, false);
         
         // Draw speed indicator above the arrow
-        String speedStr = recipe.clickType().name(); // FAST, SLOW, ANY
-        speedStr = speedStr.substring(0, 1).toUpperCase() + speedStr.substring(1).toLowerCase();
-        net.minecraft.network.chat.Component speedText = net.minecraft.network.chat.Component.literal(speedStr);
+        String speedKey = "jei.chymistry.mortar.speed." + recipe.clickType().name().toLowerCase(java.util.Locale.ROOT);
+        net.minecraft.network.chat.Component speedText = net.minecraft.network.chat.Component.translatable(speedKey);
         int speedWidth = font.width(speedText);
         
         // Top right corner
@@ -84,7 +84,8 @@ public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, MortarRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe> recipeHolder, IFocusGroup focuses) {
+        MortarRecipe recipe = recipeHolder.value();
         // According to MortarMenu slot 0: 26, 17
         if (recipe.inputs().size() > 0) {
             builder.addInputSlot(5, 2)
@@ -106,9 +107,9 @@ public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
 
         builder.addOutputSlot(88, 16)
           .setOutputSlotBackground()
-          .addItemStack(recipe.output().create());
+          .add(recipe.output().create());
 
         builder.addInvisibleIngredients(RecipeIngredientRole.CRAFTING_STATION)
-          .addItemStack(new ItemStack(ModBlocks.MORTAR.get()));
+          .add(new ItemStack(ModBlocks.MORTAR.get()));
     }
 }

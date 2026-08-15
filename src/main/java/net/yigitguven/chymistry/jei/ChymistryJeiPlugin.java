@@ -23,8 +23,9 @@ import net.yigitguven.chymistry.screen.MortarScreen;
 @JeiPlugin
 public class ChymistryJeiPlugin implements IModPlugin {
 
-    public static final RecipeType<MortarRecipe> MORTAR =
-            RecipeType.create(Chymistry.MODID, "mortar", MortarRecipe.class);
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>> MORTAR =
+            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "mortar", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
 
     @Override
     public Identifier getPluginUid() {
@@ -41,9 +42,9 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         if (Minecraft.getInstance().getSingleplayerServer() != null) {
             RecipeManager manager = Minecraft.getInstance().getSingleplayerServer().getRecipeManager();
-            java.util.List<MortarRecipe> recipes = manager.getRecipes().stream()
+            java.util.List<net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>> recipes = manager.getRecipes().stream()
                 .filter(holder -> holder.value() instanceof MortarRecipe)
-                .map(holder -> (MortarRecipe) holder.value())
+                .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>)(Object)holder)
                 .toList();
             registration.addRecipes(MORTAR, recipes);
         }
