@@ -144,8 +144,17 @@ public class MortarMenu extends AbstractContainerMenu {
                     ItemStack outputSlot = container.getItem(3);
 
                     if (outputSlot.isEmpty() || (ItemStack.isSameItemSameComponents(outputSlot, result) && outputSlot.getCount() + result.getCount() <= container.getMaxStackSize())) {
-                        for (int i = 0; i < activeRecipe.inputs().size(); i++) {
-                            container.getItem(i).shrink(activeRecipe.inputs().get(i).count());
+                        boolean[] usedSlots = new boolean[3];
+                        for (net.yigitguven.chymistry.recipe.SizedIngredient ingredient : activeRecipe.inputs()) {
+                            for (int i = 0; i < 3; i++) {
+                                if (usedSlots[i]) continue;
+                                ItemStack slotStack = container.getItem(i);
+                                if (!slotStack.isEmpty() && ingredient.test(slotStack)) {
+                                    slotStack.shrink(ingredient.count());
+                                    usedSlots[i] = true;
+                                    break;
+                                }
+                            }
                         }
                         if (outputSlot.isEmpty()) {
                             container.setItem(3, result.copy());

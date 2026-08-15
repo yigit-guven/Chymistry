@@ -37,13 +37,33 @@ public record MortarRecipe(List<SizedIngredient> inputs, ClickType clickType, It
 
     @Override
     public boolean matches(MortarRecipeInput pInput, Level pLevel) {
-        if (this.inputs.size() != pInput.size()) return false;
-        for (int i = 0; i < this.inputs.size(); i++) {
-            if (!this.inputs.get(i).test(pInput.getItem(i))) {
+        java.util.List<ItemStack> inputItems = new java.util.ArrayList<>();
+        for (int i = 0; i < pInput.size(); i++) {
+            ItemStack stack = pInput.getItem(i);
+            if (!stack.isEmpty()) {
+                inputItems.add(stack);
+            }
+        }
+
+        if (this.inputs.size() != inputItems.size()) {
+            return false;
+        }
+
+        for (SizedIngredient ingredient : this.inputs) {
+            boolean found = false;
+            for (int i = 0; i < inputItems.size(); i++) {
+                if (ingredient.test(inputItems.get(i))) {
+                    inputItems.remove(i);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
                 return false;
             }
         }
-        return true;
+
+        return inputItems.isEmpty();
     }
 
     @Override
