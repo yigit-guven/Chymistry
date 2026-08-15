@@ -11,6 +11,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.yigitguven.chymistry.block.ModBlocks;
 import net.yigitguven.chymistry.recipe.MortarRecipe;
+import net.yigitguven.chymistry.recipe.SizedIngredient;
+
+import java.util.List;
 
 public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
 
@@ -50,27 +53,33 @@ public final class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
         return this.icon;
     }
 
+    private List<ItemStack> getStacks(SizedIngredient sizedIngredient) {
+        return sizedIngredient.ingredient().items()
+            .map(holder -> new ItemStack(holder, sizedIngredient.count()))
+            .toList();
+    }
+
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, MortarRecipe recipe, IFocusGroup focuses) {
         // According to MortarMenu slot 0: 26, 17
         if (recipe.inputs().size() > 0) {
             builder.addInputSlot(26, 17)
               .setStandardSlotBackground()
-              .addIngredients(recipe.inputs().get(0).ingredient());
+              .addItemStacks(getStacks(recipe.inputs().get(0)));
         }
 
         // According to MortarMenu slot 1: 26, 35
         if (recipe.inputs().size() > 1) {
             builder.addInputSlot(26, 35)
               .setStandardSlotBackground()
-              .addIngredients(recipe.inputs().get(1).ingredient());
+              .addItemStacks(getStacks(recipe.inputs().get(1)));
         }
 
         // According to MortarMenu slot 2: 26, 53
         if (recipe.inputs().size() > 2) {
             builder.addInputSlot(26, 53)
               .setStandardSlotBackground()
-              .addIngredients(recipe.inputs().get(2).ingredient());
+              .addItemStacks(getStacks(recipe.inputs().get(2)));
         }
 
         // According to MortarMenu slot 3 (output): 95, 35
