@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "chymistry:block/mortar" }
+    "facing=north": { "model": "chymistry:block/mortar" },
+    "facing=east":  { "model": "chymistry:block/mortar", "y": 90 },
+    "facing=south": { "model": "chymistry:block/mortar", "y": 180 },
+    "facing=west":  { "model": "chymistry:block/mortar", "y": 270 }
   }
 }

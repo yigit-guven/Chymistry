@@ -9,5 +9,5 @@ import net.yigitguven.chymistry.Chymistry;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Chymistry.MODID);
 
-    public static final DeferredBlock<Block> MORTAR = BLOCKS.registerBlock("mortar", MortarBlock::new, BlockBehaviour.Properties::of);
+    public static final DeferredBlock<Block> MORTAR = BLOCKS.registerBlock("mortar", MortarBlock::new, () -> BlockBehaviour.Properties.of().noOcclusion());
 }
