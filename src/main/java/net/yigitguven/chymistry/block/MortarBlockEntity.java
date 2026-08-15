@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class MortarBlockEntity extends BaseContainerBlockEntity {
 
-    protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+    protected NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
     private int currentPresses = 0;
     private int maxPresses = 0; // 0 means no recipe, -1 means invalid recipe
     protected final ContainerData data;
@@ -77,12 +77,12 @@ public class MortarBlockEntity extends BaseContainerBlockEntity {
             if (this.currentPresses >= this.maxPresses) {
                 // Craft
                 ItemStack result = recipe.get().value().assemble(input);
-                ItemStack outputSlot = this.getItem(1);
+                ItemStack outputSlot = this.getItem(3);
 
                 if (outputSlot.isEmpty() || (ItemStack.isSameItemSameComponents(outputSlot, result) && outputSlot.getCount() + result.getCount() <= this.getMaxStackSize())) {
                     this.getItem(0).shrink(1);
                     if (outputSlot.isEmpty()) {
-                        this.setItem(1, result.copy());
+                        this.setItem(3, result.copy());
                     } else {
                         outputSlot.grow(result.getCount());
                     }
@@ -134,6 +134,6 @@ public class MortarBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     public int getContainerSize() {
-        return 2;
+        return 4;
     }
 }

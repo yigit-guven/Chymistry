@@ -15,8 +15,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(Chymistry.MODID,
             "textures/gui/mortar_gui.png");
 
-    private static final Identifier ERROR_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID,
-            "textures/gui/error_arrow.png");
+
     private static final Identifier FULL_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID,
             "textures/gui/full_arrow.png");
 
@@ -27,8 +26,8 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
     private static final Identifier MESH_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Chymistry.MODID,
             "textures/gui/mesh_button_pressed.png");
 
-    private static final int BUTTON_X = 74;
-    private static final int BUTTON_Y = 53;
+    private static final int BUTTON_X = 126;
+    private static final int BUTTON_Y = 26;
     private static final int BUTTON_SIZE = 27;
 
     private boolean isButtonPressed = false;
@@ -76,17 +75,13 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
         pGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0f, 0f, this.imageWidth, this.imageHeight,
                 this.imageWidth, this.imageHeight);
 
-        int indicatorX = x + 72;
-        int indicatorY = y + 32;
+        int indicatorX = x + 43;
+        int indicatorY = y + 16;
 
-        if (this.menu.hasError()) {
-            pGraphics.blit(RenderPipelines.GUI_TEXTURED, ERROR_ARROW, indicatorX, indicatorY, 0f, 0f, 28, 21, 28, 21);
-        } else {
-            int progress = this.menu.getScaledProgress();
-            if (progress > 0) {
-                pGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, indicatorX, indicatorY, 0f, 0f, progress, 21,
-                        28, 21);
-            }
+        int progress = this.menu.getScaledProgress();
+        if (progress > 0) {
+            pGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, indicatorX, indicatorY, 0f, 0f, progress, 21,
+                    28, 21);
         }
 
         int btnX = x + BUTTON_X;

@@ -25,8 +25,10 @@ public class MortarMenu extends AbstractContainerMenu {
         blockEntity = (MortarBlockEntity) entity;
         this.data = data;
 
-        this.addSlot(new Slot(blockEntity, 0, 44, 35));
-        this.addSlot(new Slot(blockEntity, 1, 116, 35) {
+        this.addSlot(new Slot(blockEntity, 0, 26, 17));
+        this.addSlot(new Slot(blockEntity, 1, 26, 35));
+        this.addSlot(new Slot(blockEntity, 2, 26, 53));
+        this.addSlot(new Slot(blockEntity, 3, 95, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -48,11 +50,11 @@ public class MortarMenu extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            if (pIndex < 2) {
-                if (!this.moveItemStackTo(itemstack1, 2, this.slots.size(), true)) {
+            if (pIndex < 4) {
+                if (!this.moveItemStackTo(itemstack1, 4, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 0, 3, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -94,9 +96,6 @@ public class MortarMenu extends AbstractContainerMenu {
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
-    public boolean hasError() {
-        return this.data.get(1) == -1; 
-    }
 
     @Override
     public void removed(Player pPlayer) {
