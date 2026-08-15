@@ -20,11 +20,13 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
     private final IDrawable background;
     private final IDrawable icon;
     private final IDrawable arrow;
+    private final IDrawable meshIcon;
 
     public MortarRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(111, 58);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.MORTAR.get()));
         this.arrow = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/grey_arrow.png"), 0, 0, 45, 39).setTextureSize(45, 39).build();
+        this.meshIcon = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/mesh_icon.png"), 0, 0, 18, 20).setTextureSize(18, 20).build();
     }
 
     @Override
@@ -71,7 +73,18 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
         // Draw press count in bottom right
         net.minecraft.network.chat.Component pressesText = net.minecraft.network.chat.Component.translatable("jei.chymistry.mortar.clicks", recipe.presses());
         int textWidth = font.width(pressesText);
-        guiGraphics.text(font, pressesText, 111 - textWidth - 2, 48, 0xFF808080, false);
+        
+        int iconWidth = 9;
+        int spacing = 2;
+        int iconX = 111 - 2 - iconWidth;
+        int textX = iconX - spacing - textWidth;
+        
+        guiGraphics.text(font, pressesText, textX, 48, 0xFF808080, false);
+        
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().scale(0.5f, 0.5f);
+        this.meshIcon.draw(guiGraphics, iconX * 2, 47 * 2);
+        guiGraphics.pose().popMatrix();
         
         // Draw speed indicator above the arrow
         String speedKey = "jei.chymistry.mortar.speed." + recipe.clickType().name().toLowerCase(java.util.Locale.ROOT);
