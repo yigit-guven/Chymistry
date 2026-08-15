@@ -7,15 +7,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.yigitguven.chymistry.menu.MortarMenu;
-import org.jetbrains.annotations.Nullable;
 
-public class MortarBlock extends BaseEntityBlock {
+public class MortarBlock extends Block {
     public static final MapCodec<MortarBlock> CODEC = simpleCodec(MortarBlock::new);
 
     public MortarBlock(Properties properties) {
@@ -23,28 +21,19 @@ public class MortarBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends Block> codec() {
         return CODEC;
     }
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MortarBlockEntity(pos, state);
-    }
-
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
-    }
+    private static final Component CONTAINER_TITLE = Component.translatable("block.chymistry.mortar");
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide()) {
-            BlockEntity entity = level.getBlockEntity(pos);
-            if (entity instanceof MortarBlockEntity mortar) {
-                ((net.minecraft.server.level.ServerPlayer) player).openMenu(mortar, pos);
-            }
+            player.openMenu(new SimpleMenuProvider(
+                    (id, inventory, p) -> new MortarMenu(id, inventory, net.minecraft.world.inventory.ContainerLevelAccess.create(level, pos)),
+                    CONTAINER_TITLE
+            ));
         }
         return InteractionResult.SUCCESS;
     }

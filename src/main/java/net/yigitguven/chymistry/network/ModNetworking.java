@@ -6,7 +6,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.yigitguven.chymistry.Chymistry;
-import net.yigitguven.chymistry.block.MortarBlockEntity;
 
 public class ModNetworking {
 
@@ -18,9 +17,8 @@ public class ModNetworking {
                 MeshButtonPressedPayload.STREAM_CODEC,
                 (payload, context) -> {
                     context.enqueueWork(() -> {
-                        BlockEntity be = context.player().level().getBlockEntity(payload.pos());
-                        if (be instanceof MortarBlockEntity mortar) {
-                            mortar.handleMeshPress();
+                        if (context.player().containerMenu instanceof net.yigitguven.chymistry.menu.MortarMenu menu) {
+                            menu.handleMeshPress();
                         }
                     });
                 }

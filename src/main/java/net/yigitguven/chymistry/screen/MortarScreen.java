@@ -52,7 +52,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
         if (pMouseX >= x + BUTTON_X && pMouseX <= x + BUTTON_X + BUTTON_SIZE && pMouseY >= y + BUTTON_Y
                 && pMouseY <= y + BUTTON_Y + BUTTON_SIZE) {
             net.minecraft.client.Minecraft.getInstance().getConnection()
-                    .send(new MeshButtonPressedPayload(this.menu.blockEntity.getBlockPos()));
+                    .send(new MeshButtonPressedPayload());
             this.isButtonPressed = true;
             return true;
         }

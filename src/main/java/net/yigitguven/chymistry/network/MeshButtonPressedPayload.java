@@ -1,19 +1,15 @@
 package net.yigitguven.chymistry.network;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.yigitguven.chymistry.Chymistry;
 
-public record MeshButtonPressedPayload(BlockPos pos) implements CustomPacketPayload {
+public record MeshButtonPressedPayload() implements CustomPacketPayload {
     public static final Type<MeshButtonPressedPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(Chymistry.MODID, "mesh_button_pressed"));
 
-    public static final StreamCodec<FriendlyByteBuf, MeshButtonPressedPayload> STREAM_CODEC = StreamCodec.of(
-            (buf, payload) -> buf.writeBlockPos(payload.pos()),
-            buf -> new MeshButtonPressedPayload(buf.readBlockPos())
-    );
+    public static final StreamCodec<ByteBuf, MeshButtonPressedPayload> STREAM_CODEC = StreamCodec.unit(new MeshButtonPressedPayload());
 
     @Override
     public Type<? extends CustomPacketPayload> type() {

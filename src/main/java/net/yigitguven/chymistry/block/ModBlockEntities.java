@@ -13,6 +13,4 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Chymistry.MODID);
 
-    public static final Supplier<BlockEntityType<MortarBlockEntity>> MORTAR_BE =
-            BLOCK_ENTITIES.register("mortar", () -> new BlockEntityType<>(MortarBlockEntity::new, Set.of(ModBlocks.MORTAR.get())));
 }
