@@ -80,8 +80,8 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
 
         int progress = this.menu.getScaledProgress();
         if (progress > 0) {
-            pGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, indicatorX, indicatorY, 0f, 0f, progress, 21,
-                    28, 21);
+            pGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, indicatorX, indicatorY, 0f, 0f, progress, 52,
+                    50, 52);
         }
 
         int btnX = x + BUTTON_X;
