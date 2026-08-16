@@ -1,0 +1,15 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "minecraft:raw_iron",
+      "count": 1
+    }
+  ],
+  "clickType": "any",
+  "presses": 3,
+  "output": {
+    "id": "chymistry:iron_dust",
+    "count": 1
+  }
+}

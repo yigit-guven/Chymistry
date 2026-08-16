@@ -1,0 +1,15 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "minecraft:raw_copper",
+      "count": 1
+    }
+  ],
+  "clickType": "any",
+  "presses": 2,
+  "output": {
+    "id": "chymistry:copper_dust",
+    "count": 1
+  }
+}
