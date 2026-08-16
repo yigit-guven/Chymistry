@@ -13,6 +13,8 @@ description='''
 A comprehensive Chymistry mod for Minecraft.
 '''
 
+[[mixins]]
+config="chymistry.mixins.json"
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"

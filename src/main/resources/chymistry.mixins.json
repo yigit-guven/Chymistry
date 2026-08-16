@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.yigitguven.chymistry.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "chymistry.refmap.json",
+  "mixins": [
+    "FireBlockMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

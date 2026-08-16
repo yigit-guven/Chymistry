@@ -1,0 +1,8 @@
+{
+  "type": "chymistry:burning",
+  "input": "#minecraft:logs",
+  "output": {
+    "id": "chymistry:ash"
+  },
+  "chance": 70
+}

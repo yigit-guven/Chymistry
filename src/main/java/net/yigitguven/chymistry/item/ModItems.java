@@ -12,7 +12,7 @@ import net.yigitguven.chymistry.block.ModBlocks;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Chymistry.MODID);
 
-    public static final DeferredItem<Item> ASH = ITEMS.registerSimpleItem("ash");
+    public static final DeferredItem<Item> ASH = ITEMS.registerItem("ash", properties -> new Item(properties.fireResistant()));
     public static final DeferredItem<Item> NITER_DUST = ITEMS.registerSimpleItem("niter_dust");
     public static final DeferredItem<Item> ANIMAL_FAT = ITEMS.registerSimpleItem("animal_fat");
     public static final DeferredItem<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust");

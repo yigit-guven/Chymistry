@@ -24,4 +24,15 @@ public class ModRecipes {
                     return "mortar";
                 }
             });
+
+    public static final Supplier<RecipeSerializer<BurningRecipe>> BURNING_SERIALIZER =
+            SERIALIZERS.register("burning", () -> new RecipeSerializer<>(BurningRecipe.CODEC, BurningRecipe.STREAM_CODEC));
+
+    public static final Supplier<RecipeType<BurningRecipe>> BURNING_TYPE =
+            TYPES.register("burning", () -> new RecipeType<BurningRecipe>() {
+                @Override
+                public String toString() {
+                    return "burning";
+                }
+            });
 }

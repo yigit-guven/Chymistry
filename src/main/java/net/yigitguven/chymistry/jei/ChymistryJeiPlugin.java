@@ -27,6 +27,10 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>> MORTAR =
             mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "mortar", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.BurningRecipe>> BURNING =
+            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "burning", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -36,6 +40,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(new MortarRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new BurningRecipeCategory(guiHelper));
     }
 
     @Override
@@ -47,12 +52,20 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe>)(Object)holder)
                 .toList();
             registration.addRecipes(MORTAR, recipes);
+
+            java.util.List<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.BurningRecipe>> burningRecipes = manager.getRecipes().stream()
+                .filter(holder -> holder.value() instanceof net.yigitguven.chymistry.recipe.BurningRecipe)
+                .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.BurningRecipe>)(Object)holder)
+                .toList();
+            registration.addRecipes(BURNING, burningRecipes);
         }
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addCraftingStation(MORTAR, new ItemStack(ModBlocks.MORTAR.get()));
+        registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FLINT_AND_STEEL));
+        registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FIRE_CHARGE));
     }
 
     @Override
