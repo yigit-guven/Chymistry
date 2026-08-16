@@ -28,4 +28,29 @@ public class ModEvents {
             event.getEntity().removeEffect(MobEffects.WITHER);
         }
     }
+
+    @SubscribeEvent
+    public static void onRightClickItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem event) {
+        if (event.getItemStack().is(net.minecraft.world.item.Items.BUCKET)) {
+            net.minecraft.world.phys.BlockHitResult hitResult = net.minecraft.world.item.Item.getPlayerPOVHitResult(event.getLevel(), event.getEntity(), net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY);
+            if (hitResult.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
+                net.minecraft.core.BlockPos pos = hitResult.getBlockPos();
+                net.minecraft.world.level.Level level = event.getLevel();
+                if (level.getFluidState(pos).is(net.minecraft.tags.FluidTags.WATER)) {
+                    if (level.getBiome(pos).is(net.minecraft.tags.BiomeTags.IS_OCEAN)) {
+                        net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+                        if (state.getBlock() instanceof net.minecraft.world.level.block.BucketPickup bucketPickup) {
+                            net.minecraft.world.item.ItemStack pickup = bucketPickup.pickupBlock(event.getEntity(), level, pos, state);
+                            if (!pickup.isEmpty()) {
+                                net.minecraft.world.item.ItemStack newBucket = new net.minecraft.world.item.ItemStack(net.yigitguven.chymistry.item.ModItems.SEA_WATER_BUCKET.get());
+                                event.getEntity().setItemInHand(event.getHand(), net.minecraft.world.item.ItemUtils.createFilledResult(event.getItemStack(), event.getEntity(), newBucket));
+                                event.setCanceled(true);
+                                event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
