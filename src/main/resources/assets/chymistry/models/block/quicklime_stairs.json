@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "chymistry:block/quicklime",
+    "top": "chymistry:block/quicklime",
+    "side": "chymistry:block/quicklime"
+  }
+}

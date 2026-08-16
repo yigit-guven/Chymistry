@@ -47,4 +47,8 @@ public class ModItems {
     });
 
     public static final DeferredItem<BlockItem> MORTAR = ITEMS.registerSimpleBlockItem("mortar", ModBlocks.MORTAR);
+    public static final DeferredItem<BlockItem> QUICKLIME = ITEMS.registerSimpleBlockItem("quicklime", ModBlocks.QUICKLIME);
+    public static final DeferredItem<BlockItem> QUICKLIME_STAIRS = ITEMS.registerSimpleBlockItem("quicklime_stairs", ModBlocks.QUICKLIME_STAIRS);
+    public static final DeferredItem<BlockItem> QUICKLIME_SLAB = ITEMS.registerSimpleBlockItem("quicklime_slab", ModBlocks.QUICKLIME_SLAB);
+    public static final DeferredItem<BlockItem> QUICKLIME_WALL = ITEMS.registerSimpleBlockItem("quicklime_wall", ModBlocks.QUICKLIME_WALL);
 }

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "chymistry:block/quicklime_slab"
+    },
+    "type=double": {
+      "model": "chymistry:block/quicklime"
+    },
+    "type=top": {
+      "model": "chymistry:block/quicklime_slab_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "chymistry:quicklime",
+  "result": {
+    "id": "chymistry:quicklime_stairs",
+    "count": 1
+  }
+}

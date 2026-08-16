@@ -24,6 +24,10 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.COPPER_DUST.get());
                 output.accept(ModItems.IRON_DUST.get());
                 output.accept(ModItems.PURIFIED_GOLD_DUST.get());
+                output.accept(ModBlocks.QUICKLIME.get());
+                output.accept(ModBlocks.QUICKLIME_STAIRS.get());
+                output.accept(ModBlocks.QUICKLIME_SLAB.get());
+                output.accept(ModBlocks.QUICKLIME_WALL.get());
                 output.accept(ModItems.TINTED_GLASS_BOTTLE.get());
                 output.accept(ModItems.ELIXIR_OF_VITRIOL.get());
             })

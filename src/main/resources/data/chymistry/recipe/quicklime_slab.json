@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": "chymistry:quicklime"
+  },
+  "result": {
+    "id": "chymistry:quicklime_slab",
+    "count": 6
+  }
+}

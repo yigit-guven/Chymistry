@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "chymistry:quicklime",
+    "chymistry:quicklime_stairs",
+    "chymistry:quicklime_slab",
+    "chymistry:quicklime_wall"
+  ]
+}

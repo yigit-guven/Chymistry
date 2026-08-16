@@ -1,5 +1,9 @@
 {
   "block.chymistry.mortar": "Mortar",
+  "block.chymistry.quicklime": "Quicklime",
+  "block.chymistry.quicklime_stairs": "Quicklime Stairs",
+  "block.chymistry.quicklime_slab": "Quicklime Slab",
+  "block.chymistry.quicklime_wall": "Quicklime Wall",
   "creativetab.chymistry": "Chymistry",
   "item.chymistry.ash": "Ash",
   "item.chymistry.niter_dust": "Niter Dust",
