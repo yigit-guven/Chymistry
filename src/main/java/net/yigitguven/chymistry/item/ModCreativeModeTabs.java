@@ -20,6 +20,10 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.MORTAR.get());
                 output.accept(ModItems.ASH.get());
                 output.accept(ModItems.NITER_DUST.get());
+                output.accept(ModItems.ANIMAL_FAT.get());
+                output.accept(ModItems.COPPER_DUST.get());
+                output.accept(ModItems.IRON_DUST.get());
+                output.accept(ModItems.PURIFIED_GOLD_DUST.get());
                 output.accept(ModItems.TINTED_GLASS_BOTTLE.get());
                 output.accept(ModItems.ELIXIR_OF_VITRIOL.get());
             })
