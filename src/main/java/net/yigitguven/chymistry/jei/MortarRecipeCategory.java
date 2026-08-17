@@ -20,12 +20,16 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
     private final IDrawable background;
     private final IDrawable icon;
     private final IDrawable arrow;
+    private final IDrawable arrow1;
+    private final IDrawable arrow2;
     private final IDrawable meshIcon;
 
     public MortarRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(111, 58);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.MORTAR.get()));
         this.arrow = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/grey_arrow.png"), 0, 0, 45, 39).setTextureSize(45, 39).build();
+        this.arrow1 = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/grey_arrow_1.png"), 0, 0, 45, 39).setTextureSize(45, 39).build();
+        this.arrow2 = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/grey_arrow_2.png"), 0, 0, 45, 39).setTextureSize(45, 39).build();
         this.meshIcon = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/mesh_icon.png"), 0, 0, 18, 20).setTextureSize(18, 20).build();
     }
 
@@ -66,7 +70,15 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
     @Override
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<MortarRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         MortarRecipe recipe = recipeHolder.value();
-        this.arrow.draw(guiGraphics, 33, 9);
+        
+        int inputCount = recipe.inputs().size();
+        if (inputCount == 1) {
+            this.arrow1.draw(guiGraphics, 33, 9);
+        } else if (inputCount == 2) {
+            this.arrow2.draw(guiGraphics, 33, 9);
+        } else {
+            this.arrow.draw(guiGraphics, 33, 9);
+        }
         
         net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
         
