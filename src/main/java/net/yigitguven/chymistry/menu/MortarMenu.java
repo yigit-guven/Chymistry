@@ -44,6 +44,10 @@ public class MortarMenu extends AbstractContainerMenu {
         this.access = access;
         this.player = inv.player;
         this.container = new SimpleContainer(4);
+        this.container.addListener(c -> {
+            this.currentPresses = 0;
+            this.maxPresses = 0;
+        });
         
         this.data = new ContainerData() {
             @Override
@@ -143,7 +147,7 @@ public class MortarMenu extends AbstractContainerMenu {
                     ItemStack result = activeRecipe.assemble(input);
                     ItemStack outputSlot = container.getItem(3);
 
-                    if (outputSlot.isEmpty() || (ItemStack.isSameItemSameComponents(outputSlot, result) && outputSlot.getCount() + result.getCount() <= container.getMaxStackSize())) {
+                    if (outputSlot.isEmpty() || (ItemStack.isSameItemSameComponents(outputSlot, result) && outputSlot.getCount() + result.getCount() <= outputSlot.getMaxStackSize())) {
                         boolean[] usedSlots = new boolean[3];
                         for (net.yigitguven.chymistry.recipe.SizedIngredient ingredient : activeRecipe.inputs()) {
                             for (int i = 0; i < 3; i++) {
@@ -161,6 +165,7 @@ public class MortarMenu extends AbstractContainerMenu {
                         } else {
                             outputSlot.grow(result.getCount());
                         }
+                        this.container.setChanged();
                         this.currentPresses = 0;
                         
                         if (container.getItem(0).isEmpty() && container.getItem(1).isEmpty() && container.getItem(2).isEmpty()) {
