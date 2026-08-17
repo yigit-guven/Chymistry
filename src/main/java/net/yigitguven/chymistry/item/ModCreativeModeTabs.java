@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.ANIMAL_FAT.get());
                 output.accept(ModItems.COPPER_DUST.get());
                 output.accept(ModItems.IRON_DUST.get());
+                output.accept(ModItems.RUST_POWDER.get());
                 output.accept(ModItems.PURIFIED_GOLD_DUST.get());
                 output.accept(ModItems.SEA_WATER_BUCKET.get());
                 output.accept(ModBlocks.QUICKLIME.get());

@@ -17,6 +17,7 @@ public class ModItems {
     public static final DeferredItem<Item> ANIMAL_FAT = ITEMS.registerSimpleItem("animal_fat");
     public static final DeferredItem<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust");
     public static final DeferredItem<Item> IRON_DUST = ITEMS.registerSimpleItem("iron_dust");
+    public static final DeferredItem<Item> RUST_POWDER = ITEMS.registerSimpleItem("rust_powder");
     public static final DeferredItem<Item> PURIFIED_GOLD_DUST = ITEMS.registerSimpleItem("purified_gold_dust");
     public static final DeferredItem<Item> SEA_WATER_BUCKET = ITEMS.registerItem("sea_water_bucket", properties -> new net.minecraft.world.item.BucketItem(net.minecraft.world.level.material.Fluids.WATER, properties.craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
     public static final DeferredItem<Item> TINTED_GLASS_BOTTLE = ITEMS.registerSimpleItem("tinted_glass_bottle");
