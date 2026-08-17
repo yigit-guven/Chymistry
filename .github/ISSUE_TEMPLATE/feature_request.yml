@@ -1,0 +1,30 @@
+name: Feature Request
+description: Suggest a new mechanic, recipe, or feature.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature for Chymistry. Please ensure your suggestion aligns with the mod's technical and alchemical themes.
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: A clear and detailed description of the requested feature or mechanic.
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Rationale
+      description: Explain how this feature improves gameplay or fits into the mod's ecosystem.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative implementations or existing workarounds you have considered.
+    validations:
+      required: false

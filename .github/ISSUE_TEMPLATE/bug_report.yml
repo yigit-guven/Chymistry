@@ -1,0 +1,50 @@
+name: Bug Report
+description: File a bug report or crash issue.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue with Chymistry. Please provide as much technical detail as possible.
+  - type: input
+    id: version
+    attributes:
+      label: Chymistry Version
+      description: What version of Chymistry are you using? (e.g. 1.0.0-alpha)
+      placeholder: 1.0.0-alpha
+    validations:
+      required: true
+  - type: input
+    id: modloader
+    attributes:
+      label: Modloader & Version
+      description: Specify the modloader and version. (e.g. NeoForge 26.2.1)
+      placeholder: NeoForge 26.2.1
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Provide the exact steps needed to reproduce this bug.
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Crash Report / Logs
+      description: Paste any relevant crash reports or logs here. Use Pastebin or GitHub Gists for large logs.
+    validations:
+      required: false

@@ -8,7 +8,7 @@ displayURL="https://github.com/yigit-guven/Chymistry"
 issueTrackerURL="https://github.com/yigit-guven/Chymistry/issues"
 updateJSONURL="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/update.json"
 authors="Yiğit Güven"
-credits="Thanks to my friend Rwkersa for the idea and evolution of the idea, and to Curseforge ModJam 2026 for being the starting point!"
+credits="Thanks to all community contributors for their fixes, and to Curseforge ModJam 2026 for being the starting point!"
 description='''
 A comprehensive Chymistry mod for Minecraft.
 '''

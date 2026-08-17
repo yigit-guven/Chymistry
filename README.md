@@ -24,6 +24,8 @@
 
 ## For Developers
 
+We welcome contributions! Please review our [**Contributing Guidelines**](CONTRIBUTING.md) before submitting a Pull Request.
+
 To build Chymistry from source, ensure you have Java 21 installed and execute the following commands in your terminal:
 
 ```bash
