@@ -43,11 +43,14 @@ public class MortarMenu extends AbstractContainerMenu {
         super(ModMenus.MORTAR_MENU.get(), pContainerId);
         this.access = access;
         this.player = inv.player;
-        this.container = new SimpleContainer(4);
-        this.container.addListener(c -> {
-            this.currentPresses = 0;
-            this.maxPresses = 0;
-        });
+        this.container = new SimpleContainer(4) {
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                MortarMenu.this.currentPresses = 0;
+                MortarMenu.this.maxPresses = 0;
+            }
+        };
         
         this.data = new ContainerData() {
             @Override

@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.yigitguven.chymistry.Chymistry;
 import net.yigitguven.chymistry.menu.MortarMenu;
 import net.yigitguven.chymistry.network.MeshButtonPressedPayload;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(Chymistry.MODID,
@@ -51,7 +50,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu> {
 
         if (pMouseX >= x + BUTTON_X && pMouseX <= x + BUTTON_X + BUTTON_SIZE && pMouseY >= y + BUTTON_Y
                 && pMouseY <= y + BUTTON_Y + BUTTON_SIZE) {
-            PacketDistributor.sendToServer(new MeshButtonPressedPayload());
+            net.minecraft.client.Minecraft.getInstance().getConnection().send(new MeshButtonPressedPayload());
             this.isButtonPressed = true;
             return true;
         }
