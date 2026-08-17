@@ -44,7 +44,7 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
     }
 
     public int getWidth() {
-        return 116;
+        return 111;
     }
 
     @Override
