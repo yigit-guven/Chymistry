@@ -21,5 +21,6 @@
   "jei.chymistry.mortar.speed.slow": "Slow",
   "jei.chymistry.mortar.speed.tooltip.fast": "Requires clicking quickly in succession",
   "jei.chymistry.mortar.speed.tooltip.slow": "Requires waiting briefly between clicks",
-  "jei.chymistry.burning": "Burning"
+  "jei.chymistry.burning": "Burning",
+  "jei.chymistry.burning.chance": "Chance: %s%%"
 }
