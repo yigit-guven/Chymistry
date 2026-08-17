@@ -51,7 +51,7 @@ jobs:
       shell: bash
       run: |
         chmod +x ./gradlew
-        ./gradlew build
+        ./gradlew clean build --no-daemon --no-build-cache
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
