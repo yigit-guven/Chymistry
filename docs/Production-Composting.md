@@ -8,4 +8,11 @@ When a Composter reaches **Level 7** (meaning it is completely full, but the Bon
 
 For example, right-clicking a Level 7 Composter with **[Ash](Ash)** will convert its contents into a **Niter Soil Composter**. When this modified composter is right-clicked (or broken), it will drop **[Niter Dust](Niter-Dust)** (and the Composter itself if broken) as the final product.
 
+## Recipes
+
+The following resources can be synthesized via Production Composting:
+
+### [Niter Dust](Niter-Dust)
+Apply **[Ash](Ash)** to a Level 7 Composter.
+
 ![Production Composting](images/production_composting_ash_to_niter.png)

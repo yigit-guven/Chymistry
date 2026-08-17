@@ -12,16 +12,29 @@ Unlike standard crafting stations, the Mortar requires manual player interaction
 2. **Processing:** Players must repeatedly click the block to advance the crafting progress.
 3. **Speed Requirements:** Each recipe mandates a specific clicking frequency to succeed:
    *   **Slow:** Requires a deliberately paced click rate.
-   *   **Normal:** Requires a standard, steady click rate.
    *   **Fast:** Requires a rapid click rate.
    *   **Any:** The recipe progresses regardless of the click rate.
 
-If the required click speed is not maintained, processing progress will halt until the correct speed is resumed.
+Failing to maintain the required click speed will trigger different consequences depending on the recipe being processed. While some safe recipes may simply halt progress until the correct speed is resumed, more volatile recipes can result in catastrophic failure; such as Gunpowder violently exploding if ground too quickly!
 
-## JEI Integration
+## Recipes
 
-Mortar recipes are fully integrated with **Just Enough Items (JEI)**. The JEI interface displays:
-*   Required input items and quantities.
-*   Total number of clicks required (displayed in the bottom right corner).
-*   Required clicking speed (displayed as a tooltip above the progress arrow).
-*   Dynamic arrow textures that indicate the input complexity.
+The following items can be processed in the Mortar:
+
+### [Copper Dust](Copper-Dust)
+1x Raw Copper ➔ 1x Copper Dust
+* *Speed:* Any | *Presses:* 2
+
+![Copper Dust Recipe](images/recipe_copper_dust.png)
+
+### [Iron Dust](Iron-Dust)
+1x Raw Iron ➔ 1x Iron Dust
+* *Speed:* Any | *Presses:* 3
+
+![Iron Dust Recipe](images/recipe_iron_dust.png)
+
+### Gunpowder (`minecraft:gunpowder`)
+1x Sulfur, 1x Charcoal, 5x [Niter Dust](Niter-Dust) ➔ 7x Gunpowder
+* *Speed:* Slow | *Presses:* 5
+
+![Gunpowder Recipe](images/recipe_gunpowder.png)

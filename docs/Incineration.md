@@ -12,3 +12,12 @@ To mitigate server performance issues caused by mass block burning, item entitie
 *   **Despawn Rate:** The dropped items despawn after exactly **30 seconds** (600 ticks), significantly faster than the vanilla 5-minute timer. This value is configurable via `chymistry-server.toml` under `ash_despawn_ticks`.
 *   **Proximity Checks:** The fire will only drop the items if a player is detected within a 64-block radius at the time the block burns out. If no player is present, the output is discarded. This can be toggled via the `require_player_for_ash` config option.
 *   **Invulnerability:** Items dropped by this process are marked as invulnerable so they are not immediately destroyed by the fire that generated them.
+
+## Recipes
+
+The following items can be generated via Incineration:
+
+### [Ash](Ash)
+Drop from any burning block in the `#minecraft:logs` tag. *(70% chance to drop 1x Ash)*
+
+![Ash Recipe](images/recipe_ash.png)
