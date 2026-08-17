@@ -53,4 +53,32 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onRightClickBlock(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock event) {
+        net.minecraft.world.level.Level level = event.getLevel();
+        net.minecraft.core.BlockPos pos = event.getPos();
+        net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+        
+        if (state.is(net.minecraft.world.level.block.Blocks.COMPOSTER)) {
+            if (state.hasProperty(net.minecraft.world.level.block.ComposterBlock.LEVEL)) {
+                int composterLevel = state.getValue(net.minecraft.world.level.block.ComposterBlock.LEVEL);
+                // "completely full but the bone meal is not ready to collect" -> Level 7
+                if (composterLevel == 7) {
+                    net.minecraft.world.item.ItemStack stack = event.getItemStack();
+                    if (stack.is(net.yigitguven.chymistry.item.ModItems.ASH.get())) {
+                        if (!level.isClientSide()) {
+                            if (!event.getEntity().isCreative()) {
+                                stack.shrink(1);
+                            }
+                            level.setBlock(pos, net.yigitguven.chymistry.block.ModBlocks.NITER_SOIL_COMPOSTER.get().defaultBlockState(), 3);
+                            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.SAND_PLACE, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+                        }
+                        event.setCanceled(true);
+                        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                    }
+                }
+            }
+        }
+    }
 }

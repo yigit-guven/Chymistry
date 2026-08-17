@@ -15,4 +15,6 @@ public class ModBlocks {
     public static final DeferredBlock<Block> QUICKLIME_STAIRS = BLOCKS.registerBlock("quicklime_stairs", properties -> new net.minecraft.world.level.block.StairBlock(QUICKLIME.get().defaultBlockState(), properties), () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE).strength(1.2f, 6.0f).requiresCorrectToolForDrops());
     public static final DeferredBlock<Block> QUICKLIME_SLAB = BLOCKS.registerBlock("quicklime_slab", net.minecraft.world.level.block.SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE).strength(1.2f, 6.0f).requiresCorrectToolForDrops());
     public static final DeferredBlock<Block> QUICKLIME_WALL = BLOCKS.registerBlock("quicklime_wall", net.minecraft.world.level.block.WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE).strength(1.2f, 6.0f).requiresCorrectToolForDrops());
+
+    public static final DeferredBlock<Block> NITER_SOIL_COMPOSTER = BLOCKS.registerBlock("niter_soil_composter", NiterSoilComposterBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COMPOSTER));
 }
