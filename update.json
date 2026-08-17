@@ -1,10 +1,10 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/chymistry/",
   "promos": {
-    "26.2-latest": "1.0.0",
-    "26.2-recommended": "1.0.0"
+    "26.2-latest": "1.0.0-alpha",
+    "26.2-recommended": "1.0.0-alpha"
   },
   "26.2": {
-    "1.0.0": "Initial Release for Chymistry"
+    "1.0.0-alpha": "Initial Alpha Release for Chymistry"
   }
 }
