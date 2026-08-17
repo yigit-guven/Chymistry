@@ -1,7 +1,3 @@
-<br>
-
----
-
 <div align="center">
   <small>
     <b>Chymistry</b> is open-source and licensed under the <a href="https://github.com/yigit-guven/Chymistry/blob/main/LICENSE">GPLv3 License</a>.<br>
