@@ -18,4 +18,4 @@ Ash item entities have custom despawn parameters:
 * The dropped entity is invulnerable to damage (e.g. fire/lava).
 
 ## Usage
-Ash is used in [Production Composting](Production-Composting). Right-clicking a completely full **Level 7 Composter** with Ash will transform it into a Niter Soil Composter, which yields Niter Dust when right-clicked (or broken).
+Ash is used in [Production Composting](Production-Composting). Right-clicking a completely full **Level 7 Composter** with Ash will transform it into a Niter Soil Composter, which yields [Niter Dust](Niter-Dust) when right-clicked (or broken).
