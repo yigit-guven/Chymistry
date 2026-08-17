@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.yigitguven.chymistry.recipe.BurningRecipe;
 import net.yigitguven.chymistry.recipe.ModRecipes;
+import net.yigitguven.chymistry.config.ChymistryServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,9 +45,14 @@ public class FireBlockMixin {
 
     private void chymistry$handleBurnOut(Level level, BlockPos pos, RandomSource random) {
         if (level instanceof ServerLevel serverLevel) {
+            // Only process if a player is within 64 blocks, if enabled in config
+            if (ChymistryServerConfig.REQUIRE_PLAYER_FOR_ASH.get() && !serverLevel.hasNearbyAlivePlayer(pos.getX(), pos.getY(), pos.getZ(), 64.0D)) {
+                return;
+            }
+
             BlockState state = level.getBlockState(pos);
             ItemStack stack = new ItemStack(state.getBlock());
-            
+
             if (!stack.isEmpty()) {
                 SingleRecipeInput input = new SingleRecipeInput(stack);
 
@@ -58,6 +64,8 @@ public class FireBlockMixin {
                             ItemEntity itemEntity = new ItemEntity(serverLevel, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, result);
                             itemEntity.setDeltaMovement(0, 0.2, 0);
                             itemEntity.setInvulnerable(true);
+                            // Configurable despawn time
+                            itemEntity.lifespan = ChymistryServerConfig.ASH_DESPAWN_TICKS.get();
                             serverLevel.addFreshEntity(itemEntity);
                         }
                     }
