@@ -23,5 +23,8 @@
   "jei.chymistry.mortar.speed.tooltip.fast": "Requires clicking quickly in succession",
   "jei.chymistry.mortar.speed.tooltip.slow": "Requires waiting briefly between clicks",
   "jei.chymistry.burning": "Burning",
-  "jei.chymistry.burning.chance": "Chance: %s%%"
+  "jei.chymistry.burning.chance": "Chance: %s%%",
+  "jei.chymistry.niter_composting": "Niter Composting",
+  "jei.chymistry.niter_composting.level": "Level 7",
+  "jei.chymistry.niter_composting.tooltip": "Requires a completely full Composter (Level 7) right before it produces Bone Meal."
 }
