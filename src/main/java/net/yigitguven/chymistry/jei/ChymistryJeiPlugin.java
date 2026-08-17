@@ -31,8 +31,8 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.BurningRecipe>> BURNING =
             mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "burning", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
 
-    public static final mezz.jei.api.recipe.RecipeType<NiterComposterJeiRecipe> NITER_COMPOSTING =
-            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "niter_composting", NiterComposterJeiRecipe.class);
+    public static final mezz.jei.api.recipe.RecipeType<ProductionComposterJeiRecipe> PRODUCTION_COMPOSTING =
+            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "production_composting", ProductionComposterJeiRecipe.class);
 
     @Override
     public Identifier getPluginUid() {
@@ -44,7 +44,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(new MortarRecipeCategory(guiHelper));
         registration.addRecipeCategories(new BurningRecipeCategory(guiHelper));
-        registration.addRecipeCategories(new NiterComposterRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new ProductionComposterRecipeCategory(guiHelper));
     }
 
     @Override
@@ -63,8 +63,8 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 .toList();
             registration.addRecipes(BURNING, burningRecipes);
 
-            registration.addRecipes(NITER_COMPOSTING, java.util.List.of(
-                new NiterComposterJeiRecipe(new ItemStack(net.yigitguven.chymistry.item.ModItems.ASH.get()), new ItemStack(net.yigitguven.chymistry.item.ModItems.NITER_DUST.get()))
+            registration.addRecipes(PRODUCTION_COMPOSTING, java.util.List.of(
+                new ProductionComposterJeiRecipe(new ItemStack(net.yigitguven.chymistry.item.ModItems.ASH.get()), new ItemStack(net.yigitguven.chymistry.item.ModItems.NITER_DUST.get()))
             ));
         }
     }
@@ -74,8 +74,8 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addCraftingStation(MORTAR, new ItemStack(ModBlocks.MORTAR.get()));
         registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FLINT_AND_STEEL));
         registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FIRE_CHARGE));
-        registration.addCraftingStation(NITER_COMPOSTING, new ItemStack(net.minecraft.world.level.block.Blocks.COMPOSTER));
-        registration.addCraftingStation(NITER_COMPOSTING, new ItemStack(ModBlocks.NITER_SOIL_COMPOSTER.get()));
+        registration.addCraftingStation(PRODUCTION_COMPOSTING, new ItemStack(net.minecraft.world.level.block.Blocks.COMPOSTER));
+        registration.addCraftingStation(PRODUCTION_COMPOSTING, new ItemStack(ModBlocks.NITER_SOIL_COMPOSTER.get()));
     }
 
     @Override

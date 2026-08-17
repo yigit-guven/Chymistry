@@ -12,26 +12,26 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.yigitguven.chymistry.Chymistry;
 
-public final class NiterComposterRecipeCategory implements IRecipeCategory<NiterComposterJeiRecipe> {
+public final class ProductionComposterRecipeCategory implements IRecipeCategory<ProductionComposterJeiRecipe> {
 
     private final IDrawable background;
     private final IDrawable icon;
     private final IDrawable arrow;
 
-    public NiterComposterRecipeCategory(IGuiHelper guiHelper) {
+    public ProductionComposterRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(110, 40);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(Blocks.COMPOSTER));
         this.arrow = guiHelper.getRecipeArrow();
     }
 
     @Override
-    public RecipeType<NiterComposterJeiRecipe> getRecipeType() {
-        return ChymistryJeiPlugin.NITER_COMPOSTING;
+    public RecipeType<ProductionComposterJeiRecipe> getRecipeType() {
+        return ChymistryJeiPlugin.PRODUCTION_COMPOSTING;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("jei.chymistry.niter_composting");
+        return Component.translatable("jei.chymistry.production_composting");
     }
 
     public int getWidth() {
@@ -53,30 +53,30 @@ public final class NiterComposterRecipeCategory implements IRecipeCategory<Niter
     }
 
     @Override
-    public void draw(NiterComposterJeiRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+    public void draw(ProductionComposterJeiRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.arrow.draw(guiGraphics, 55, 12);
         
         net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
-        Component levelText = Component.translatable("jei.chymistry.niter_composting.level");
+        Component levelText = Component.translatable("jei.chymistry.production_composting.level");
         int textWidth = font.width(levelText);
         int textX = 41 - textWidth / 2; // Center under the composter (x=33 + 8)
         guiGraphics.text(font, levelText, textX, 30, 0xFF808080, false);
     }
 
     @Override
-    public void getTooltip(mezz.jei.api.gui.builder.ITooltipBuilder tooltip, NiterComposterJeiRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(mezz.jei.api.gui.builder.ITooltipBuilder tooltip, ProductionComposterJeiRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
-        Component levelText = Component.translatable("jei.chymistry.niter_composting.level");
+        Component levelText = Component.translatable("jei.chymistry.production_composting.level");
         int textWidth = font.width(levelText);
         int textX = 41 - textWidth / 2;
         
         if (mouseX >= textX && mouseX <= textX + textWidth && mouseY >= 30 && mouseY <= 39) {
-            tooltip.add(Component.translatable("jei.chymistry.niter_composting.tooltip").withStyle(net.minecraft.ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("jei.chymistry.production_composting.tooltip").withStyle(net.minecraft.ChatFormatting.GRAY));
         }
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, NiterComposterJeiRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, ProductionComposterJeiRecipe recipe, IFocusGroup focuses) {
         // Ash input
         builder.addInputSlot(11, 12)
           .setStandardSlotBackground()
@@ -87,7 +87,7 @@ public final class NiterComposterRecipeCategory implements IRecipeCategory<Niter
           .setStandardSlotBackground()
           .addItemStack(new ItemStack(Blocks.COMPOSTER));
 
-        // Niter output
+        // Output
         builder.addOutputSlot(85, 12)
           .setOutputSlotBackground()
           .addItemStack(recipe.output());
