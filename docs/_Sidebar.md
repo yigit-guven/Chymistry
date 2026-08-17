@@ -1,4 +1,4 @@
-### <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/gui/fire_arrow.png" width="24" style="image-rendering: pixelated; vertical-align: middle;"> [Mechanics](Mechanics)
+### <img src="images/blocks/mechanicsmodel.png" width="24" style="image-rendering: pixelated; vertical-align: middle;"> [Mechanics](Mechanics)
 * <img src="images/blocks/minecraft-fire.gif" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Incineration](Incineration)
 * <img src="images/blocks/compostmodel.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Production Composting](Production-Composting)
 
