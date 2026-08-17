@@ -1,5 +1,6 @@
 ### Mechanics
 * [Incineration](Incineration)
+* [Production Composting](Production-Composting)
 
 ### Stations
 * [Mortar](Mortar)

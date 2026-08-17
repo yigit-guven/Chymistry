@@ -17,7 +17,16 @@ Quicklime is crafted by processing standard Stone (`minecraft:stone`) inside a v
 * Requires the correct tool (Pickaxe) to drop itself when mined.
 
 ## Variants
-Quicklime can be stonecut or crafted into the following structural variants:
-* **[Quicklime Stairs](Quicklime-Stairs):** `chymistry:quicklime_stairs`
-* **[Quicklime Slab](Quicklime-Slab):** `chymistry:quicklime_slab`
-* **[Quicklime Wall](Quicklime-Wall):** `chymistry:quicklime_wall`
+Quicklime can be stonecut or crafted into structural variants:
+
+### Quicklime Stairs (`chymistry:quicklime_stairs`)
+![Quicklime Stairs Recipe](images/recipe_quicklime_stairs.png)
+![Quicklime Stairs Stonecutting](images/recipe_quicklime_stairs_stonecutting.png)
+
+### Quicklime Slab (`chymistry:quicklime_slab`)
+![Quicklime Slab Recipe](images/recipe_quicklime_slab.png)
+![Quicklime Slab Stonecutting](images/recipe_quicklime_slab_stonecutting.png)
+
+### Quicklime Wall (`chymistry:quicklime_wall`)
+![Quicklime Wall Recipe](images/recipe_quicklime_wall.png)
+![Quicklime Wall Stonecutting](images/recipe_quicklime_wall_stonecutting.png)
