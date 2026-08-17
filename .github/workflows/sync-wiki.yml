@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 26.2-neoforge
+    paths:
+      - 'docs/**'
   workflow_dispatch:
 
 jobs:
@@ -27,20 +29,14 @@ jobs:
 
       - name: Sync and Push
         run: |
-          # Clear existing wiki contents (ignoring the .git folder)
-          find wiki-repo -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          rsync -av --delete --exclude '.git' main-repo/docs/ wiki-repo/
           
-          # Copy everything from the docs/ folder into the wiki
-          cp -r main-repo/docs/* wiki-repo/
-          
-          # Navigate to wiki repository and push changes
           cd wiki-repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
           git add .
           
-          # Only commit and push if there are actual changes
           if git diff-index --quiet HEAD; then
             echo "No changes to sync."
           else
