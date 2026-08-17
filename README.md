@@ -5,6 +5,7 @@
   [![CurseForge Downloads](https://img.shields.io/curseforge/dt/chymistry?logo=curseforge&style=for-the-badge&color=f16436)](https://www.curseforge.com/minecraft/mc-mods/chymistry)
   [![Modrinth Downloads](https://img.shields.io/modrinth/dt/chymistry?logo=modrinth&style=for-the-badge&color=00AF5C)](https://modrinth.com/mod/chymistry)
   [![GitHub Stars](https://img.shields.io/github/stars/yigit-guven/Chymistry?style=for-the-badge&logo=github)](https://github.com/yigit-guven/Chymistry)
+  [![GitHub Forks](https://img.shields.io/github/forks/yigit-guven/Chymistry?style=for-the-badge&logo=github)](https://github.com/yigit-guven/Chymistry/network/members)
 </div>
 
 ---
