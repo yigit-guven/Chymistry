@@ -14,11 +14,13 @@
 * <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/iron_dust.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Iron Dust](Iron-Dust)
 * <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/niter_dust.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Niter Dust](Niter-Dust)
 * <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/purified_gold_dust.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Purified Gold Dust](Purified-Gold-Dust)
-
-### <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/elixir_of_vitriol.png" width="24" style="image-rendering: pixelated; vertical-align: middle;"> [Fluids & Extracts](Fluids)
 * <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/animal_fat.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Animal Fat](Animal-Fat)
-* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/sea_water_bucket.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Sea Water Bucket](Sea-Water-Bucket)
 * <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/tinted_glass_bottle.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Tinted Glass Bottle](Tinted-Glass-Bottle)
+
+### <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/sea_water_bucket.png" width="24" style="image-rendering: pixelated; vertical-align: middle;"> [Fluids](Fluids)
+* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/sea_water_bucket.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Sea Water Bucket](Sea-Water-Bucket)
+
+### <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/elixir_of_vitriol.png" width="24" style="image-rendering: pixelated; vertical-align: middle;"> [Potions](Potions)
 * <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/elixir_of_vitriol.png" width="16" style="image-rendering: pixelated; vertical-align: middle;"> [Elixir of Vitriol](Elixir-of-Vitriol)
 
 ### <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/mob_effect/vitriol_immunity.png" width="24" style="image-rendering: pixelated; vertical-align: middle;"> [Effects](Effects)
