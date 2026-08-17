@@ -2,9 +2,19 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [ "26.2-neoforge" ]
+    paths:
+      - 'src/main/java/**'
+      - 'build.gradle'
+      - 'settings.gradle'
+      - 'gradle.properties'
+      - '.github/workflows/**'
   pull_request:
-    branches: [ "26.2-neoforge" ]
+    paths:
+      - 'src/main/java/**'
+      - 'build.gradle'
+      - 'settings.gradle'
+      - 'gradle.properties'
+      - '.github/workflows/**'
   schedule:
     - cron: '27 22 * * 4'
 

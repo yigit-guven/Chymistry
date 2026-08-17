@@ -2,8 +2,6 @@ name: Sync Docs to Wiki
 
 on:
   push:
-    branches:
-      - 26.2-neoforge
     paths:
       - 'docs/**'
   workflow_dispatch:
