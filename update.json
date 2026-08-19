@@ -1,10 +1,11 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/chymistry/",
   "promos": {
-    "26.2-latest": "1.0.0-alpha",
-    "26.2-recommended": "1.0.0-alpha"
+    "26.2-latest": "1.0.1-alpha",
+    "26.2-recommended": "1.0.1-alpha"
   },
   "26.2": {
+    "1.0.1-alpha": "- Added Iron Tongs with custom two-handed holding and swinging animations\n- Added Crucible block variants\n- Added Rust Powder item\n- Added Niter Soil Composter block workflow and JEI category\n- Fixed mortar state reset, button packet dispatching, and output stack limits (thanks Spagles!)\n- Fixed mortar JEI recipe category width alignment\n- Massive updates to wiki documentation, CI workflows, and issue templates",
     "1.0.0-alpha": "Initial Alpha Release for Chymistry"
   }
 }

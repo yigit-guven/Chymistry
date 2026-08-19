@@ -11,8 +11,8 @@ body:
     id: version
     attributes:
       label: Chymistry Version
-      description: What version of Chymistry are you using? (e.g. 1.0.0-alpha)
-      placeholder: 1.0.0-alpha
+      description: What version of Chymistry are you using? (e.g. 1.0.1-alpha)
+      placeholder: 1.0.1-alpha
     validations:
       required: true
   - type: input
