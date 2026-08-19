@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.ANIMAL_FAT.get());
                 output.accept(ModItems.COPPER_DUST.get());
                 output.accept(ModItems.IRON_DUST.get());
+                output.accept(ModItems.IRON_TONGS.get());
                 output.accept(ModItems.RUST_POWDER.get());
                 output.accept(ModItems.PURIFIED_GOLD_DUST.get());
                 output.accept(ModItems.SEA_WATER_BUCKET.get());
@@ -30,6 +31,9 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.QUICKLIME_STAIRS.get());
                 output.accept(ModBlocks.QUICKLIME_SLAB.get());
                 output.accept(ModBlocks.QUICKLIME_WALL.get());
+                output.accept(ModBlocks.BRICK_CRUCIBLE.get());
+                output.accept(ModBlocks.DEEPSLATE_CRUCIBLE.get());
+                output.accept(ModBlocks.NETHERITE_CRUCIBLE.get());
                 output.accept(ModItems.TINTED_GLASS_BOTTLE.get());
                 output.accept(ModItems.ELIXIR_OF_VITRIOL.get());
             })

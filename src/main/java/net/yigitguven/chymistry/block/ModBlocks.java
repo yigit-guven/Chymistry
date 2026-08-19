@@ -16,5 +16,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> QUICKLIME_SLAB = BLOCKS.registerBlock("quicklime_slab", net.minecraft.world.level.block.SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE).strength(1.2f, 6.0f).requiresCorrectToolForDrops());
     public static final DeferredBlock<Block> QUICKLIME_WALL = BLOCKS.registerBlock("quicklime_wall", net.minecraft.world.level.block.WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE).strength(1.2f, 6.0f).requiresCorrectToolForDrops());
 
+    public static final DeferredBlock<Block> BRICK_CRUCIBLE = BLOCKS.registerBlock("brick_crucible", CrucibleBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.BRICKS).noOcclusion());
+    public static final DeferredBlock<Block> DEEPSLATE_CRUCIBLE = BLOCKS.registerBlock("deepslate_crucible", CrucibleBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.DEEPSLATE_BRICKS).noOcclusion());
+    public static final DeferredBlock<Block> NETHERITE_CRUCIBLE = BLOCKS.registerBlock("netherite_crucible", CrucibleBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.NETHERITE_BLOCK).noOcclusion());
+
     public static final DeferredBlock<Block> NITER_SOIL_COMPOSTER = BLOCKS.registerBlock("niter_soil_composter", NiterSoilComposterBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COMPOSTER));
 }
