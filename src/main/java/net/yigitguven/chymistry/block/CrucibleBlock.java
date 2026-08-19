@@ -1,6 +1,8 @@
 package net.yigitguven.chymistry.block;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -17,13 +19,30 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.core.Direction;
 
 public class CrucibleBlock extends Block implements SimpleWaterloggedBlock {
-    public static final MapCodec<CrucibleBlock> CODEC = simpleCodec(CrucibleBlock::new);
+    public static final MapCodec<CrucibleBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            propertiesCodec(),
+            Codec.INT.fieldOf("max_heat").forGetter(CrucibleBlock::getMaxHeat),
+            Codec.INT.fieldOf("min_heat").forGetter(CrucibleBlock::getMinHeat)
+    ).apply(instance, CrucibleBlock::new));
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0);
 
-    public CrucibleBlock(Properties properties) {
+    private final int maxHeat;
+    private final int minHeat;
+
+    public CrucibleBlock(Properties properties, int maxHeat, int minHeat) {
         super(properties);
+        this.maxHeat = maxHeat;
+        this.minHeat = minHeat;
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.valueOf(false)));
+    }
+
+    public int getMaxHeat() {
+        return this.maxHeat;
+    }
+
+    public int getMinHeat() {
+        return this.minHeat;
     }
 
     @Override
