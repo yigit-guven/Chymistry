@@ -6,7 +6,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -16,9 +20,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.yigitguven.chymistry.block.CrucibleBlockEntity;
 import net.minecraft.core.Direction;
 
-public class CrucibleBlock extends Block implements SimpleWaterloggedBlock {
+import javax.annotation.Nullable;
+
+public class CrucibleBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
     public static final MapCodec<CrucibleBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             propertiesCodec(),
             Codec.INT.fieldOf("max_heat").forGetter(CrucibleBlock::getMaxHeat),
@@ -53,6 +60,22 @@ public class CrucibleBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new CrucibleBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(net.minecraft.world.level.Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide() ? null : (lvl, pos, st, blockEntity) -> {
+            if (blockEntity instanceof CrucibleBlockEntity crucible) {
+                CrucibleBlockEntity.tick(lvl, pos, st, crucible);
+            }
+        };
     }
 
     @Override
