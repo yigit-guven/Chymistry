@@ -81,4 +81,32 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
+        net.minecraft.world.entity.player.Player player = event.getEntity();
+        if (player.level().isClientSide()) return;
+
+        net.minecraft.world.item.ItemStack mainHand = player.getMainHandItem();
+        net.minecraft.world.item.ItemStack offHand = player.getOffhandItem();
+
+        // 1. Cannot be transferred to offhand
+        if (offHand.is(net.yigitguven.chymistry.util.ModTags.Items.TWO_HANDED)) {
+            net.minecraft.world.item.ItemStack offHandCopy = offHand.copy();
+            offHand.shrink(offHand.getCount());
+            if (!player.getInventory().add(offHandCopy)) {
+                player.drop(offHandCopy, false);
+            }
+        }
+
+        // 2. Cannot hold in main hand if offhand is not empty. Unequip offhand instead of main hand.
+        offHand = player.getOffhandItem();
+        if (mainHand.is(net.yigitguven.chymistry.util.ModTags.Items.TWO_HANDED) && !offHand.isEmpty()) {
+            net.minecraft.world.item.ItemStack offHandCopy = offHand.copy();
+            offHand.shrink(offHand.getCount());
+            if (!player.getInventory().add(offHandCopy)) {
+                player.drop(offHandCopy, false);
+            }
+        }
+    }
 }

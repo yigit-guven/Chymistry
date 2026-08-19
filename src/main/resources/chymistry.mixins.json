@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "chymistry.refmap.json",
   "mixins": [
-    "FireBlockMixin"
+    "FireBlockMixin",
+    "client.HumanoidModelMixin"
   ],
   "client": [],
   "injectors": {
