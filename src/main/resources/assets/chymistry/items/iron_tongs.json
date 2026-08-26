@@ -1,6 +1,33 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "chymistry:item/iron_tongs"
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {
+        "when": "chymistry:brick_crucible",
+        "model": {
+          "type": "minecraft:model",
+          "model": "chymistry:item/iron_tongs_carry_brick_crucible"
+        }
+      },
+      {
+        "when": "chymistry:deepslate_crucible",
+        "model": {
+          "type": "minecraft:model",
+          "model": "chymistry:item/iron_tongs_carry_deepslate_crucible"
+        }
+      },
+      {
+        "when": "chymistry:netherite_crucible",
+        "model": {
+          "type": "minecraft:model",
+          "model": "chymistry:item/iron_tongs_carry_netherite_crucible"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "chymistry:item/iron_tongs"
+    }
   }
 }

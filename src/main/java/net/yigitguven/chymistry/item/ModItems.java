@@ -21,7 +21,7 @@ public class ModItems {
     public static final DeferredItem<Item> PURIFIED_GOLD_DUST = ITEMS.registerSimpleItem("purified_gold_dust");
     public static final DeferredItem<Item> SEA_WATER_BUCKET = ITEMS.registerItem("sea_water_bucket", properties -> new net.minecraft.world.item.BucketItem(net.minecraft.world.level.material.Fluids.WATER, properties.craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
     public static final DeferredItem<Item> TINTED_GLASS_BOTTLE = ITEMS.registerSimpleItem("tinted_glass_bottle");
-    public static final DeferredItem<Item> IRON_TONGS = ITEMS.registerItem("iron_tongs", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> IRON_TONGS = ITEMS.registerItem("iron_tongs", properties -> new IronTongsItem(properties.stacksTo(1)));
     public static final DeferredItem<Item> THERMOMETER = ITEMS.registerItem("thermometer", properties -> new Item(properties.stacksTo(1)));
     public static final DeferredItem<Item> ELIXIR_OF_VITRIOL = ITEMS.registerItem("elixir_of_vitriol", properties -> new Item(properties.stacksTo(1)
             .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
