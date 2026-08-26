@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "D D",
+    "D D",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:cobbled_deepslate"
+    }
+  },
+  "result": {
+    "id": "chymistry:deepslate_crucible",
+    "count": 1
+  }
+}

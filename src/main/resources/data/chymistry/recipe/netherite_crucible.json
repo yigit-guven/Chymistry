@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "D D",
+    "D D",
+    "DND"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:cobbled_deepslate"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "id": "chymistry:netherite_crucible",
+    "count": 1
+  }
+}
