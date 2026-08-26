@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": "chymistry:sea_water_bucket",
+  "result": {
+    "id": "chymistry:sea_salt"
+  }
+}

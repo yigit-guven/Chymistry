@@ -27,6 +27,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.RUST_POWDER.get());
                 output.accept(ModItems.PURIFIED_GOLD_DUST.get());
                 output.accept(ModItems.SEA_WATER_BUCKET.get());
+                output.accept(ModItems.SEA_SALT.get());
                 output.accept(ModBlocks.QUICKLIME.get());
                 output.accept(ModBlocks.QUICKLIME_STAIRS.get());
                 output.accept(ModBlocks.QUICKLIME_SLAB.get());

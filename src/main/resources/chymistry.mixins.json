@@ -6,6 +6,7 @@
     "refmap":  "chymistry.refmap.json",
     "mixins":  [
                    "FireBlockMixin",
+                   "AbstractFurnaceBlockEntityMixin",
                    "client.HumanoidModelMixin",
                    "client.ItemInHandRendererMixin"
                ],
