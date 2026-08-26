@@ -26,6 +26,53 @@ public class IronTongsItem extends Item {
         super(properties);
     }
 
+    private static class ClientTooltipHandler {
+        public static boolean hasThermometer() {
+            try {
+                net.minecraft.client.player.LocalPlayer player = net.minecraft.client.Minecraft.getInstance().player;
+                if (player == null) return false;
+                for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+                    if (player.getInventory().getItem(i).is(ModItems.THERMOMETER.get())) {
+                        return true;
+                    }
+                }
+            } catch (Exception e) {
+                // ignored
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> pTooltipComponents, net.minecraft.world.item.TooltipFlag pTooltipFlag) {
+        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.desc").withStyle(net.minecraft.ChatFormatting.GRAY));
+
+        CustomData customData = pStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        CompoundTag tag = customData.copyTag();
+
+        if (tag.contains("CrucibleType")) {
+            String crucibleType = tag.getString("CrucibleType").orElse("");
+            float heat = tag.contains("CrucibleHeat") ? tag.getFloat("CrucibleHeat").orElse(0.0f) : 0.0f;
+
+            String blockKey = crucibleType.replace(":", ".");
+            net.minecraft.network.chat.Component crucibleName = net.minecraft.network.chat.Component.translatable("block." + blockKey).withStyle(net.minecraft.ChatFormatting.GOLD);
+
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.carrying", crucibleName).withStyle(net.minecraft.ChatFormatting.GRAY));
+            
+            try {
+                if (ClientTooltipHandler.hasThermometer()) {
+                    pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.format("%.1f", heat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                }
+            } catch (Throwable e) {
+                // Ignore
+            }
+        } else {
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.empty").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        }
+
+        super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
+    }
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();

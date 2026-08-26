@@ -22,7 +22,13 @@ public class ModItems {
     public static final DeferredItem<Item> SEA_WATER_BUCKET = ITEMS.registerItem("sea_water_bucket", properties -> new net.minecraft.world.item.BucketItem(net.minecraft.world.level.material.Fluids.WATER, properties.craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
     public static final DeferredItem<Item> TINTED_GLASS_BOTTLE = ITEMS.registerSimpleItem("tinted_glass_bottle");
     public static final DeferredItem<Item> IRON_TONGS = ITEMS.registerItem("iron_tongs", properties -> new IronTongsItem(properties.stacksTo(1)));
-    public static final DeferredItem<Item> THERMOMETER = ITEMS.registerItem("thermometer", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> THERMOMETER = ITEMS.registerItem("thermometer", properties -> new Item(properties.stacksTo(1)) {
+        @Override
+        public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, java.util.function.Consumer<Component> pTooltipComponents, net.minecraft.world.item.TooltipFlag pTooltipFlag) {
+            pTooltipComponents.accept(Component.translatable("tooltip.chymistry.thermometer.desc").withStyle(net.minecraft.ChatFormatting.GRAY));
+            super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
+        }
+    });
     public static final DeferredItem<Item> ELIXIR_OF_VITRIOL = ITEMS.registerItem("elixir_of_vitriol", properties -> new Item(properties.stacksTo(1)
             .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
             .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
