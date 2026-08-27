@@ -56,6 +56,24 @@ public class ModItems {
             pTooltipComponents.accept(net.minecraft.network.chat.Component.literal("-15% ").append(net.minecraft.network.chat.Component.translatable(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED.value().getDescriptionId())).withStyle(net.minecraft.ChatFormatting.RED));
         }
     });
+    public static final DeferredItem<Item> BATTERY = ITEMS.registerSimpleItem("battery");
+    public static final DeferredItem<Item> BLAST_PROOF_CEMENT = ITEMS.registerSimpleItem("blast_proof_cement");
+    public static final DeferredItem<Item> BRASS_INGOT = ITEMS.registerSimpleItem("brass_ingot");
+    public static final DeferredItem<Item> DYNAMITE = ITEMS.registerSimpleItem("dynamite");
+    public static final DeferredItem<Item> FREEZING_POWDER = ITEMS.registerSimpleItem("freezing_powder");
+    public static final DeferredItem<Item> GREEN_CRYSTAL = ITEMS.registerSimpleItem("green_crystal");
+    public static final DeferredItem<Item> INCENDIARY_DUST = ITEMS.registerSimpleItem("incendiary_dust");
+    public static final DeferredItem<Item> MATCH = ITEMS.registerSimpleItem("match");
+    public static final DeferredItem<Item> PHOSPHORUS = ITEMS.registerSimpleItem("phosphorus");
+    public static final DeferredItem<Item> PLASTIC_PELLETS = ITEMS.registerSimpleItem("plastic_pellets");
+    public static final DeferredItem<Item> SILVER_INGOT = ITEMS.registerSimpleItem("silver_ingot");
+    public static final DeferredItem<Item> SILVER_SLUDGE = ITEMS.registerSimpleItem("silver_sludge");
+    public static final DeferredItem<Item> SOAP = ITEMS.registerSimpleItem("soap");
+    public static final DeferredItem<Item> STEEL_INGOT = ITEMS.registerSimpleItem("steel_ingot");
+    public static final DeferredItem<Item> STORM_POWDER = ITEMS.registerSimpleItem("storm_powder");
+    public static final DeferredItem<Item> VULCANIZED_RUBBER = ITEMS.registerSimpleItem("vulcanized_rubber");
+
+
 
     public static final DeferredItem<BlockItem> MORTAR = ITEMS.registerSimpleBlockItem("mortar", ModBlocks.MORTAR);
     public static final DeferredItem<BlockItem> QUICKLIME = ITEMS.registerSimpleBlockItem("quicklime", ModBlocks.QUICKLIME);
@@ -66,3 +84,4 @@ public class ModItems {
     public static final DeferredItem<BlockItem> DEEPSLATE_CRUCIBLE = ITEMS.registerItem("deepslate_crucible", properties -> new CrucibleBlockItem(ModBlocks.DEEPSLATE_CRUCIBLE.get(), properties));
     public static final DeferredItem<BlockItem> NETHERITE_CRUCIBLE = ITEMS.registerItem("netherite_crucible", properties -> new CrucibleBlockItem(ModBlocks.NETHERITE_CRUCIBLE.get(), properties));
 }
+

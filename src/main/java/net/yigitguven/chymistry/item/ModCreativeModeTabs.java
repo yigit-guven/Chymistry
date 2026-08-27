@@ -38,6 +38,26 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.TINTED_GLASS_BOTTLE.get());
                 output.accept(ModItems.ELIXIR_OF_VITRIOL.get());
                 output.accept(ModItems.THERMOMETER.get());
+                        output.accept(ModItems.BATTERY.get());
+                        output.accept(ModItems.BLAST_PROOF_CEMENT.get());
+                        output.accept(ModItems.BRASS_INGOT.get());
+                        output.accept(ModItems.DYNAMITE.get());
+                        output.accept(ModItems.FREEZING_POWDER.get());
+                        output.accept(ModItems.GREEN_CRYSTAL.get());
+                        output.accept(ModItems.INCENDIARY_DUST.get());
+                        output.accept(ModItems.MATCH.get());
+                        output.accept(ModItems.PHOSPHORUS.get());
+                        output.accept(ModItems.PLASTIC_PELLETS.get());
+                        output.accept(ModItems.SILVER_INGOT.get());
+                        output.accept(ModItems.SILVER_SLUDGE.get());
+                        output.accept(ModItems.SOAP.get());
+                        output.accept(ModItems.STEEL_INGOT.get());
+                        output.accept(ModItems.STORM_POWDER.get());
+                        output.accept(ModItems.VULCANIZED_RUBBER.get());
+
+
             })
             .build());
 }
+
+
