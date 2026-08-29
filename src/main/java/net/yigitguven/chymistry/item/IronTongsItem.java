@@ -185,7 +185,12 @@ public class IronTongsItem extends Item {
             // To ensure CrucibleBlockEntity.tick checks the block AT targetPos for heat,
             // we pass targetPos.above() as the block entity's position, because tick() checks pos.below()
             BlockPos legPos = player.blockPosition();
-            BlockPos targetPos = legPos.relative(player.getDirection());
+            float yaw = player.getYRot();
+            yaw = (yaw % 360 + 360) % 360;
+            int dir = (int) Math.floor((yaw + 22.5) / 45) % 8;
+            int[] dxs = {0, -1, -1, -1, 0, 1, 1, 1};
+            int[] dzs = {1, 1, 0, -1, -1, -1, 0, 1};
+            BlockPos targetPos = legPos.offset(dxs[dir], 0, dzs[dir]);
             BlockPos dummyPos = targetPos.above();
 
             BlockEntity dummyBe = BlockEntity.loadStatic(dummyPos, dummyState, crucibleData, level.registryAccess());
