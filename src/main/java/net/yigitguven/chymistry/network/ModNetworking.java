@@ -82,10 +82,12 @@ public class ModNetworking {
                                         net.minecraft.world.inventory.ContainerData data = new net.minecraft.world.inventory.ContainerData() {
                                             @Override
                                             public int get(int pIndex) {
+                                                net.minecraft.nbt.CompoundTag currentTag = tongs.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                                                net.minecraft.nbt.CompoundTag crucibleData = currentTag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
                                                 return switch (pIndex) {
-                                                    case 0 -> dummyCrucible.progress;
-                                                    case 1 -> dummyCrucible.maxProgress;
-                                                    case 2 -> (int) (tag.getFloat("CrucibleHeat").orElse(0.0f) * 10);
+                                                    case 0 -> crucibleData.getInt("progress").orElse(0);
+                                                    case 1 -> crucibleData.getInt("maxProgress").orElse(0);
+                                                    case 2 -> (int) (currentTag.getFloat("CrucibleHeat").orElse(0.0f) * 10);
                                                     case 3 -> {
                                                         if (dummyState.getBlock() instanceof net.yigitguven.chymistry.block.CrucibleBlock crucible) {
                                                             yield crucible.getMaxHeat() * 10;
@@ -104,13 +106,14 @@ public class ModNetworking {
 
                                             @Override
                                             public void set(int pIndex, int pValue) {
+                                                net.minecraft.nbt.CompoundTag currentTag = tongs.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                                                net.minecraft.nbt.CompoundTag crucibleData = currentTag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
                                                 switch (pIndex) {
-                                                    case 0 -> dummyCrucible.progress = pValue;
-                                                    case 1 -> dummyCrucible.maxProgress = pValue;
+                                                    case 0 -> crucibleData.putInt("progress", pValue);
+                                                    case 1 -> crucibleData.putInt("maxProgress", pValue);
                                                 }
-                                                net.minecraft.nbt.CompoundTag updatedData = dummyCrucible.saveCustomOnly(player.level().registryAccess());
-                                                tag.put("CrucibleData", updatedData);
-                                                tongs.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                                                currentTag.put("CrucibleData", crucibleData);
+                                                tongs.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(currentTag));
                                             }
 
                                             @Override

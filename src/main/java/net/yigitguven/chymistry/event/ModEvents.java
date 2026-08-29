@@ -108,5 +108,13 @@ public class ModEvents {
                 player.drop(offHandCopy, false);
             }
         }
+
+        // 3. Tick Iron Tongs
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            net.minecraft.world.item.ItemStack stack = player.getInventory().getItem(i);
+            if (stack.is(net.yigitguven.chymistry.item.ModItems.IRON_TONGS.get())) {
+                net.yigitguven.chymistry.item.IronTongsItem.tickCustom(stack, player.level(), player);
+            }
+        }
     }
 }

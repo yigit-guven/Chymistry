@@ -170,8 +170,7 @@ public class IronTongsItem extends Item {
         return super.useOn(context);
     }
 
-    public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slotId, boolean isSelected) {
-        if (!(entity instanceof Player player)) return;
+    public static void tickCustom(ItemStack stack, Level level, Player player) {
 
 
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
