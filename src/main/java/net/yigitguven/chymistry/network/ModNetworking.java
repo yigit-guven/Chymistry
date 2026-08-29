@@ -71,10 +71,20 @@ public class ModNetworking {
                                             public void setChanged() {
                                                 super.setChanged();
                                                 if (initializing[0]) return;
-                                                for (int i = 0; i < 6; i++) dummyCrucible.inventory.setItem(i, this.getItem(i));
-                                                net.minecraft.nbt.CompoundTag updatedData = dummyCrucible.saveCustomOnly(player.level().registryAccess());
-                                                tag.put("CrucibleData", updatedData);
-                                                tongs.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                                                net.minecraft.world.item.ItemStack currentTongs = pPlayer.getItemInHand(pPlayer.getUsedItemHand());
+                                                net.minecraft.nbt.CompoundTag latestTag = currentTongs.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                                                net.minecraft.nbt.CompoundTag crucibleData = latestTag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
+                                                crucibleData.putString("id", "chymistry:crucible");
+                                                
+                                                net.minecraft.world.level.block.entity.BlockEntity dummyBeLatest = net.minecraft.world.level.block.entity.BlockEntity.loadStatic(net.minecraft.core.BlockPos.ZERO, dummyState, crucibleData, pPlayer.level().registryAccess());
+                                                if (dummyBeLatest instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity dummyCrucibleLatest) {
+                                                    for (int i = 0; i < 6; i++) {
+                                                        dummyCrucibleLatest.inventory.setItem(i, this.getItem(i));
+                                                    }
+                                                    net.minecraft.nbt.CompoundTag updatedData = dummyCrucibleLatest.saveCustomOnly(pPlayer.level().registryAccess());
+                                                    latestTag.put("CrucibleData", updatedData);
+                                                    currentTongs.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(latestTag));
+                                                }
                                             }
                                         };
                                         
@@ -127,7 +137,31 @@ public class ModNetworking {
                                             }
                                         };
 
-                                        return new net.yigitguven.chymistry.menu.CrucibleMenu(pContainerId, pInventory, inventory, data, net.minecraft.world.inventory.ContainerLevelAccess.NULL);
+                                        return new net.yigitguven.chymistry.menu.CrucibleMenu(pContainerId, pInventory, inventory, data, net.minecraft.world.inventory.ContainerLevelAccess.NULL) {
+                                            @Override
+                                            public void broadcastChanges() {
+                                                net.minecraft.world.item.ItemStack currentTongs = pPlayer.getItemInHand(pPlayer.getUsedItemHand());
+                                                net.minecraft.nbt.CompoundTag latestTag = currentTongs.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                                                net.minecraft.nbt.CompoundTag crucibleData = latestTag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
+                                                
+                                                net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack> items = net.minecraft.core.NonNullList.withSize(6, net.minecraft.world.item.ItemStack.EMPTY);
+                                                crucibleData.putString("id", "chymistry:crucible");
+                                                net.minecraft.world.level.block.entity.BlockEntity dummyBe2 = net.minecraft.world.level.block.entity.BlockEntity.loadStatic(net.minecraft.core.BlockPos.ZERO, dummyState, crucibleData, player.level().registryAccess());
+                                                if (dummyBe2 instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity dummyCrucible2) {
+                                                    for (int i = 0; i < 6; i++) {
+                                                        items.set(i, dummyCrucible2.inventory.getItem(i).copy());
+                                                    }
+                                                }
+                                                
+                                                initializing[0] = true;
+                                                for(int i = 0; i < 6; i++) {
+                                                    inventory.setItem(i, items.get(i));
+                                                }
+                                                initializing[0] = false;
+                                                
+                                                super.broadcastChanges();
+                                            }
+                                        };
                                     }
                                 });
                             }
