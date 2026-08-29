@@ -88,11 +88,11 @@ public class CrucibleScreen extends AbstractContainerScreen<CrucibleMenu> {
                 Component line2;
 
                 if (currentHeat >= 0) {
-                    line1 = Component.translatable("tooltip.chymistry.iron_tongs.heat", Component.literal(String.format("%.1f", currentHeat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY);
-                    line2 = Component.translatable("tooltip.chymistry.crucible.max_heat", String.format("%.1f", maxHeat)).withStyle(net.minecraft.ChatFormatting.DARK_GRAY);
+                    line1 = Component.translatable("tooltip.chymistry.iron_tongs.heat", Component.literal(String.valueOf((int) currentHeat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY);
+                    line2 = Component.translatable("tooltip.chymistry.crucible.max_heat", String.valueOf((int) maxHeat)).withStyle(net.minecraft.ChatFormatting.DARK_GRAY);
                 } else {
-                    line1 = Component.translatable("tooltip.chymistry.iron_tongs.heat", Component.literal(String.format("%.1f", currentHeat)).withStyle(net.minecraft.ChatFormatting.AQUA)).withStyle(net.minecraft.ChatFormatting.GRAY);
-                    line2 = Component.translatable("tooltip.chymistry.crucible.min_heat", String.format("%.1f", minHeat)).withStyle(net.minecraft.ChatFormatting.DARK_GRAY);
+                    line1 = Component.translatable("tooltip.chymistry.iron_tongs.heat", Component.literal(String.valueOf((int) currentHeat)).withStyle(net.minecraft.ChatFormatting.AQUA)).withStyle(net.minecraft.ChatFormatting.GRAY);
+                    line2 = Component.translatable("tooltip.chymistry.crucible.min_heat", String.valueOf((int) minHeat)).withStyle(net.minecraft.ChatFormatting.DARK_GRAY);
                 }
                 
                 java.util.List<Component> tooltip = new java.util.ArrayList<>();

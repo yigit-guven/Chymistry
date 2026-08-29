@@ -17,12 +17,20 @@ public class CrucibleBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, Consumer<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         if (this.getBlock() instanceof CrucibleBlock crucibleBlock) {
-            pTooltipComponents.accept(
-                Component.translatable("tooltip.chymistry.crucible.heat",
-                    Component.literal(String.valueOf(crucibleBlock.getMinHeat())).withStyle(net.minecraft.ChatFormatting.AQUA),
-                    Component.literal(String.valueOf(crucibleBlock.getMaxHeat())).withStyle(net.minecraft.ChatFormatting.RED)
-                ).withStyle(net.minecraft.ChatFormatting.GRAY)
-            );
+            if (crucibleBlock.getMaxHeat() > 0) {
+                pTooltipComponents.accept(
+                    Component.translatable("tooltip.chymistry.crucible.max_heat",
+                        Component.literal(String.valueOf(crucibleBlock.getMaxHeat())).withStyle(net.minecraft.ChatFormatting.RED)
+                    ).withStyle(net.minecraft.ChatFormatting.GRAY)
+                );
+            }
+            if (crucibleBlock.getMinHeat() < 0) {
+                pTooltipComponents.accept(
+                    Component.translatable("tooltip.chymistry.crucible.min_heat",
+                        Component.literal(String.valueOf(crucibleBlock.getMinHeat())).withStyle(net.minecraft.ChatFormatting.AQUA)
+                    ).withStyle(net.minecraft.ChatFormatting.GRAY)
+                );
+            }
         }
         super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
     }

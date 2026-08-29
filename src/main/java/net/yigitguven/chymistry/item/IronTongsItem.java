@@ -62,9 +62,9 @@ public class IronTongsItem extends Item {
             try {
                 if (ClientTooltipHandler.hasThermometer()) {
                     if (heat >= 0) {
-                        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.format("%.1f", heat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.valueOf((int) heat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY));
                     } else {
-                        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.format("%.1f", heat)).withStyle(net.minecraft.ChatFormatting.AQUA)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.valueOf((int) heat)).withStyle(net.minecraft.ChatFormatting.AQUA)).withStyle(net.minecraft.ChatFormatting.GRAY));
                     }
                 }
             } catch (Throwable e) {
@@ -182,15 +182,18 @@ public class IronTongsItem extends Item {
             Block block = BuiltInRegistries.BLOCK.get(blockId).get().value();
             BlockState dummyState = block.defaultBlockState();
             
-            // To ensure CrucibleBlockEntity.tick checks the block AT targetPos for heat,
-            // we pass targetPos.above() as the block entity's position, because tick() checks pos.below()
             BlockPos legPos = player.blockPosition();
-            float yaw = player.getYRot();
-            yaw = (yaw % 360 + 360) % 360;
-            int dir = (int) Math.floor((yaw + 22.5) / 45) % 8;
-            int[] dxs = {0, -1, -1, -1, 0, 1, 1, 1};
-            int[] dzs = {1, 1, 0, -1, -1, -1, 0, 1};
-            BlockPos targetPos = legPos.offset(dxs[dir], 0, dzs[dir]);
+            BlockPos targetPos;
+            if (player.getMainHandItem() == stack) {
+                float yaw = player.getYRot();
+                yaw = (yaw % 360 + 360) % 360;
+                int dir = (int) Math.floor((yaw + 22.5) / 45) % 8;
+                int[] dxs = {0, -1, -1, -1, 0, 1, 1, 1};
+                int[] dzs = {1, 1, 0, -1, -1, -1, 0, 1};
+                targetPos = legPos.offset(dxs[dir], 0, dzs[dir]);
+            } else {
+                targetPos = legPos.below();
+            }
             BlockPos dummyPos = targetPos.above();
 
             BlockEntity dummyBe = BlockEntity.loadStatic(dummyPos, dummyState, crucibleData, level.registryAccess());
