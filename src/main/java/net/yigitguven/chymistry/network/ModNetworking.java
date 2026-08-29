@@ -53,6 +53,7 @@ public class ModNetworking {
                                     @Override
                                     public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int pContainerId, net.minecraft.world.entity.player.Inventory pInventory, net.minecraft.world.entity.player.Player pPlayer) {
                                         net.minecraft.nbt.CompoundTag crucibleData = tag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
+                                        crucibleData.putString("id", "chymistry:crucible");
                                         
                                         net.minecraft.world.level.block.state.BlockState dummyState = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.Identifier.parse(tag.getString("CrucibleType").orElse(""))).get().value().defaultBlockState();
                                         net.minecraft.world.level.block.entity.BlockEntity dummyBe = net.minecraft.world.level.block.entity.BlockEntity.loadStatic(net.minecraft.core.BlockPos.ZERO, dummyState, crucibleData, player.level().registryAccess());
@@ -64,10 +65,12 @@ public class ModNetworking {
                                             dummyCrucible = new net.yigitguven.chymistry.block.CrucibleBlockEntity(net.minecraft.core.BlockPos.ZERO, dummyState);
                                         }
 
+                                        boolean[] initializing = {true};
                                         net.minecraft.world.SimpleContainer inventory = new net.minecraft.world.SimpleContainer(6) {
                                             @Override
                                             public void setChanged() {
                                                 super.setChanged();
+                                                if (initializing[0]) return;
                                                 for (int i = 0; i < 6; i++) dummyCrucible.inventory.setItem(i, this.getItem(i));
                                                 net.minecraft.nbt.CompoundTag updatedData = dummyCrucible.saveCustomOnly(player.level().registryAccess());
                                                 tag.put("CrucibleData", updatedData);
@@ -76,18 +79,20 @@ public class ModNetworking {
                                         };
                                         
                                         for (int i = 0; i < 6; i++) {
-                                            inventory.setItem(i, dummyCrucible.inventory.getItem(i));
+                                            inventory.setItem(i, dummyCrucible.inventory.getItem(i).copy());
                                         }
+                                        initializing[0] = false;
 
                                         net.minecraft.world.inventory.ContainerData data = new net.minecraft.world.inventory.ContainerData() {
                                             @Override
                                             public int get(int pIndex) {
-                                                net.minecraft.nbt.CompoundTag currentTag = tongs.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-                                                net.minecraft.nbt.CompoundTag crucibleData = currentTag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
+                                                net.minecraft.world.item.ItemStack currentTongs = pPlayer.getItemInHand(pPlayer.getUsedItemHand());
+                                                net.minecraft.nbt.CompoundTag latestTag = currentTongs.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                                                
                                                 return switch (pIndex) {
-                                                    case 0 -> crucibleData.getInt("progress").orElse(0);
-                                                    case 1 -> crucibleData.getInt("maxProgress").orElse(0);
-                                                    case 2 -> (int) (currentTag.getFloat("CrucibleHeat").orElse(0.0f) * 10);
+                                                    case 0 -> latestTag.getCompound("CrucibleData").flatMap(t -> java.util.Optional.of(t.getInt("progress").orElse(0))).orElse(0);
+                                                    case 1 -> latestTag.getCompound("CrucibleData").flatMap(t -> java.util.Optional.of(t.getInt("maxProgress").orElse(0))).orElse(0);
+                                                    case 2 -> (int) (latestTag.getFloat("CrucibleHeat").orElse(0.0f) * 10);
                                                     case 3 -> {
                                                         if (dummyState.getBlock() instanceof net.yigitguven.chymistry.block.CrucibleBlock crucible) {
                                                             yield crucible.getMaxHeat() * 10;

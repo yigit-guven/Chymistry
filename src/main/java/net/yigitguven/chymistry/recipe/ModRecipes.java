@@ -35,4 +35,15 @@ public class ModRecipes {
                     return "burning";
                 }
             });
+
+    public static final Supplier<RecipeSerializer<CrucibleRecipe>> CRUCIBLE_SERIALIZER =
+            SERIALIZERS.register("crucible", () -> new RecipeSerializer<>(CrucibleRecipe.CODEC, CrucibleRecipe.STREAM_CODEC));
+
+    public static final Supplier<RecipeType<CrucibleRecipe>> CRUCIBLE_TYPE =
+            TYPES.register("crucible", () -> new RecipeType<CrucibleRecipe>() {
+                @Override
+                public String toString() {
+                    return "crucible";
+                }
+            });
 }

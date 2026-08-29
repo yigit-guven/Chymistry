@@ -115,7 +115,9 @@ public class IronTongsItem extends Item {
                     BlockEntity be = level.getBlockEntity(placePos);
                     if (be instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity crucibleBE && tag.contains("CrucibleHeat")) {
                         if (tag.contains("CrucibleData")) {
-                            BlockEntity loadedBe = BlockEntity.loadStatic(placePos, stateToPlace, tag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag()), level.registryAccess());
+                            net.minecraft.nbt.CompoundTag crucibleData = tag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag());
+                            crucibleData.putString("id", "chymistry:crucible");
+                            BlockEntity loadedBe = BlockEntity.loadStatic(placePos, stateToPlace, crucibleData, level.registryAccess());
                             if (loadedBe instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity loadedCrucible) {
                                 crucibleBE.inventory.clearContent();
                                 for (int i = 0; i < loadedCrucible.inventory.getContainerSize(); i++) {
@@ -195,7 +197,7 @@ public class IronTongsItem extends Item {
                 targetPos = legPos.below();
             }
             BlockPos dummyPos = targetPos.above();
-
+            crucibleData.putString("id", "chymistry:crucible");
             BlockEntity dummyBe = BlockEntity.loadStatic(dummyPos, dummyState, crucibleData, level.registryAccess());
             net.yigitguven.chymistry.block.CrucibleBlockEntity dummyCrucible;
             if (dummyBe instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity) {
@@ -214,7 +216,8 @@ public class IronTongsItem extends Item {
 
             net.yigitguven.chymistry.block.CrucibleBlockEntity.tick(level, dummyPos, dummyState, dummyCrucible);
 
-            CompoundTag newData = dummyCrucible.saveCustomOnly(level.registryAccess());
+            net.minecraft.nbt.CompoundTag newData = dummyCrucible.saveCustomOnly(level.registryAccess());
+            
             if (oldHeat != dummyCrucible.currentHeat || !newData.equals(crucibleData)) {
                 tag.putFloat("CrucibleHeat", dummyCrucible.currentHeat);
                 tag.put("CrucibleData", newData);

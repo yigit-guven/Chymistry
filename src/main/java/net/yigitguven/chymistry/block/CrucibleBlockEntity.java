@@ -12,6 +12,9 @@ public class CrucibleBlockEntity extends BlockEntity {
     public int progress = 0;
     public int maxProgress = 0;
 
+    private final net.minecraft.world.item.crafting.RecipeManager.CachedCheck<net.yigitguven.chymistry.recipe.CrucibleRecipeInput, net.yigitguven.chymistry.recipe.CrucibleRecipe> quickCheck = 
+            net.minecraft.world.item.crafting.RecipeManager.createCheck(net.yigitguven.chymistry.recipe.ModRecipes.CRUCIBLE_TYPE.get());
+
     public final net.minecraft.world.SimpleContainer inventory = new net.minecraft.world.SimpleContainer(6) {
         @Override
         public void setChanged() {
@@ -156,6 +159,70 @@ public class CrucibleBlockEntity extends BlockEntity {
             blockEntity.setChanged();
             if (blockEntity.getLevel() != null && !level.isClientSide()) {
                 level.sendBlockUpdated(pos, state, state, net.minecraft.world.level.block.Block.UPDATE_ALL);
+            }
+        }
+
+        if (!level.isClientSide()) {
+            java.util.List<net.minecraft.world.item.ItemStack> inputStacks = new java.util.ArrayList<>();
+            for (int i = 0; i < 5; i++) {
+                inputStacks.add(blockEntity.inventory.getItem(i));
+            }
+            net.yigitguven.chymistry.recipe.CrucibleRecipeInput recipeInput = new net.yigitguven.chymistry.recipe.CrucibleRecipeInput(inputStacks);
+            
+            java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>> match = blockEntity.quickCheck.getRecipeFor(recipeInput, (net.minecraft.server.level.ServerLevel) level);
+
+            if (match.isPresent()) {
+                net.yigitguven.chymistry.recipe.CrucibleRecipe recipe = match.get().value();
+                if (blockEntity.currentHeat >= recipe.minHeat() && blockEntity.currentHeat <= recipe.maxHeat()) {
+                    blockEntity.maxProgress = recipe.processingTime();
+                    blockEntity.progress++;
+                    if (blockEntity.progress >= blockEntity.maxProgress) {
+                        // Consume inputs
+                        for (net.yigitguven.chymistry.recipe.SizedIngredient ingredient : recipe.inputs()) {
+                            for (int i = 0; i < 4; i++) { // Only consume from first 4 slots for materials
+                                net.minecraft.world.item.ItemStack stack = blockEntity.inventory.getItem(i);
+                                if (ingredient.test(stack)) {
+                                    stack.shrink(ingredient.count());
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Consume container
+                        if (recipe.container().isPresent()) {
+                            net.minecraft.world.item.ItemStack containerStack = blockEntity.inventory.getItem(4);
+                            if (recipe.container().get().test(containerStack)) {
+                                containerStack.shrink(recipe.container().get().count());
+                            }
+                        }
+
+                        // Produce output
+                        net.minecraft.world.item.ItemStack outputStack = recipe.assemble(recipeInput);
+                        net.minecraft.world.item.ItemStack existingOutput = blockEntity.inventory.getItem(5);
+                        if (existingOutput.isEmpty()) {
+                            blockEntity.inventory.setItem(5, outputStack.copy());
+                        } else if (net.minecraft.world.item.ItemStack.isSameItemSameComponents(existingOutput, outputStack)) {
+                            existingOutput.grow(outputStack.getCount());
+                        }
+
+                        blockEntity.currentHeat -= recipe.heatCost();
+                        if (blockEntity.currentHeat < minHeat) blockEntity.currentHeat = minHeat;
+
+                        blockEntity.progress = 0;
+                    }
+                    blockEntity.setChanged();
+                } else {
+                    if (blockEntity.progress > 0) {
+                        blockEntity.progress = Math.max(0, blockEntity.progress - 2); // Cool down progress
+                        blockEntity.setChanged();
+                    }
+                }
+            } else {
+                if (blockEntity.progress > 0) {
+                    blockEntity.progress = 0;
+                    blockEntity.maxProgress = 0;
+                    blockEntity.setChanged();
+                }
             }
         }
     }

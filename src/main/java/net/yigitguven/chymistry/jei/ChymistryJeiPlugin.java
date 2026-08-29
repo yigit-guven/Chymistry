@@ -34,6 +34,10 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<ProductionComposterJeiRecipe> PRODUCTION_COMPOSTING =
             mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "production_composting", ProductionComposterJeiRecipe.class);
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>> CRUCIBLE =
+            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "crucible", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -45,6 +49,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new MortarRecipeCategory(guiHelper));
         registration.addRecipeCategories(new BurningRecipeCategory(guiHelper));
         registration.addRecipeCategories(new ProductionComposterRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new CrucibleRecipeCategory(guiHelper));
     }
 
     @Override
@@ -66,6 +71,12 @@ public class ChymistryJeiPlugin implements IModPlugin {
             registration.addRecipes(PRODUCTION_COMPOSTING, java.util.List.of(
                 new ProductionComposterJeiRecipe(new ItemStack(net.yigitguven.chymistry.item.ModItems.ASH.get()), new ItemStack(net.yigitguven.chymistry.item.ModItems.NITER_DUST.get()))
             ));
+
+            java.util.List<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>> crucibleRecipes = manager.getRecipes().stream()
+                .filter(holder -> holder.value() instanceof net.yigitguven.chymistry.recipe.CrucibleRecipe)
+                .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>)(Object)holder)
+                .toList();
+            registration.addRecipes(CRUCIBLE, crucibleRecipes);
         }
     }
 
@@ -76,15 +87,20 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FIRE_CHARGE));
         registration.addCraftingStation(PRODUCTION_COMPOSTING, new ItemStack(net.minecraft.world.level.block.Blocks.COMPOSTER));
         registration.addCraftingStation(PRODUCTION_COMPOSTING, new ItemStack(ModBlocks.NITER_SOIL_COMPOSTER.get()));
+        registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.BRICK_CRUCIBLE.get()));
+        registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.DEEPSLATE_CRUCIBLE.get()));
+        registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.NETHERITE_CRUCIBLE.get()));
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         registration.addRecipeTransferHandler(MortarMenu.class, ModMenus.MORTAR_MENU.get(), MORTAR, 0, 3, 4, 36);
+        registration.addRecipeTransferHandler(net.yigitguven.chymistry.menu.CrucibleMenu.class, ModMenus.CRUCIBLE_MENU.get(), CRUCIBLE, 0, 5, 6, 36);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(MortarScreen.class, 43, 16, 50, 52, MORTAR);
+        registration.addRecipeClickArea(net.yigitguven.chymistry.screen.CrucibleScreen.class, 122, 53, 14, 14, CRUCIBLE);
     }
 }

@@ -1,0 +1,25 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "chymistry:quicklime",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:ash",
+      "count": 1
+    },
+    {
+      "ingredient": "#minecraft:sand",
+      "count": 1
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "minecraft:glass",
+    "count": 1
+  }
+}
