@@ -13,5 +13,6 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.MORTAR_MENU.get(), MortarScreen::new);
+        event.register(ModMenus.CRUCIBLE_MENU.get(), net.yigitguven.chymistry.screen.CrucibleScreen::new);
     }
 }

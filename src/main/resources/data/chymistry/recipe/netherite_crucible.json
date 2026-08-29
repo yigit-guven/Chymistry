@@ -7,12 +7,8 @@
     "DND"
   ],
   "key": {
-    "D": {
-      "item": "minecraft:cobbled_deepslate"
-    },
-    "N": {
-      "item": "minecraft:netherite_ingot"
-    }
+    "D": "minecraft:cobbled_deepslate",
+    "N": "minecraft:netherite_ingot"
   },
   "result": {
     "id": "chymistry:netherite_crucible",

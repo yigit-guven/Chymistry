@@ -8,8 +8,10 @@
     "block.chymistry.brick_crucible":  "Brick Crucible",
     "block.chymistry.deepslate_crucible":  "Deepslate Crucible",
     "block.chymistry.netherite_crucible":  "Netherite Crucible",
-    "tooltip.chymistry.crucible.heat":  "Heat limits: %1$s to %2$s",
+    "tooltip.chymistry.crucible.max_heat": "Max Heat: %s",
+    "tooltip.chymistry.crucible.min_heat": "Min Heat: %s",
     "creativetab.chymistry":  "Chymistry",
+    "container.chymistry.crucible": "Crucible",
     "item.chymistry.ash":  "Ash",
     "item.chymistry.niter_dust":  "Niter Dust",
     "item.chymistry.animal_fat":  "Animal Fat",
@@ -60,3 +62,5 @@
     "item.chymistry.plastic_pellets":  "Plastic Pellets",
     "item.chymistry.storm_powder":  "Storm Powder"
 }
+
+

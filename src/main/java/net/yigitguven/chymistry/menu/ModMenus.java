@@ -14,4 +14,7 @@ public class ModMenus {
 
     public static final Supplier<MenuType<MortarMenu>> MORTAR_MENU =
             MENUS.register("mortar", () -> IMenuTypeExtension.create(MortarMenu::new));
+
+    public static final Supplier<MenuType<CrucibleMenu>> CRUCIBLE_MENU =
+            MENUS.register("crucible", () -> IMenuTypeExtension.create(CrucibleMenu::new));
 }

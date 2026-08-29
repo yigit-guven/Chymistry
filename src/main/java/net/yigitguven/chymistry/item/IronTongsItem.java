@@ -61,7 +61,11 @@ public class IronTongsItem extends Item {
             
             try {
                 if (ClientTooltipHandler.hasThermometer()) {
-                    pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.format("%.1f", heat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                    if (heat >= 0) {
+                        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.format("%.1f", heat)).withStyle(net.minecraft.ChatFormatting.RED)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                    } else {
+                        pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.iron_tongs.heat", net.minecraft.network.chat.Component.literal(String.format("%.1f", heat)).withStyle(net.minecraft.ChatFormatting.AQUA)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                    }
                 }
             } catch (Throwable e) {
                 // Ignore
@@ -73,6 +77,8 @@ public class IronTongsItem extends Item {
         super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
     }
 
+
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
@@ -81,6 +87,11 @@ public class IronTongsItem extends Item {
         ItemStack stack = context.getItemInHand();
 
         if (player == null) return InteractionResult.PASS;
+
+        BlockState clickedState = level.getBlockState(pos);
+        if (clickedState.getBlock() instanceof CrucibleBlock && !player.isShiftKeyDown()) {
+            return InteractionResult.PASS;
+        }
 
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         CompoundTag tag = customData.copyTag();
@@ -103,6 +114,17 @@ public class IronTongsItem extends Item {
                 if (level.setBlock(placePos, stateToPlace, 3)) {
                     BlockEntity be = level.getBlockEntity(placePos);
                     if (be instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity crucibleBE && tag.contains("CrucibleHeat")) {
+                        if (tag.contains("CrucibleData")) {
+                            BlockEntity loadedBe = BlockEntity.loadStatic(placePos, stateToPlace, tag.getCompound("CrucibleData").orElse(new net.minecraft.nbt.CompoundTag()), level.registryAccess());
+                            if (loadedBe instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity loadedCrucible) {
+                                crucibleBE.inventory.clearContent();
+                                for (int i = 0; i < loadedCrucible.inventory.getContainerSize(); i++) {
+                                    crucibleBE.inventory.setItem(i, loadedCrucible.inventory.getItem(i));
+                                }
+                                crucibleBE.progress = loadedCrucible.progress;
+                                crucibleBE.maxProgress = loadedCrucible.maxProgress;
+                            }
+                        }
                         crucibleBE.currentHeat = tag.getFloat("CrucibleHeat").orElse(0.0f);
                         crucibleBE.setChanged();
                     }
@@ -110,6 +132,7 @@ public class IronTongsItem extends Item {
 
                     tag.remove("CrucibleType");
                     tag.remove("CrucibleHeat");
+                    tag.remove("CrucibleData");
                     
                     if (tag.isEmpty()) {
                         stack.remove(DataComponents.CUSTOM_DATA);
@@ -129,6 +152,7 @@ public class IronTongsItem extends Item {
                 if (be instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity crucibleBE) {
                     tag.putString("CrucibleType", BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString());
                     tag.putFloat("CrucibleHeat", crucibleBE.currentHeat);
+                    tag.put("CrucibleData", crucibleBE.saveCustomOnly(level.registryAccess()));
 
                     stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
                     stack.set(DataComponents.CUSTOM_MODEL_DATA, new net.minecraft.world.item.component.CustomModelData(
@@ -144,5 +168,51 @@ public class IronTongsItem extends Item {
         }
 
         return super.useOn(context);
+    }
+
+    public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slotId, boolean isSelected) {
+        if (!(entity instanceof Player player)) return;
+
+
+        CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        CompoundTag tag = customData.copyTag();
+
+        if (tag.contains("CrucibleType") && tag.contains("CrucibleHeat")) {
+            CompoundTag crucibleData = tag.getCompound("CrucibleData").orElse(new CompoundTag());
+            Identifier blockId = Identifier.parse(tag.getString("CrucibleType").orElse(""));
+            Block block = BuiltInRegistries.BLOCK.get(blockId).get().value();
+            BlockState dummyState = block.defaultBlockState();
+            
+            // To ensure CrucibleBlockEntity.tick checks the block AT targetPos for heat,
+            // we pass targetPos.above() as the block entity's position, because tick() checks pos.below()
+            BlockPos legPos = player.blockPosition();
+            BlockPos targetPos = legPos.relative(player.getDirection());
+            BlockPos dummyPos = targetPos.above();
+
+            BlockEntity dummyBe = BlockEntity.loadStatic(dummyPos, dummyState, crucibleData, level.registryAccess());
+            net.yigitguven.chymistry.block.CrucibleBlockEntity dummyCrucible;
+            if (dummyBe instanceof net.yigitguven.chymistry.block.CrucibleBlockEntity) {
+                dummyCrucible = (net.yigitguven.chymistry.block.CrucibleBlockEntity) dummyBe;
+            } else {
+                dummyCrucible = new net.yigitguven.chymistry.block.CrucibleBlockEntity(dummyPos, dummyState);
+            }
+            dummyCrucible.currentHeat = tag.getFloat("CrucibleHeat").orElse(0.0f);
+
+            float oldHeat = dummyCrucible.currentHeat;
+
+            // Handle waterlogged state overriding if player is in water
+            if (player.isInWater()) {
+                dummyState = dummyState.setValue(CrucibleBlock.WATERLOGGED, true);
+            }
+
+            net.yigitguven.chymistry.block.CrucibleBlockEntity.tick(level, dummyPos, dummyState, dummyCrucible);
+
+            CompoundTag newData = dummyCrucible.saveCustomOnly(level.registryAccess());
+            if (oldHeat != dummyCrucible.currentHeat || !newData.equals(crucibleData)) {
+                tag.putFloat("CrucibleHeat", dummyCrucible.currentHeat);
+                tag.put("CrucibleData", newData);
+                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+            }
+        }
     }
 }

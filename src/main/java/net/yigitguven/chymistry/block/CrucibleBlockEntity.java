@@ -9,6 +9,53 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 public class CrucibleBlockEntity extends BlockEntity {
     public float currentHeat = 0.0f;
+    public int progress = 0;
+    public int maxProgress = 0;
+
+    public final net.minecraft.world.SimpleContainer inventory = new net.minecraft.world.SimpleContainer(6) {
+        @Override
+        public void setChanged() {
+            super.setChanged();
+            CrucibleBlockEntity.this.setChanged();
+        }
+    };
+
+    public final net.minecraft.world.inventory.ContainerData data = new net.minecraft.world.inventory.ContainerData() {
+        @Override
+        public int get(int pIndex) {
+            return switch (pIndex) {
+                case 0 -> CrucibleBlockEntity.this.progress;
+                case 1 -> CrucibleBlockEntity.this.maxProgress;
+                case 2 -> (int) (CrucibleBlockEntity.this.currentHeat * 10);
+                case 3 -> {
+                    if (CrucibleBlockEntity.this.getBlockState().getBlock() instanceof CrucibleBlock crucible) {
+                        yield crucible.getMaxHeat() * 10;
+                    }
+                    yield 1000;
+                }
+                case 4 -> {
+                    if (CrucibleBlockEntity.this.getBlockState().getBlock() instanceof CrucibleBlock crucible) {
+                        yield crucible.getMinHeat() * 10;
+                    }
+                    yield -1000;
+                }
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int pIndex, int pValue) {
+            switch (pIndex) {
+                case 0 -> CrucibleBlockEntity.this.progress = pValue;
+                case 1 -> CrucibleBlockEntity.this.maxProgress = pValue;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
+    };
 
     public CrucibleBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CRUCIBLE_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -18,12 +65,18 @@ public class CrucibleBlockEntity extends BlockEntity {
     protected void saveAdditional(ValueOutput pOutput) {
         super.saveAdditional(pOutput);
         pOutput.putFloat("heat", this.currentHeat);
+        pOutput.putInt("progress", this.progress);
+        pOutput.putInt("maxProgress", this.maxProgress);
+        net.minecraft.world.ContainerHelper.saveAllItems(pOutput, this.inventory.getItems());
     }
 
     @Override
     protected void loadAdditional(ValueInput pInput) {
         super.loadAdditional(pInput);
         this.currentHeat = pInput.getFloatOr("heat", 0.0f);
+        this.progress = pInput.getIntOr("progress", 0);
+        this.maxProgress = pInput.getIntOr("maxProgress", 0);
+        net.minecraft.world.ContainerHelper.loadAllItems(pInput, this.inventory.getItems());
     }
 
     @Override
@@ -37,7 +90,6 @@ public class CrucibleBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CrucibleBlockEntity blockEntity) {
-        if (level.isClientSide()) return;
 
         BlockState below = level.getBlockState(pos.below());
         float heatChange = 0.0f;
@@ -102,7 +154,9 @@ public class CrucibleBlockEntity extends BlockEntity {
 
         if (oldHeat != blockEntity.currentHeat) {
             blockEntity.setChanged();
-            level.sendBlockUpdated(pos, state, state, net.minecraft.world.level.block.Block.UPDATE_ALL);
+            if (blockEntity.getLevel() != null && !level.isClientSide()) {
+                level.sendBlockUpdated(pos, state, state, net.minecraft.world.level.block.Block.UPDATE_ALL);
+            }
         }
     }
 }

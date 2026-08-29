@@ -7,9 +7,7 @@
     "DDD"
   ],
   "key": {
-    "D": {
-      "item": "minecraft:cobbled_deepslate"
-    }
+    "D": "minecraft:cobbled_deepslate"
   },
   "result": {
     "id": "chymistry:deepslate_crucible",

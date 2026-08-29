@@ -110,4 +110,25 @@ public class CrucibleBlock extends Block implements SimpleWaterloggedBlock, Enti
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CrucibleBlockEntity crucible) {
+                player.openMenu(new net.minecraft.world.MenuProvider() {
+                    @Override
+                    public net.minecraft.network.chat.Component getDisplayName() {
+                        return net.minecraft.network.chat.Component.translatable("container.chymistry.crucible");
+                    }
+
+                    @Override
+                    public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int pContainerId, net.minecraft.world.entity.player.Inventory pInventory, net.minecraft.world.entity.player.Player pPlayer) {
+                        return new net.yigitguven.chymistry.menu.CrucibleMenu(pContainerId, pInventory, crucible.inventory, crucible.data, net.minecraft.world.inventory.ContainerLevelAccess.create(level, pos));
+                    }
+                }, pos);
+            }
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
+    }
 }
