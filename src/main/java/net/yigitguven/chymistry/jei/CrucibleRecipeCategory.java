@@ -2,6 +2,7 @@ package net.yigitguven.chymistry.jei;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -19,12 +20,33 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
 
     private final IDrawable background;
     private final IDrawable icon;
-    private final IDrawable arrow;
+    private final IDrawable emptyArrow1;
+    private final IDrawable emptyArrow2;
+    private final IDrawable emptyArrow3;
+    private final IDrawable emptyArrow4;
 
     public CrucibleRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createBlankDrawable(160, 80);
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(net.yigitguven.chymistry.item.ModItems.BRICK_CRUCIBLE.get()));
-        this.arrow = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/grey_arrow.png"), 0, 0, 45, 39).setTextureSize(45, 39).build();
+        this.background = guiHelper.drawableBuilder(
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucible_gui.png"),
+            0, 0, 176, 84
+        ).setTextureSize(176, 166).build();
+        this.emptyArrow1 = guiHelper.drawableBuilder(
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucibleemptyarrow1.png"),
+            0, 0, 109, 14
+        ).setTextureSize(109, 14).build();
+        this.emptyArrow2 = guiHelper.drawableBuilder(
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucibleemptyarrow2.png"),
+            0, 0, 109, 14
+        ).setTextureSize(109, 14).build();
+        this.emptyArrow3 = guiHelper.drawableBuilder(
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucibleemptyarrow3.png"),
+            0, 0, 109, 14
+        ).setTextureSize(109, 14).build();
+        this.emptyArrow4 = guiHelper.drawableBuilder(
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/cruciblearrowempty.png"),
+            0, 0, 109, 14
+        ).setTextureSize(109, 14).build();
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.BRICK_CRUCIBLE.get()));
     }
 
     @Override
@@ -38,12 +60,12 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
     }
 
     public int getWidth() {
-        return 160;
+        return 176;
     }
 
     @Override
     public int getHeight() {
-        return 80;
+        return 84;
     }
 
     public IDrawable getBackground() {
@@ -57,7 +79,16 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
 
     @Override
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
-        arrow.draw(guiGraphics, 70, 20);
+        int inputs = recipeHolder.value().inputs().size();
+        if (inputs == 1) {
+            emptyArrow1.draw(guiGraphics, 26, 37);
+        } else if (inputs == 2) {
+            emptyArrow2.draw(guiGraphics, 26, 37);
+        } else if (inputs == 3) {
+            emptyArrow3.draw(guiGraphics, 26, 37);
+        } else {
+            emptyArrow4.draw(guiGraphics, 26, 37);
+        }
     }
 
     @Override
@@ -65,23 +96,23 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         CrucibleRecipe recipe = recipeHolder.value();
         
         int[][] slotPositions = {
-                {45, 26}, {65, 26}, {55, 43}, {75, 43}
+                {20, 19}, {56, 19}, {20, 53}, {56, 53}
         };
 
         for (int i = 0; i < recipe.inputs().size() && i < 4; i++) {
-            builder.addInputSlot(slotPositions[i][0], slotPositions[i][1])
+            builder.addSlot(RecipeIngredientRole.INPUT, slotPositions[i][0], slotPositions[i][1])
               .setStandardSlotBackground()
-              .add(recipe.inputs().get(i).ingredient());
+              .addIngredients(recipe.inputs().get(i).ingredient());
         }
 
         if (recipe.container().isPresent()) {
-            builder.addInputSlot(87, 43)
+            builder.addSlot(RecipeIngredientRole.CRAFTING_STATION, 97, 53)
               .setStandardSlotBackground()
-              .add(recipe.container().get().ingredient());
+              .addIngredients(recipe.container().get().ingredient());
         }
 
-        builder.addOutputSlot(129, 26)
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 144, 36)
           .setOutputSlotBackground()
-          .add(recipe.output().create());
+          .addItemStack(recipe.output().create());
     }
 }
