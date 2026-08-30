@@ -136,6 +136,26 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
     }
 
     @Override
+    public void getTooltip(mezz.jei.api.gui.builder.ITooltipBuilder tooltip, net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        int heatIndicatorX = 98;
+        int heatIndicatorY = 37;
+        int HEAT_WIDTH = 14;
+        int HEAT_HEIGHT = 14;
+
+        if (mouseX >= heatIndicatorX && mouseX < heatIndicatorX + HEAT_WIDTH &&
+                mouseY >= heatIndicatorY && mouseY < heatIndicatorY + HEAT_HEIGHT) {
+
+            int minHeat = recipeHolder.value().minHeat();
+            int maxHeat = recipeHolder.value().maxHeat();
+
+            tooltip.add(Component.translatable("tooltip.chymistry.crucible.min_heat", String.valueOf(minHeat))
+                    .withStyle(net.minecraft.ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("tooltip.chymistry.crucible.max_heat", String.valueOf(maxHeat))
+                    .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        }
+    }
+
+    @Override
     public void setRecipe(IRecipeLayoutBuilder builder, net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, IFocusGroup focuses) {
         CrucibleRecipe recipe = recipeHolder.value();
         
