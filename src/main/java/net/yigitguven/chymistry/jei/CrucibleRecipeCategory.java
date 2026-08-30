@@ -77,6 +77,11 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         return this.icon;
     }
 
+    private static final net.minecraft.resources.Identifier FIRE_EMPTY = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/empty_fire.png");
+    private static final net.minecraft.resources.Identifier FIRE_FULL = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/full_fire.png");
+    private static final net.minecraft.resources.Identifier SNOW_EMPTY = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/empty_snow.png");
+    private static final net.minecraft.resources.Identifier SNOW_FULL = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/full_snow.png");
+
     @Override
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         int inputs = recipeHolder.value().inputs().size();
@@ -88,6 +93,45 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
             emptyArrow3.draw(guiGraphics, 26, 37);
         } else {
             emptyArrow4.draw(guiGraphics, 26, 37);
+        }
+
+        int minHeat = recipeHolder.value().minHeat();
+        int maxHeat = recipeHolder.value().maxHeat();
+
+        long time = System.currentTimeMillis();
+        double cycle = (time % 4000L) / 4000.0;
+        double progress = (Math.sin(cycle * Math.PI * 2) + 1.0) / 2.0;
+        float currentHeat = (float) (minHeat + (maxHeat - minHeat) * progress);
+
+        int heatIndicatorX = 98;
+        int heatIndicatorY = 37;
+        int HEAT_WIDTH = 14;
+        int HEAT_HEIGHT = 14;
+
+        if (maxHeat >= 0) {
+            guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, FIRE_EMPTY, heatIndicatorX, heatIndicatorY, 0f, 0f, HEAT_WIDTH, HEAT_HEIGHT, HEAT_WIDTH, HEAT_HEIGHT);
+            if (currentHeat > 0) {
+                float fillRatio = Math.min(1.0f, currentHeat / 999.0f);
+                int steps = (int) Math.ceil((HEAT_HEIGHT - 1) * fillRatio);
+                if (steps > 0) {
+                    int fillHeight = steps + 1;
+                    guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, FIRE_FULL, heatIndicatorX,
+                            heatIndicatorY + HEAT_HEIGHT - fillHeight,
+                            0f, (float) (HEAT_HEIGHT - fillHeight),
+                            HEAT_WIDTH, fillHeight, HEAT_WIDTH, HEAT_HEIGHT);
+                }
+            }
+        } else {
+            guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, SNOW_EMPTY, heatIndicatorX, heatIndicatorY, 0f, 0f, HEAT_WIDTH, HEAT_HEIGHT, HEAT_WIDTH, HEAT_HEIGHT);
+            float fillRatio = Math.min(1.0f, Math.abs(currentHeat) / 999.0f);
+            int steps = (int) Math.ceil((HEAT_HEIGHT - 1) * fillRatio);
+            if (steps > 0) {
+                int fillHeight = steps + 1;
+                guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, SNOW_FULL, heatIndicatorX,
+                        heatIndicatorY + HEAT_HEIGHT - fillHeight,
+                        0f, (float) (HEAT_HEIGHT - fillHeight),
+                        HEAT_WIDTH, fillHeight, HEAT_WIDTH, HEAT_HEIGHT);
+            }
         }
     }
 
