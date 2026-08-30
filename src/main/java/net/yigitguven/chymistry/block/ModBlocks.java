@@ -21,4 +21,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> NETHERITE_CRUCIBLE = BLOCKS.registerBlock("netherite_crucible", properties -> new CrucibleBlock(properties, 999, -999), () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.NETHERITE_BLOCK).noOcclusion());
 
     public static final DeferredBlock<Block> NITER_SOIL_COMPOSTER = BLOCKS.registerBlock("niter_soil_composter", NiterSoilComposterBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COMPOSTER));
+    
+    public static final DeferredBlock<Block> PLACED_BOTTLE = BLOCKS.registerBlock("placed_bottle", PlacedBottleBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.GLASS).noOcclusion().strength(0.3F).sound(net.minecraft.world.level.block.SoundType.GLASS));
+
 }

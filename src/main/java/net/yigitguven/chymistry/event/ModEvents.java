@@ -76,7 +76,29 @@ public class ModEvents {
                         }
                         event.setCanceled(true);
                         event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                        return;
                     }
+                }
+            }
+        }
+
+        if (event.getItemStack().is(net.minecraft.world.item.Items.GLASS_BOTTLE)) {
+            net.minecraft.world.phys.BlockHitResult hitResult = event.getHitVec();
+            net.minecraft.world.item.context.UseOnContext useOnContext = new net.minecraft.world.item.context.UseOnContext(event.getEntity(), event.getHand(), hitResult);
+            net.minecraft.world.item.context.BlockPlaceContext placeContext = new net.minecraft.world.item.context.BlockPlaceContext(useOnContext);
+            if (placeContext.canPlace()) {
+                net.minecraft.world.level.block.state.BlockState placementState = net.yigitguven.chymistry.block.ModBlocks.PLACED_BOTTLE.get().getStateForPlacement(placeContext);
+                if (placementState != null && placementState.canSurvive(level, placeContext.getClickedPos())) {
+                    if (!level.isClientSide()) {
+                        level.setBlock(placeContext.getClickedPos(), placementState, 11);
+                        level.playSound(null, placeContext.getClickedPos(), net.minecraft.sounds.SoundEvents.GLASS_PLACE, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+                        if (!event.getEntity().isCreative()) {
+                            event.getItemStack().shrink(1);
+                        }
+                    }
+                    event.setCanceled(true);
+                    event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                    return;
                 }
             }
         }
