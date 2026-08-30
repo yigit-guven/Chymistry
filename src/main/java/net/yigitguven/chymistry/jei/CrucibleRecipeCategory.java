@@ -23,7 +23,7 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
 
     public CrucibleRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(160, 80);
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.BRICK_CRUCIBLE.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(net.yigitguven.chymistry.item.ModItems.BRICK_CRUCIBLE.get()));
         this.arrow = guiHelper.drawableBuilder(net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/grey_arrow.png"), 0, 0, 45, 39).setTextureSize(45, 39).build();
     }
 
@@ -55,30 +55,9 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         return this.icon;
     }
 
-    private List<ItemStack> getStacks(SizedIngredient sizedIngredient) {
-        return sizedIngredient.ingredient().items()
-            .map(holder -> new ItemStack(holder, sizedIngredient.count()))
-            .toList();
-    }
-
     @Override
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
-        CrucibleRecipe recipe = recipeHolder.value();
-        net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
-
-        // Draw arrow
         arrow.draw(guiGraphics, 70, 20);
-
-        // Draw heat info
-        String heatText = recipe.minHeat() + " - " + recipe.maxHeat() + " Heat";
-        int textWidth = font.width(heatText);
-        guiGraphics.text(font, heatText, (160 - textWidth) / 2, 5, 0x404040, false);
-        
-        if (recipe.heatCost() > 0) {
-            String costText = "Cost: " + (int)recipe.heatCost() + " Heat";
-            int costWidth = font.width(costText);
-            guiGraphics.text(font, costText, (160 - costWidth) / 2, 70, 0x8b0000, false);
-        }
     }
 
     @Override
@@ -86,29 +65,23 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         CrucibleRecipe recipe = recipeHolder.value();
         
         int[][] slotPositions = {
-            {10, 15}, {46, 15},
-            {10, 43}, {46, 43}
+                {45, 26}, {65, 26}, {55, 43}, {75, 43}
         };
 
         for (int i = 0; i < recipe.inputs().size() && i < 4; i++) {
             builder.addInputSlot(slotPositions[i][0], slotPositions[i][1])
               .setStandardSlotBackground()
-              .addItemStacks(getStacks(recipe.inputs().get(i)));
+              .add(recipe.inputs().get(i).ingredient());
         }
 
         if (recipe.container().isPresent()) {
             builder.addInputSlot(87, 43)
               .setStandardSlotBackground()
-              .addItemStacks(getStacks(recipe.container().get()));
+              .add(recipe.container().get().ingredient());
         }
 
         builder.addOutputSlot(129, 26)
           .setOutputSlotBackground()
           .add(recipe.output().create());
-
-        builder.addInvisibleIngredients(RecipeIngredientRole.CRAFTING_STATION)
-          .add(new ItemStack(ModBlocks.BRICK_CRUCIBLE.get()))
-          .add(new ItemStack(ModBlocks.DEEPSLATE_CRUCIBLE.get()))
-          .add(new ItemStack(ModBlocks.NETHERITE_CRUCIBLE.get()));
     }
 }

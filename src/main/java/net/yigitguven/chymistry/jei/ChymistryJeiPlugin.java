@@ -76,6 +76,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 .filter(holder -> holder.value() instanceof net.yigitguven.chymistry.recipe.CrucibleRecipe)
                 .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>)(Object)holder)
                 .toList();
+            System.out.println("DEBUG JEI: FOUND " + crucibleRecipes.size() + " CRUCIBLE RECIPES");
             registration.addRecipes(CRUCIBLE, crucibleRecipes);
         }
     }
@@ -86,7 +87,6 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FLINT_AND_STEEL));
         registration.addCraftingStation(BURNING, new ItemStack(net.minecraft.world.item.Items.FIRE_CHARGE));
         registration.addCraftingStation(PRODUCTION_COMPOSTING, new ItemStack(net.minecraft.world.level.block.Blocks.COMPOSTER));
-        registration.addCraftingStation(PRODUCTION_COMPOSTING, new ItemStack(ModBlocks.NITER_SOIL_COMPOSTER.get()));
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.BRICK_CRUCIBLE.get()));
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.DEEPSLATE_CRUCIBLE.get()));
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.NETHERITE_CRUCIBLE.get()));
