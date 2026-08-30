@@ -28,7 +28,7 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
     public CrucibleRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(
             net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucible_gui.png"),
-            0, 0, 176, 84
+            18, 17, 149, 54
         ).setTextureSize(176, 166).build();
         this.emptyArrow1 = guiHelper.drawableBuilder(
             net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucibleemptyarrow1.png"),
@@ -60,12 +60,12 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
     }
 
     public int getWidth() {
-        return 176;
+        return 149;
     }
 
     @Override
     public int getHeight() {
-        return 84;
+        return 54;
     }
 
     public IDrawable getBackground() {
@@ -86,13 +86,13 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         int inputs = recipeHolder.value().inputs().size();
         if (inputs == 1) {
-            emptyArrow1.draw(guiGraphics, 26, 37);
+            emptyArrow1.draw(guiGraphics, 8, 20);
         } else if (inputs == 2) {
-            emptyArrow2.draw(guiGraphics, 26, 37);
+            emptyArrow2.draw(guiGraphics, 8, 20);
         } else if (inputs == 3) {
-            emptyArrow3.draw(guiGraphics, 26, 37);
+            emptyArrow3.draw(guiGraphics, 8, 20);
         } else {
-            emptyArrow4.draw(guiGraphics, 26, 37);
+            emptyArrow4.draw(guiGraphics, 8, 20);
         }
 
         int minHeat = recipeHolder.value().minHeat();
@@ -103,8 +103,8 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         double progress = (Math.sin(cycle * Math.PI * 2) + 1.0) / 2.0;
         float currentHeat = (float) (minHeat + (maxHeat - minHeat) * progress);
 
-        int heatIndicatorX = 98;
-        int heatIndicatorY = 37;
+        int heatIndicatorX = 80;
+        int heatIndicatorY = 20;
         int HEAT_WIDTH = 14;
         int HEAT_HEIGHT = 14;
 
@@ -133,12 +133,21 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
                         HEAT_WIDTH, fillHeight, HEAT_WIDTH, HEAT_HEIGHT);
             }
         }
+
+        int processingTime = recipeHolder.value().processingTime();
+        if (processingTime > 0) {
+            int seconds = processingTime / 20;
+            Component timeString = Component.translatable("gui.jei.category.smelting.time.seconds", seconds);
+            net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
+            int stringWidth = font.width(timeString);
+            guiGraphics.text(font, timeString, getWidth() - stringWidth - 2, getHeight() - font.lineHeight, 0xFF808080, false);
+        }
     }
 
     @Override
     public void getTooltip(mezz.jei.api.gui.builder.ITooltipBuilder tooltip, net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        int heatIndicatorX = 98;
-        int heatIndicatorY = 37;
+        int heatIndicatorX = 80;
+        int heatIndicatorY = 20;
         int HEAT_WIDTH = 14;
         int HEAT_HEIGHT = 14;
 
@@ -160,7 +169,7 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         CrucibleRecipe recipe = recipeHolder.value();
         
         int[][] slotPositions = {
-                {20, 19}, {56, 19}, {20, 53}, {56, 53}
+                {2, 2}, {38, 2}, {2, 36}, {38, 36}
         };
 
         for (int i = 0; i < recipe.inputs().size() && i < 4; i++) {
@@ -170,12 +179,12 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         }
 
         if (recipe.container().isPresent()) {
-            builder.addSlot(RecipeIngredientRole.CRAFTING_STATION, 97, 53)
+            builder.addSlot(RecipeIngredientRole.CRAFTING_STATION, 79, 36)
               .setStandardSlotBackground()
               .addIngredients(recipe.container().get().ingredient());
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 144, 36)
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 19)
           .setOutputSlotBackground()
           .addItemStack(recipe.output().create());
     }
