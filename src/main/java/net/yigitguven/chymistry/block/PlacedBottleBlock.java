@@ -69,8 +69,14 @@ public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock {
     protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
         if (!level.isClientSide()) {
             net.minecraft.world.item.ItemStack bottle = new net.minecraft.world.item.ItemStack(returnItem.get());
-            if (!player.getInventory().add(bottle)) {
-                player.drop(bottle, false);
+            if (player.isCreative()) {
+                if (!player.getInventory().contains(bottle)) {
+                    player.getInventory().add(bottle);
+                }
+            } else {
+                if (!player.getInventory().add(bottle)) {
+                    player.drop(bottle, false);
+                }
             }
             level.removeBlock(pos, false);
             level.playSound(null, pos, net.minecraft.sounds.SoundEvents.ITEM_PICKUP, net.minecraft.sounds.SoundSource.PLAYERS, 0.2F, (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 1.4F + 2.0F);
