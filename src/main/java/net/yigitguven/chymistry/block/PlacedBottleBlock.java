@@ -19,9 +19,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
+    private final java.util.function.Supplier<net.minecraft.world.item.Item> returnItem;
 
-    public PlacedBottleBlock(Properties properties) {
+    public PlacedBottleBlock(Properties properties, java.util.function.Supplier<net.minecraft.world.item.Item> returnItem) {
         super(properties);
+        this.returnItem = returnItem;
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
 
@@ -66,7 +68,7 @@ public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
         if (!level.isClientSide()) {
-            net.minecraft.world.item.ItemStack bottle = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE);
+            net.minecraft.world.item.ItemStack bottle = new net.minecraft.world.item.ItemStack(returnItem.get());
             if (!player.getInventory().add(bottle)) {
                 player.drop(bottle, false);
             }
