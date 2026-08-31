@@ -159,4 +159,17 @@ public class AlembicBlock extends BaseEntityBlock {
             level.removeBlockEntity(pos);
         }
     }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState pState, net.minecraft.world.level.Level pLevel, BlockPos pPos, net.minecraft.world.entity.player.Player pPlayer, net.minecraft.world.phys.BlockHitResult pHitResult) {
+        if (pLevel.isClientSide()) {
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        } else {
+            BlockEntity blockentity = pLevel.getBlockEntity(pState.getValue(HALF) == DoubleBlockHalf.LOWER ? pPos : pPos.below());
+            if (blockentity instanceof AlembicBlockEntity alembicBlockEntity) {
+                pPlayer.openMenu(alembicBlockEntity);
+            }
+            return net.minecraft.world.InteractionResult.CONSUME;
+        }
+    }
 }

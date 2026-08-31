@@ -17,4 +17,7 @@ public class ModMenus {
 
     public static final Supplier<MenuType<CrucibleMenu>> CRUCIBLE_MENU =
             MENUS.register("crucible", () -> IMenuTypeExtension.create(CrucibleMenu::new));
+
+    public static final Supplier<MenuType<net.yigitguven.chymistry.menu.AlembicMenu>> ALEMBIC_MENU =
+            MENUS.register("alembic", () -> IMenuTypeExtension.create(net.yigitguven.chymistry.menu.AlembicMenu::new));
 }
