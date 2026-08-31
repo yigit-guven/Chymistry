@@ -19,6 +19,9 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
     public int fuelTime = 0;
     public int maxFuelTime = 0;
 
+    private final net.minecraft.world.item.crafting.RecipeManager.CachedCheck<net.yigitguven.chymistry.recipe.AlembicRecipeInput, net.yigitguven.chymistry.recipe.AlembicRecipe> quickCheck = 
+            net.minecraft.world.item.crafting.RecipeManager.createCheck(net.yigitguven.chymistry.recipe.ModRecipes.ALEMBIC_TYPE.get());
+
     public final net.minecraft.world.SimpleContainer inventory = new net.minecraft.world.SimpleContainer(6) {
         @Override
         public void setChanged() {
@@ -81,7 +84,124 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        // Implement tick logic when recipe is added
+        if (level.isClientSide()) return;
+
+        boolean changed = false;
+
+        // Decrease fuel time
+        if (this.fuelTime > 0) {
+            this.fuelTime--;
+            changed = true;
+        }
+
+        // Build Recipe Input
+        java.util.List<net.minecraft.world.item.ItemStack> inputList = new java.util.ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            inputList.add(this.inventory.getItem(i));
+        }
+        net.yigitguven.chymistry.recipe.AlembicRecipeInput recipeInput = new net.yigitguven.chymistry.recipe.AlembicRecipeInput(inputList, this.inventory.getItem(4), this.inventory.getItem(5));
+
+        // Find Recipe
+        var recipeHolder = this.quickCheck.getRecipeFor(recipeInput, (net.minecraft.server.level.ServerLevel) level).orElse(null);
+
+        if (recipeHolder != null) {
+            net.yigitguven.chymistry.recipe.AlembicRecipe recipe = recipeHolder.value();
+            
+            // Check if we need fuel and have fuel item
+            if (this.fuelTime <= 0) {
+                net.minecraft.world.item.ItemStack fuelStack = this.inventory.getItem(4);
+                if (!fuelStack.isEmpty()) {
+                    int burnDuration = level.fuelValues().burnDuration(fuelStack);
+                    if (burnDuration > 0) {
+                        this.fuelTime = burnDuration;
+                        this.maxFuelTime = burnDuration;
+                        fuelStack.shrink(1);
+                        changed = true;
+                    }
+                }
+            }
+
+            // If we have fuel, check output capacity
+            if (this.fuelTime > 0) {
+                net.minecraft.world.item.ItemStack outputStack = this.inventory.getItem(5);
+                net.minecraft.world.item.ItemStack recipeOutput = recipe.output().create();
+                
+                boolean canOutputItem = outputStack.isEmpty() || (net.minecraft.world.item.ItemStack.isSameItemSameComponents(outputStack, recipeOutput) && outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize());
+                
+                if (canOutputItem) {
+                    this.progress++;
+                    this.maxProgress = recipe.processingTime();
+                    
+                    if (this.progress >= this.maxProgress) {
+                        // Consume inputs
+                        for (net.yigitguven.chymistry.recipe.SizedIngredient ingredient : recipe.inputs()) {
+                            int toConsume = ingredient.count();
+                            for (int i = 0; i < 4; i++) {
+                                net.minecraft.world.item.ItemStack stack = this.inventory.getItem(i);
+                                if (ingredient.ingredient().test(stack)) {
+                                    int consumed = Math.min(toConsume, stack.getCount());
+                                    stack.shrink(consumed);
+                                    toConsume -= consumed;
+                                    if (toConsume <= 0) break;
+                                }
+                            }
+                        }
+
+                        // Add output
+                        if (outputStack.isEmpty()) {
+                            this.inventory.setItem(5, recipeOutput.copy());
+                        } else {
+                            outputStack.grow(recipeOutput.getCount());
+                        }
+                        
+                        // Handle secondary output (liquid)
+                        recipe.secondaryOutput().ifPresent(secondary -> {
+                            BottleConnection connection = state.getValue(AlembicBlock.CONNECTION);
+                            if (connection != BottleConnection.NONE) {
+                                net.minecraft.core.Direction dir = null;
+                                switch (connection) {
+                                    case NORTH -> dir = net.minecraft.core.Direction.NORTH;
+                                    case EAST -> dir = net.minecraft.core.Direction.EAST;
+                                    case SOUTH -> dir = net.minecraft.core.Direction.SOUTH;
+                                    case WEST -> dir = net.minecraft.core.Direction.WEST;
+                                }
+                                if (dir != null) {
+                                    BlockPos bottlePos = pos.relative(dir);
+                                    BlockEntity be = level.getBlockEntity(bottlePos);
+                                    if (be instanceof PlacedBottleBlockEntity bottleBE) {
+                                        if (bottleBE.getStoredItem().isEmpty()) {
+                                            bottleBE.setStoredItem(secondary.create().copy());
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        this.progress = 0;
+                    }
+                    changed = true;
+                } else {
+                    if (this.progress > 0) {
+                        this.progress = 0;
+                        changed = true;
+                    }
+                }
+            } else {
+                if (this.progress > 0) {
+                    this.progress = 0;
+                    changed = true;
+                }
+            }
+        } else {
+            if (this.progress > 0) {
+                this.progress = 0;
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            this.setChanged();
+        }
     }
 
     @Override

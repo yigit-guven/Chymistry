@@ -56,6 +56,10 @@ public class ModItems {
             pTooltipComponents.accept(net.minecraft.network.chat.Component.literal("-15% ").append(net.minecraft.network.chat.Component.translatable(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED.value().getDescriptionId())).withStyle(net.minecraft.ChatFormatting.RED));
         }
     });
+
+    public static final DeferredItem<Item> BERRY_ESSENCE = ITEMS.registerItem("berry_essence", properties -> new Item(properties.stacksTo(1)
+            .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)));
+
     public static final DeferredItem<Item> BATTERY = ITEMS.registerSimpleItem("battery");
     public static final DeferredItem<Item> BLAST_PROOF_CEMENT = ITEMS.registerSimpleItem("blast_proof_cement");
     public static final DeferredItem<Item> BRASS_INGOT = ITEMS.registerSimpleItem("brass_ingot");

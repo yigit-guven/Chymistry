@@ -8,11 +8,11 @@ import java.util.List;
 public record AlembicRecipeInput(List<ItemStack> inputs, ItemStack fuelSlot, ItemStack outputSlot) implements RecipeInput {
     @Override
     public ItemStack getItem(int pIndex) {
-        if (pIndex < 3) {
-            return inputs.get(pIndex);
-        } else if (pIndex == 3) {
-            return fuelSlot;
+        if (pIndex < 4) {
+            return inputs.size() > pIndex ? inputs.get(pIndex) : ItemStack.EMPTY;
         } else if (pIndex == 4) {
+            return fuelSlot;
+        } else if (pIndex == 5) {
             return outputSlot;
         }
         return ItemStack.EMPTY;
@@ -20,6 +20,6 @@ public record AlembicRecipeInput(List<ItemStack> inputs, ItemStack fuelSlot, Ite
 
     @Override
     public int size() {
-        return 5;
+        return 6;
     }
 }

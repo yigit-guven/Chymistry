@@ -39,7 +39,7 @@ public record AlembicRecipe(List<SizedIngredient> inputs, ItemStackTemplate outp
     @Override
     public boolean matches(AlembicRecipeInput pInput, Level pLevel) {
         java.util.List<ItemStack> inputItems = new java.util.ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             ItemStack stack = pInput.getItem(i);
             if (!stack.isEmpty()) {
                 inputItems.add(stack.copy());

@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/potion_overlay",
+    "layer1": "minecraft:item/potion"
+  },
+  "tints": [
+    {
+      "type": "minecraft:constant",
+      "value": -3598743
+    },
+    {
+      "type": "minecraft:constant",
+      "value": -1
+    }
+  ]
+}

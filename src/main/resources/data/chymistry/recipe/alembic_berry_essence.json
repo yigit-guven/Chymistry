@@ -1,0 +1,16 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "minecraft:sweet_berries",
+      "count": 1
+    }
+  ],
+  "output": {
+    "id": "chymistry:ash"
+  },
+  "secondaryOutput": {
+    "id": "chymistry:berry_essence"
+  },
+  "processingTime": 200
+}

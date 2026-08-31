@@ -16,7 +16,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock {
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
+
+public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
     private final java.util.function.Supplier<net.minecraft.world.item.Item> returnItem;
@@ -68,19 +72,30 @@ public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
         if (!level.isClientSide()) {
-            net.minecraft.world.item.ItemStack bottle = new net.minecraft.world.item.ItemStack(returnItem.get());
+            net.minecraft.world.item.ItemStack dropItem = new net.minecraft.world.item.ItemStack(returnItem.get());
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof PlacedBottleBlockEntity pbe && !pbe.getStoredItem().isEmpty()) {
+                dropItem = pbe.getStoredItem().copy();
+            }
+
             if (player.isCreative()) {
-                if (!player.getInventory().contains(bottle)) {
-                    player.getInventory().add(bottle);
+                if (!player.getInventory().contains(dropItem)) {
+                    player.getInventory().add(dropItem);
                 }
             } else {
-                if (!player.getInventory().add(bottle)) {
-                    player.drop(bottle, false);
+                if (!player.getInventory().add(dropItem)) {
+                    player.drop(dropItem, false);
                 }
             }
             level.removeBlock(pos, false);
             level.playSound(null, pos, net.minecraft.sounds.SoundEvents.ITEM_PICKUP, net.minecraft.sounds.SoundSource.PLAYERS, 0.2F, (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 1.4F + 2.0F);
         }
         return net.minecraft.world.InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new PlacedBottleBlockEntity(pos, state);
     }
 }

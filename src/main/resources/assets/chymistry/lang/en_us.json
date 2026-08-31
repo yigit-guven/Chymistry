@@ -30,6 +30,7 @@
     "tooltip.chymistry.iron_tongs.carrying":  "Carrying: %s",
     "tooltip.chymistry.iron_tongs.heat":  "Heat: %s",
     "item.chymistry.elixir_of_vitriol":  "Elixir of Vitriol",
+    "item.chymistry.berry_essence": "Berry Essence",
     "item.chymistry.thermometer":  "Thermometer",
     "tooltip.chymistry.thermometer.desc":  "Used to measure the temperature of Crucibles and other heat sources.",
     "item.chymistry.brick_crucible":  "Brick Crucible",
