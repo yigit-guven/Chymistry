@@ -128,6 +128,57 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
                 
                 boolean canOutputItem = outputStack.isEmpty() || (net.minecraft.world.item.ItemStack.isSameItemSameComponents(outputStack, recipeOutput) && outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize());
                 
+                boolean hasAvailableBottle = false;
+                net.minecraft.core.Direction targetBottleDir = null;
+                
+                if (recipe.secondaryOutput().isPresent()) {
+                    BottleConnection connection = state.getValue(AlembicBlock.CONNECTION);
+                    if (connection != BottleConnection.NONE) {
+                        net.minecraft.core.Direction dir = switch (connection) {
+                            case NORTH -> net.minecraft.core.Direction.NORTH;
+                            case EAST -> net.minecraft.core.Direction.EAST;
+                            case SOUTH -> net.minecraft.core.Direction.SOUTH;
+                            case WEST -> net.minecraft.core.Direction.WEST;
+                            default -> null;
+                        };
+                        if (dir != null) {
+                            BlockEntity be = level.getBlockEntity(pos.relative(dir));
+                            if (be instanceof PlacedBottleBlockEntity bottleBE && bottleBE.getStoredItem().isEmpty()) {
+                                hasAvailableBottle = true;
+                                targetBottleDir = dir;
+                            }
+                        }
+                    }
+                    
+                    if (!hasAvailableBottle) {
+                        for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                            BlockEntity be = level.getBlockEntity(pos.relative(dir));
+                            if (be instanceof PlacedBottleBlockEntity bottleBE && bottleBE.getStoredItem().isEmpty()) {
+                                hasAvailableBottle = true;
+                                targetBottleDir = dir;
+                                BottleConnection newConn = switch(dir) {
+                                    case NORTH -> BottleConnection.NORTH;
+                                    case EAST -> BottleConnection.EAST;
+                                    case SOUTH -> BottleConnection.SOUTH;
+                                    case WEST -> BottleConnection.WEST;
+                                    default -> BottleConnection.NONE;
+                                };
+                                state = state.setValue(AlembicBlock.CONNECTION, newConn);
+                                level.setBlock(pos, state, 3);
+                                changed = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!hasAvailableBottle && connection != BottleConnection.NONE) {
+                            // No empty bottle found around, disconnect so UI gas bar stops
+                            state = state.setValue(AlembicBlock.CONNECTION, BottleConnection.NONE);
+                            level.setBlock(pos, state, 3);
+                            changed = true;
+                        }
+                    }
+                }
+                
                 if (canOutputItem) {
                     this.progress++;
                     this.maxProgress = recipe.processingTime();
@@ -155,27 +206,12 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
                         }
                         
                         // Handle secondary output (liquid)
-                        recipe.secondaryOutput().ifPresent(secondary -> {
-                            BottleConnection connection = state.getValue(AlembicBlock.CONNECTION);
-                            if (connection != BottleConnection.NONE) {
-                                net.minecraft.core.Direction dir = null;
-                                switch (connection) {
-                                    case NORTH -> dir = net.minecraft.core.Direction.NORTH;
-                                    case EAST -> dir = net.minecraft.core.Direction.EAST;
-                                    case SOUTH -> dir = net.minecraft.core.Direction.SOUTH;
-                                    case WEST -> dir = net.minecraft.core.Direction.WEST;
-                                }
-                                if (dir != null) {
-                                    BlockPos bottlePos = pos.relative(dir);
-                                    BlockEntity be = level.getBlockEntity(bottlePos);
-                                    if (be instanceof PlacedBottleBlockEntity bottleBE) {
-                                        if (bottleBE.getStoredItem().isEmpty()) {
-                                            bottleBE.setStoredItem(secondary.create().copy());
-                                        }
-                                    }
-                                }
+                        if (recipe.secondaryOutput().isPresent() && targetBottleDir != null) {
+                            BlockEntity be = level.getBlockEntity(pos.relative(targetBottleDir));
+                            if (be instanceof PlacedBottleBlockEntity bottleBE) {
+                                bottleBE.setStoredItem(recipe.secondaryOutput().get().create().copy());
                             }
-                        });
+                        }
 
                         this.progress = 0;
                     }
