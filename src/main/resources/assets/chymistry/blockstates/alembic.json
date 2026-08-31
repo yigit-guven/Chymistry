@@ -1,0 +1,120 @@
+{
+  "multipart": [
+    {
+      "when": { "half": "lower", "facing": "north" },
+      "apply": { "model": "chymistry:block/alembic_base" }
+    },
+    {
+      "when": { "half": "lower", "facing": "east" },
+      "apply": { "model": "chymistry:block/alembic_base", "y": 90 }
+    },
+    {
+      "when": { "half": "lower", "facing": "south" },
+      "apply": { "model": "chymistry:block/alembic_base", "y": 180 }
+    },
+    {
+      "when": { "half": "lower", "facing": "west" },
+      "apply": { "model": "chymistry:block/alembic_base", "y": 270 }
+    },
+    {
+      "when": { "half": "lower", "lit": "true", "facing": "north" },
+      "apply": { "model": "chymistry:block/alembic_fuel_burning" }
+    },
+    {
+      "when": { "half": "lower", "lit": "true", "facing": "east" },
+      "apply": { "model": "chymistry:block/alembic_fuel_burning", "y": 90 }
+    },
+    {
+      "when": { "half": "lower", "lit": "true", "facing": "south" },
+      "apply": { "model": "chymistry:block/alembic_fuel_burning", "y": 180 }
+    },
+    {
+      "when": { "half": "lower", "lit": "true", "facing": "west" },
+      "apply": { "model": "chymistry:block/alembic_fuel_burning", "y": 270 }
+    },
+    {
+      "when": { "half": "upper", "facing": "north" },
+      "apply": { "model": "chymistry:block/alembic_upper" }
+    },
+    {
+      "when": { "half": "upper", "facing": "east" },
+      "apply": { "model": "chymistry:block/alembic_upper", "y": 90 }
+    },
+    {
+      "when": { "half": "upper", "facing": "south" },
+      "apply": { "model": "chymistry:block/alembic_upper", "y": 180 }
+    },
+    {
+      "when": { "half": "upper", "facing": "west" },
+      "apply": { "model": "chymistry:block/alembic_upper", "y": 270 }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "half": "upper"
+          },
+          {
+            "OR": [
+              {
+                "connection": "north"
+              },
+              {
+                "connection": "east"
+              },
+              {
+                "connection": "south"
+              },
+              {
+                "connection": "west"
+              }
+            ]
+          }
+        ]
+      },
+      "apply": {
+        "model": "chymistry:block/alembic_top"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "connection": "west"
+      },
+      "apply": {
+        "model": "chymistry:block/alembic_tube",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "connection": "north"
+      },
+      "apply": {
+        "model": "chymistry:block/alembic_tube",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "connection": "east"
+      },
+      "apply": {
+        "model": "chymistry:block/alembic_tube",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "connection": "south"
+      },
+      "apply": {
+        "model": "chymistry:block/alembic_tube",
+        "y": 270
+      }
+    }
+  ]
+}

@@ -83,5 +83,6 @@ public class ModItems {
     public static final DeferredItem<BlockItem> BRICK_CRUCIBLE = ITEMS.registerItem("brick_crucible", properties -> new CrucibleBlockItem(ModBlocks.BRICK_CRUCIBLE.get(), properties));
     public static final DeferredItem<BlockItem> DEEPSLATE_CRUCIBLE = ITEMS.registerItem("deepslate_crucible", properties -> new CrucibleBlockItem(ModBlocks.DEEPSLATE_CRUCIBLE.get(), properties));
     public static final DeferredItem<BlockItem> NETHERITE_CRUCIBLE = ITEMS.registerItem("netherite_crucible", properties -> new CrucibleBlockItem(ModBlocks.NETHERITE_CRUCIBLE.get(), properties));
+    public static final DeferredItem<BlockItem> ALEMBIC = ITEMS.registerSimpleBlockItem("alembic", ModBlocks.ALEMBIC);
 }
 

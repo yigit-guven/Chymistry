@@ -46,4 +46,15 @@ public class ModRecipes {
                     return "crucible";
                 }
             });
+
+    public static final Supplier<RecipeSerializer<AlembicRecipe>> ALEMBIC_SERIALIZER =
+            SERIALIZERS.register("alembic", () -> new RecipeSerializer<>(AlembicRecipe.CODEC, AlembicRecipe.STREAM_CODEC));
+
+    public static final Supplier<RecipeType<AlembicRecipe>> ALEMBIC_TYPE =
+            TYPES.register("alembic", () -> new RecipeType<AlembicRecipe>() {
+                @Override
+                public String toString() {
+                    return "alembic";
+                }
+            });
 }

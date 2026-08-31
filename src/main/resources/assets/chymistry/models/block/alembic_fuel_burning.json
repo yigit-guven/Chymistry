@@ -1,0 +1,32 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "block/campfire_log_lit"
+	},
+	"elements": [
+		{
+			"from": [4, 1, 4],
+			"to": [12, 2, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 1, 7]},
+			"faces": {
+				"north": {"uv": [6, 10, 16, 11], "texture": "#1"},
+				"east": {"uv": [0, 12, 10, 13], "texture": "#1"},
+				"south": {"uv": [6, 15, 16, 16], "texture": "#1"},
+				"west": {"uv": [6, 4, 16, 5], "texture": "#1"},
+				"up": {"uv": [3, 4, 13, 14], "texture": "#1"},
+				"down": {"uv": [0, 5, 10, 15], "texture": "#1"}
+			}
+		}
+	],
+	"display": {},
+	"groups": [
+		{
+			"name": "fuelburning",
+			"origin": [7, 1, 7],
+			"scope": 0,
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

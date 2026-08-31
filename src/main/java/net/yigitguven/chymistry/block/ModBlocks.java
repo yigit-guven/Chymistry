@@ -25,4 +25,6 @@ public class ModBlocks {
     public static final DeferredBlock<Block> PLACED_BOTTLE = BLOCKS.registerBlock("placed_bottle", properties -> new PlacedBottleBlock(properties, () -> net.minecraft.world.item.Items.GLASS_BOTTLE), () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.GLASS).noOcclusion().strength(0.3F).sound(net.minecraft.world.level.block.SoundType.GLASS));
     public static final DeferredBlock<Block> PLACED_TINTED_BOTTLE = BLOCKS.registerBlock("placed_tinted_bottle", properties -> new PlacedBottleBlock(properties, net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE), () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.GLASS).noOcclusion().strength(0.3F).sound(net.minecraft.world.level.block.SoundType.GLASS));
 
+    public static final DeferredBlock<Block> ALEMBIC = BLOCKS.registerBlock("alembic", AlembicBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.IRON_BLOCK).noOcclusion().strength(1.5F).sound(net.minecraft.world.level.block.SoundType.COPPER));
+
 }
