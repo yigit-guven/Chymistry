@@ -199,6 +199,14 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
 
+        boolean isLit = state.getValue(AlembicBlock.LIT);
+        boolean shouldBeLit = this.fuelTime > 0;
+        if (isLit != shouldBeLit) {
+            BlockState newState = state.setValue(AlembicBlock.LIT, shouldBeLit);
+            level.setBlock(pos, newState, 3);
+            changed = true;
+        }
+
         if (changed) {
             this.setChanged();
         }
