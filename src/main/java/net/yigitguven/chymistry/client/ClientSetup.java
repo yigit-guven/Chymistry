@@ -14,4 +14,5 @@ public class ClientSetup {
     public static void registerGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAboveAll(Identifier.fromNamespaceAndPath(Chymistry.MODID, "thermometer_overlay"), CrucibleOverlay.INSTANCE);
     }
+
 }

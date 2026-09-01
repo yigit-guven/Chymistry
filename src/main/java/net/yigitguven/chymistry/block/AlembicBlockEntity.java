@@ -63,6 +63,8 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
         super(ModBlockEntities.ALEMBIC.get(), pPos, pBlockState);
     }
 
+    public boolean isProducingGas = false;
+
     @Override
     protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput pOutput) {
         super.saveAdditional(pOutput);
@@ -70,6 +72,7 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
         pOutput.putInt("maxProgress", this.maxProgress);
         pOutput.putInt("fuelTime", this.fuelTime);
         pOutput.putInt("maxFuelTime", this.maxFuelTime);
+        pOutput.putBoolean("isProducingGas", this.isProducingGas);
         net.minecraft.world.ContainerHelper.saveAllItems(pOutput, this.inventory.getItems());
     }
 
@@ -80,7 +83,18 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
         this.maxProgress = pInput.getIntOr("maxProgress", 0);
         this.fuelTime = pInput.getIntOr("fuelTime", 0);
         this.maxFuelTime = pInput.getIntOr("maxFuelTime", 0);
+        this.isProducingGas = pInput.getBooleanOr("isProducingGas", false);
         net.minecraft.world.ContainerHelper.loadAllItems(pInput, this.inventory.getItems());
+    }
+
+    @Override
+    public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider pRegistries) {
+        return this.saveCustomOnly(pRegistries);
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -103,6 +117,12 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
 
         // Find Recipe
         var recipeHolder = this.quickCheck.getRecipeFor(recipeInput, (net.minecraft.server.level.ServerLevel) level).orElse(null);
+
+        boolean wasProducingGas = this.isProducingGas;
+        this.isProducingGas = false;
+        if (this.progress > 0 && recipeHolder != null && recipeHolder.value().secondaryOutput().isPresent()) {
+            this.isProducingGas = true;
+        }
 
         if (recipeHolder != null) {
             net.yigitguven.chymistry.recipe.AlembicRecipe recipe = recipeHolder.value();
@@ -240,6 +260,11 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
         if (isLit != shouldBeLit) {
             BlockState newState = state.setValue(AlembicBlock.LIT, shouldBeLit);
             level.setBlock(pos, newState, 3);
+            changed = true;
+        }
+
+        if (wasProducingGas != this.isProducingGas) {
+            level.sendBlockUpdated(pos, state, state, 3);
             changed = true;
         }
 

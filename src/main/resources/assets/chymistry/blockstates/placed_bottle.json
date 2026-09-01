@@ -1,7 +1,17 @@
 {
-  "variants": {
-    "": {
-      "model": "chymistry:block/placed_bottle"
+  "multipart": [
+    {
+      "apply": {
+        "model": "chymistry:block/placed_bottle"
+      }
+    },
+    {
+      "when": {
+        "filled": "true"
+      },
+      "apply": {
+        "model": "chymistry:block/bottle_water_fill"
+      }
     }
-  }
+  ]
 }

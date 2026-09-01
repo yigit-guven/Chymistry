@@ -55,6 +55,13 @@ public class AlembicBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected float getShadeBrightness(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
+        return 1.0F;
+    }
+
+
+
+    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             return new AlembicBlockEntity(pos, state);
@@ -94,7 +101,9 @@ public class AlembicBlock extends BaseEntityBlock {
         if (directionToNeighbour.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (directionToNeighbour == Direction.UP)) {
             if (neighbourState.is(this) && neighbourState.getValue(HALF) != half) {
                 if (half == DoubleBlockHalf.UPPER) {
-                    return state.setValue(CONNECTION, neighbourState.getValue(CONNECTION)).setValue(FACING, neighbourState.getValue(FACING));
+                    return state.setValue(CONNECTION, neighbourState.getValue(CONNECTION))
+                                .setValue(FACING, neighbourState.getValue(FACING))
+                                .setValue(LIT, neighbourState.getValue(LIT));
                 }
                 return state;
             } else {
@@ -170,6 +179,37 @@ public class AlembicBlock extends BaseEntityBlock {
                 pPlayer.openMenu(alembicBlockEntity);
             }
             return net.minecraft.world.InteractionResult.CONSUME;
+        }
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            if (state.getValue(CONNECTION) == BottleConnection.NONE) {
+                BlockEntity be = level.getBlockEntity(pos.below());
+                if (be instanceof AlembicBlockEntity alembicBE && alembicBE.isProducingGas) {
+                    // Generate campfire smoke particles
+                    if (random.nextFloat() < 0.5F) {
+                        for (int i = 0; i < random.nextInt(2) + 2; ++i) {
+                            level.addParticle(
+                                    net.minecraft.core.particles.ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                                    pos.getX() + 0.5D + random.nextDouble() / 3.0D * (random.nextBoolean() ? 1 : -1),
+                                    pos.getY() + 0.5D + random.nextDouble() + random.nextDouble(),
+                                    pos.getZ() + 0.5D + random.nextDouble() / 3.0D * (random.nextBoolean() ? 1 : -1),
+                                    0.0D,
+                                    0.07D,
+                                    0.0D
+                            );
+                        }
+                    }
+                }
+            }
+        } else if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            if (state.getValue(LIT)) {
+                if (random.nextInt(10) == 0) {
+                    level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, net.minecraft.sounds.SoundEvents.CAMPFIRE_CRACKLE, net.minecraft.sounds.SoundSource.BLOCKS, 0.5F + random.nextFloat(), random.nextFloat() * 0.7F + 0.6F, false);
+                }
+            }
         }
     }
 }

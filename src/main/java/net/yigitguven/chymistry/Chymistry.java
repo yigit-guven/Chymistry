@@ -20,17 +20,7 @@ public class Chymistry {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Chymistry(IEventBus modEventBus, ModContainer modContainer) {
-        for (java.lang.reflect.Method m : net.minecraft.world.item.ItemStack.class.getDeclaredMethods()) {
-            Class<?>[] p = m.getParameterTypes();
-            if (p.length == 5 && p[0] == net.minecraft.world.item.ItemStack.class && p[2] == net.minecraft.world.entity.Entity.class && p[3] == int.class && p[4] == boolean.class) {
-                System.out.println("STACK_METHOD: " + m);
-            }
-        }
-        for (java.lang.reflect.Method m : net.minecraft.world.item.ItemStack.class.getDeclaredMethods()) {
-            if (m.getName().toLowerCase().contains("tick") || m.getName().toLowerCase().contains("inventory")) {
-                System.out.println("METHOD: " + m);
-            }
-        }
+
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);

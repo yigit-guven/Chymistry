@@ -22,13 +22,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty FILLED = BooleanProperty.create("filled");
     protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
     private final java.util.function.Supplier<net.minecraft.world.item.Item> returnItem;
 
     public PlacedBottleBlock(Properties properties, java.util.function.Supplier<net.minecraft.world.item.Item> returnItem) {
         super(properties);
         this.returnItem = returnItem;
-        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.valueOf(false)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(FILLED, Boolean.valueOf(false)));
     }
 
     @Override
@@ -66,7 +67,7 @@ public class PlacedBottleBlock extends Block implements SimpleWaterloggedBlock, 
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, FILLED);
     }
 
     @Override

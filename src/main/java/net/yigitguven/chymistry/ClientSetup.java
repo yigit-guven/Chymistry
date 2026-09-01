@@ -16,5 +16,4 @@ public class ClientSetup {
         event.register(ModMenus.CRUCIBLE_MENU.get(), net.yigitguven.chymistry.screen.CrucibleScreen::new);
         event.register(ModMenus.ALEMBIC_MENU.get(), net.yigitguven.chymistry.screen.AlembicScreen::new);
     }
-
 }
