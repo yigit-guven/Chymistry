@@ -9,6 +9,8 @@
     "block.chymistry.brick_crucible": "Brick Crucible",
     "block.chymistry.deepslate_crucible": "Deepslate Crucible",
     "block.chymistry.netherite_crucible": "Netherite Crucible",
+    "block.chymistry.reinforced_glass": "Reinforced Glass",
+    "item.chymistry.reinforced_glass": "Reinforced Glass",
     "tooltip.chymistry.crucible.max_heat": "Max Heat: %s",
     "tooltip.chymistry.crucible.min_heat": "Min Heat: %s",
     "creativetab.chymistry": "Chymistry",

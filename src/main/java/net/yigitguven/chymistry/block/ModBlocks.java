@@ -26,5 +26,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> PLACED_TINTED_BOTTLE = BLOCKS.registerBlock("placed_tinted_bottle", properties -> new PlacedBottleBlock(properties, net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE), () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.GLASS).noOcclusion().strength(0.3F).sound(net.minecraft.world.level.block.SoundType.GLASS));
 
     public static final DeferredBlock<Block> ALEMBIC = BLOCKS.registerBlock("alembic", AlembicBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.IRON_BLOCK).noOcclusion().strength(1.5F).sound(net.minecraft.world.level.block.SoundType.COPPER).lightLevel(state -> state.hasProperty(AlembicBlock.LIT) && state.getValue(AlembicBlock.LIT) && state.hasProperty(AlembicBlock.HALF) && state.getValue(AlembicBlock.HALF) == net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER ? 13 : 0));
+    
+    public static final DeferredBlock<Block> REINFORCED_GLASS = BLOCKS.registerBlock("reinforced_glass", net.minecraft.world.level.block.TransparentBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.GLASS).strength(3.0F, 1200.0F));
 
 }

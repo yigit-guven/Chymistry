@@ -19,6 +19,7 @@ public class ModCreativeModeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(ModBlocks.MORTAR.get());
                 output.accept(ModBlocks.ALEMBIC.get());
+                output.accept(ModBlocks.REINFORCED_GLASS.get());
                 output.accept(ModItems.ASH.get());
                 output.accept(ModItems.NITER_DUST.get());
                 output.accept(ModItems.ANIMAL_FAT.get());
