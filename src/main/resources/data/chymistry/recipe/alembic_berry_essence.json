@@ -6,6 +6,10 @@
       "count": 1
     }
   ],
+  "bottle": {
+    "ingredient": "minecraft:glass_bottle",
+    "count": 1
+  },
   "output": {
     "id": "chymistry:ash"
   },

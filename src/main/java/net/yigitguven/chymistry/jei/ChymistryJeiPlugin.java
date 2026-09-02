@@ -38,6 +38,10 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>> CRUCIBLE =
             mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "crucible", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.AlembicRecipe>> ALEMBIC =
+            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "alembic", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -50,6 +54,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new BurningRecipeCategory(guiHelper));
         registration.addRecipeCategories(new ProductionComposterRecipeCategory(guiHelper));
         registration.addRecipeCategories(new CrucibleRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new AlembicRecipeCategory(guiHelper));
     }
 
     @Override
@@ -76,8 +81,13 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 .filter(holder -> holder.value() instanceof net.yigitguven.chymistry.recipe.CrucibleRecipe)
                 .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CrucibleRecipe>)(Object)holder)
                 .toList();
-            System.out.println("DEBUG JEI: FOUND " + crucibleRecipes.size() + " CRUCIBLE RECIPES");
             registration.addRecipes(CRUCIBLE, crucibleRecipes);
+
+            java.util.List<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.AlembicRecipe>> alembicRecipes = manager.getRecipes().stream()
+                .filter(holder -> holder.value() instanceof net.yigitguven.chymistry.recipe.AlembicRecipe)
+                .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.AlembicRecipe>)(Object)holder)
+                .toList();
+            registration.addRecipes(ALEMBIC, alembicRecipes);
         }
     }
 
@@ -90,17 +100,20 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.BRICK_CRUCIBLE.get()));
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.DEEPSLATE_CRUCIBLE.get()));
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.NETHERITE_CRUCIBLE.get()));
+        registration.addCraftingStation(ALEMBIC, new ItemStack(ModBlocks.ALEMBIC.get()));
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         registration.addRecipeTransferHandler(MortarMenu.class, ModMenus.MORTAR_MENU.get(), MORTAR, 0, 3, 4, 36);
         registration.addRecipeTransferHandler(net.yigitguven.chymistry.menu.CrucibleMenu.class, ModMenus.CRUCIBLE_MENU.get(), CRUCIBLE, 0, 5, 6, 36);
+        registration.addRecipeTransferHandler(net.yigitguven.chymistry.menu.AlembicMenu.class, ModMenus.ALEMBIC_MENU.get(), ALEMBIC, 0, 4, 6, 36);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(MortarScreen.class, 43, 16, 50, 52, MORTAR);
         registration.addRecipeClickArea(net.yigitguven.chymistry.screen.CrucibleScreen.class, 122, 53, 14, 14, CRUCIBLE);
+        registration.addRecipeClickArea(net.yigitguven.chymistry.screen.AlembicScreen.class, 63, 35, 68, 14, ALEMBIC);
     }
 }

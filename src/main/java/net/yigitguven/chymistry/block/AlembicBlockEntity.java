@@ -163,9 +163,12 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
                         };
                         if (dir != null) {
                             BlockEntity be = level.getBlockEntity(pos.relative(dir));
+                            BlockState bState = level.getBlockState(pos.relative(dir));
                             if (be instanceof PlacedBottleBlockEntity bottleBE && bottleBE.getStoredItem().isEmpty()) {
-                                hasAvailableBottle = true;
-                                targetBottleDir = dir;
+                                if (isValidBottle(recipe, bState)) {
+                                    hasAvailableBottle = true;
+                                    targetBottleDir = dir;
+                                }
                             }
                         }
                     }
@@ -173,25 +176,27 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
                     if (!hasAvailableBottle) {
                         for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.Plane.HORIZONTAL) {
                             BlockEntity be = level.getBlockEntity(pos.relative(dir));
+                            BlockState bState = level.getBlockState(pos.relative(dir));
                             if (be instanceof PlacedBottleBlockEntity bottleBE && bottleBE.getStoredItem().isEmpty()) {
-                                hasAvailableBottle = true;
-                                targetBottleDir = dir;
-                                BottleConnection newConn = switch(dir) {
-                                    case NORTH -> BottleConnection.NORTH;
-                                    case EAST -> BottleConnection.EAST;
-                                    case SOUTH -> BottleConnection.SOUTH;
-                                    case WEST -> BottleConnection.WEST;
-                                    default -> BottleConnection.NONE;
-                                };
-                                state = state.setValue(AlembicBlock.CONNECTION, newConn);
-                                level.setBlock(pos, state, 3);
-                                changed = true;
-                                break;
+                                if (isValidBottle(recipe, bState)) {
+                                    hasAvailableBottle = true;
+                                    targetBottleDir = dir;
+                                    BottleConnection newConn = switch(dir) {
+                                        case NORTH -> BottleConnection.NORTH;
+                                        case EAST -> BottleConnection.EAST;
+                                        case SOUTH -> BottleConnection.SOUTH;
+                                        case WEST -> BottleConnection.WEST;
+                                        default -> BottleConnection.NONE;
+                                    };
+                                    state = state.setValue(AlembicBlock.CONNECTION, newConn);
+                                    level.setBlock(pos, state, 3);
+                                    changed = true;
+                                    break;
+                                }
                             }
                         }
                         
                         if (!hasAvailableBottle && connection != BottleConnection.NONE) {
-                            // No empty bottle found around, disconnect so UI gas bar stops
                             state = state.setValue(AlembicBlock.CONNECTION, BottleConnection.NONE);
                             level.setBlock(pos, state, 3);
                             changed = true;
@@ -271,6 +276,16 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
         if (changed) {
             this.setChanged();
         }
+    }
+
+    private boolean isValidBottle(net.yigitguven.chymistry.recipe.AlembicRecipe recipe, BlockState bottleBlockState) {
+        if (recipe.bottle().isEmpty()) {
+            return true;
+        }
+        net.minecraft.world.item.ItemStack bottleItem = bottleBlockState.is(ModBlocks.PLACED_TINTED_BOTTLE.get())
+                ? new net.minecraft.world.item.ItemStack(net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE.get())
+                : new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE);
+        return recipe.bottle().get().ingredient().test(bottleItem);
     }
 
     @Override
