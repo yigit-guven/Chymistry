@@ -47,7 +47,7 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
     private List<ItemStack> fuelStacks;
 
     public AlembicRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(TEXTURE, 20, 4, 140, 72).setTextureSize(176, 166).build();
+        this.background = guiHelper.drawableBuilder(TEXTURE, 20, 2, 140, 74).setTextureSize(176, 166).build();
         this.emptyArrow = guiHelper.drawableBuilder(EMPTY_ARROW_TEX, 0, 0, 68, 14).setTextureSize(68, 14).build();
         this.emptyGasIndicator = guiHelper.drawableBuilder(EMPTY_GAS_TEX, 0, 0, 12, 29).setTextureSize(12, 29).build();
         this.emptyFire = guiHelper.drawableBuilder(EMPTY_FIRE_TEX, 0, 0, 14, 14).setTextureSize(14, 14).build();
@@ -70,7 +70,7 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
 
     @Override
     public int getHeight() {
-        return 72;
+        return 74;
     }
 
     public IDrawable getBackground() {
@@ -105,9 +105,9 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
 
     @Override
     public void draw(RecipeHolder<AlembicRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
-        this.emptyArrow.draw(guiGraphics, 43, 31);
-        this.emptyGasIndicator.draw(guiGraphics, 71, 2);
-        this.emptyFire.draw(guiGraphics, 70, 32);
+        this.emptyArrow.draw(guiGraphics, 43, 33);
+        this.emptyGasIndicator.draw(guiGraphics, 71, 4);
+        this.emptyFire.draw(guiGraphics, 70, 34);
 
         long time = System.currentTimeMillis();
         double cycle = (time % 4000L) / 4000.0;
@@ -115,7 +115,7 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
         double fireCycle = (time % 2000L) / 2000.0;
         int fireHeight = (int) (14.0 * (1.0 - fireCycle));
         if (fireHeight > 0) {
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_FIRE, 70, 32 + (14 - fireHeight), 0f, 14f - fireHeight, 14, fireHeight, 14, 14);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_FIRE, 70, 34 + (14 - fireHeight), 0f, 14f - fireHeight, 14, fireHeight, 14, 14);
         }
 
         int gapSize = GAP_END - GAP_START;
@@ -124,14 +124,14 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
 
         if (activePixels > 0) {
             if (activePixels <= GAP_START) {
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, 43, 31, 0f, 0f,
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, 43, 33, 0f, 0f,
                         activePixels, ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
             } else {
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, 43, 31, 0f, 0f, GAP_START,
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, 43, 33, 0f, 0f, GAP_START,
                         ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
 
                 int remainingPixels = activePixels - GAP_START;
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, 43 + GAP_END, 31,
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_ARROW, 43 + GAP_END, 33,
                         (float) GAP_END, 0f, remainingPixels, ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
             }
         }
@@ -139,7 +139,7 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
         if (recipeHolder.value().secondaryOutput().isPresent()) {
             int gasHeight = (int) (29.0 * cycle);
             if (gasHeight > 0) {
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_GAS, 71, 2 + (29 - gasHeight), 0f, 29f - gasHeight, 12, gasHeight, 12, 29);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, FULL_GAS, 71, 4 + (29 - gasHeight), 0f, 29f - gasHeight, 12, gasHeight, 12, 29);
             }
         }
 
@@ -154,11 +154,20 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
     }
 
     @Override
+    public void getTooltip(mezz.jei.api.gui.builder.ITooltipBuilder tooltip, RecipeHolder<AlembicRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        if (recipeHolder.value().secondaryOutput().isPresent()) {
+            if (mouseX >= 71 && mouseX < 83 && mouseY >= 4 && mouseY < 33) {
+                tooltip.add(Component.translatable("jei.chymistry.alembic.bottle_tooltip").withStyle(net.minecraft.ChatFormatting.AQUA));
+            }
+        }
+    }
+
+    @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AlembicRecipe> recipeHolder, IFocusGroup focuses) {
         AlembicRecipe recipe = recipeHolder.value();
 
         int[][] slotPositions = {
-                {5, 20}, {23, 20}, {5, 38}, {23, 38}
+                {5, 22}, {23, 22}, {5, 40}, {23, 40}
         };
 
         for (int i = 0; i < 4; i++) {
@@ -169,27 +178,27 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
             }
         }
 
-        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 68, 49)
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 68, 51)
                 .setStandardSlotBackground()
                 .addItemStacks(getFuelStacks());
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 114, 29)
-                .setStandardSlotBackground()
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 118, 34)
+                .setOutputSlotBackground()
                 .addItemStack(recipe.output().create());
 
         if (recipe.secondaryOutput().isPresent()) {
             if (recipe.bottle().isPresent()) {
-                builder.addSlot(RecipeIngredientRole.INPUT, 90, 8)
+                builder.addSlot(RecipeIngredientRole.INPUT, 90, 10)
                         .setStandardSlotBackground()
                         .addItemStacks(getStacks(recipe.bottle().get()));
             } else {
-                builder.addSlot(RecipeIngredientRole.INPUT, 90, 8)
+                builder.addSlot(RecipeIngredientRole.INPUT, 90, 10)
                         .setStandardSlotBackground()
                         .addItemStack(new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE));
             }
 
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 114, 8)
-                    .setStandardSlotBackground()
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 118, 6)
+                    .setOutputSlotBackground()
                     .addItemStack(recipe.secondaryOutput().get().create());
         }
 

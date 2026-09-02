@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "XYX",
+    "XXX",
+    "BBB"
+  ],
+  "key": {
+    "X": "minecraft:stone",
+    "Y": "minecraft:packed_ice",
+    "B": "minecraft:bricks"
+  },
+  "result": {
+    "id": "chymistry:alembic",
+    "count": 1
+  }
+}
