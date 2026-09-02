@@ -38,6 +38,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.DEEPSLATE_CRUCIBLE.get());
                 output.accept(ModBlocks.NETHERITE_CRUCIBLE.get());
                 output.accept(ModItems.TINTED_GLASS_BOTTLE.get());
+                output.accept(ModItems.REINFORCED_GLASS_BOTTLE.get());
                 output.accept(ModItems.ELIXIR_OF_VITRIOL.get());
                 output.accept(ModItems.BERRY_ESSENCE.get());
                 output.accept(ModItems.THERMOMETER.get());

@@ -82,7 +82,7 @@ public class ModEvents {
             }
         }
 
-        if (event.getItemStack().is(net.minecraft.world.item.Items.GLASS_BOTTLE) || event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE.get())) {
+        if (event.getItemStack().is(net.minecraft.world.item.Items.GLASS_BOTTLE) || event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE.get()) || event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.REINFORCED_GLASS_BOTTLE.get())) {
             net.minecraft.world.phys.BlockHitResult hitResult = event.getHitVec();
             net.minecraft.world.item.context.UseOnContext useOnContext = new net.minecraft.world.item.context.UseOnContext(event.getEntity(), event.getHand(), hitResult);
             net.minecraft.world.item.context.BlockPlaceContext placeContext = new net.minecraft.world.item.context.BlockPlaceContext(useOnContext);
@@ -92,6 +92,8 @@ public class ModEvents {
                     placementState = net.yigitguven.chymistry.block.ModBlocks.PLACED_BOTTLE.get().getStateForPlacement(placeContext);
                 } else if (event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE.get())) {
                     placementState = net.yigitguven.chymistry.block.ModBlocks.PLACED_TINTED_BOTTLE.get().getStateForPlacement(placeContext);
+                } else if (event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.REINFORCED_GLASS_BOTTLE.get())) {
+                    placementState = net.yigitguven.chymistry.block.ModBlocks.PLACED_REINFORCED_BOTTLE.get().getStateForPlacement(placeContext);
                 }
 
                 if (placementState != null && placementState.canSurvive(level, placeContext.getClickedPos())) {

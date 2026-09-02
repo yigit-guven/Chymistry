@@ -1,0 +1,7 @@
+{
+  "parent": "chymistry:block/placed_bottle",
+  "textures": {
+    "0": "block/glass",
+    "particle": "block/glass"
+  }
+}

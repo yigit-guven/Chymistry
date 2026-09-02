@@ -25,6 +25,6 @@ public class ModBlockEntities {
     public static final java.util.function.Supplier<BlockEntityType<PlacedBottleBlockEntity>> PLACED_BOTTLE_BE =
             BLOCK_ENTITIES.register("placed_bottle", () -> new BlockEntityType<>(
                     PlacedBottleBlockEntity::new,
-                    java.util.Set.of(ModBlocks.PLACED_BOTTLE.get(), ModBlocks.PLACED_TINTED_BOTTLE.get())
+                    java.util.Set.of(ModBlocks.PLACED_BOTTLE.get(), ModBlocks.PLACED_TINTED_BOTTLE.get(), ModBlocks.PLACED_REINFORCED_BOTTLE.get())
             ));
 }

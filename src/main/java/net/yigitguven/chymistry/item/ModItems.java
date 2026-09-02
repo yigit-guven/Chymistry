@@ -76,6 +76,7 @@ public class ModItems {
     public static final DeferredItem<Item> STEEL_INGOT = ITEMS.registerSimpleItem("steel_ingot");
     public static final DeferredItem<Item> STORM_POWDER = ITEMS.registerSimpleItem("storm_powder");
     public static final DeferredItem<Item> VULCANIZED_RUBBER = ITEMS.registerSimpleItem("vulcanized_rubber");
+    public static final DeferredItem<Item> REINFORCED_GLASS_BOTTLE = ITEMS.registerSimpleItem("reinforced_glass_bottle");
 
 
 
