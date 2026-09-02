@@ -284,6 +284,8 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
         }
         net.minecraft.world.item.ItemStack bottleItem = bottleBlockState.is(ModBlocks.PLACED_TINTED_BOTTLE.get())
                 ? new net.minecraft.world.item.ItemStack(net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE.get())
+                : bottleBlockState.is(ModBlocks.PLACED_REINFORCED_BOTTLE.get())
+                ? new net.minecraft.world.item.ItemStack(net.yigitguven.chymistry.item.ModItems.REINFORCED_GLASS_BOTTLE.get())
                 : new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE);
         return recipe.bottle().get().ingredient().test(bottleItem);
     }

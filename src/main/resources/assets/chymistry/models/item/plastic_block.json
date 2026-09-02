@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "chymistry:item/plastic_block"
-  }
+  "parent": "chymistry:block/plastic_block"
 }

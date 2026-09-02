@@ -85,7 +85,6 @@ public class ModItems {
     public static final DeferredItem<Item> GOLD_SOLVENT_BOTTLE = ITEMS.registerItem("gold_solvent_bottle", properties -> new Item(properties.stacksTo(1)));
     public static final DeferredItem<Item> HYDROCHLORIC_ACID_BOTTLE = ITEMS.registerItem("hydrochloric_acid_bottle", properties -> new Item(properties.stacksTo(1)));
     public static final DeferredItem<Item> NITRIC_ACID_BOTTLE = ITEMS.registerItem("nitric_acid_bottle", properties -> new Item(properties.stacksTo(1)));
-    public static final DeferredItem<Item> PLASTIC_BLOCK = ITEMS.registerSimpleItem("plastic_block");
     public static final DeferredItem<Item> SULFURIC_ACID_BOTTLE = ITEMS.registerItem("sulfuric_acid_bottle", properties -> new Item(properties.stacksTo(1)));
     public static final DeferredItem<Item> VIGOR_POTION = ITEMS.registerItem("vigor_potion", properties -> new Item(properties.stacksTo(1)));
 
@@ -100,6 +99,7 @@ public class ModItems {
     public static final DeferredItem<BlockItem> DEEPSLATE_CRUCIBLE = ITEMS.registerItem("deepslate_crucible", properties -> new CrucibleBlockItem(ModBlocks.DEEPSLATE_CRUCIBLE.get(), properties));
     public static final DeferredItem<BlockItem> NETHERITE_CRUCIBLE = ITEMS.registerItem("netherite_crucible", properties -> new CrucibleBlockItem(ModBlocks.NETHERITE_CRUCIBLE.get(), properties));
     public static final DeferredItem<BlockItem> ALEMBIC = ITEMS.registerSimpleBlockItem("alembic", ModBlocks.ALEMBIC);
+    public static final DeferredItem<BlockItem> PLASTIC_BLOCK = ITEMS.registerSimpleBlockItem("plastic_block", ModBlocks.PLASTIC_BLOCK);
     
     public static final DeferredItem<BlockItem> REINFORCED_GLASS = ITEMS.registerItem("reinforced_glass", properties -> new BlockItem(ModBlocks.REINFORCED_GLASS.get(), properties) {
         @Override

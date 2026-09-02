@@ -156,7 +156,7 @@ public class AlembicBlock extends BaseEntityBlock {
 
     private boolean hasBottle(net.minecraft.world.level.LevelReader level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
-        return state.is(ModBlocks.PLACED_BOTTLE.get()) || state.is(ModBlocks.PLACED_TINTED_BOTTLE.get());
+        return state.is(ModBlocks.PLACED_BOTTLE.get()) || state.is(ModBlocks.PLACED_TINTED_BOTTLE.get()) || state.is(ModBlocks.PLACED_REINFORCED_BOTTLE.get());
     }
 
     public void onRemove(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, BlockState newState, boolean isMoving) {

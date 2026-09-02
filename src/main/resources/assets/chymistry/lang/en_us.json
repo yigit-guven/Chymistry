@@ -35,7 +35,7 @@
     "item.chymistry.gold_solvent_bottle": "Gold Solvent Bottle",
     "item.chymistry.hydrochloric_acid_bottle": "Hydrochloric Acid Bottle",
     "item.chymistry.nitric_acid_bottle": "Nitric Acid Bottle",
-    "item.chymistry.plastic_block": "Plastic Block",
+    "block.chymistry.plastic_block": "Plastic Block",
     "item.chymistry.sulfuric_acid_bottle": "Sulfuric Acid Bottle",
     "item.chymistry.vigor_potion": "Vigor Potion",
     "item.chymistry.sea_salt": "Sea Salt",

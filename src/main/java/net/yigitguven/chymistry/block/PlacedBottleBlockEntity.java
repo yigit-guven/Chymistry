@@ -17,8 +17,8 @@ public class PlacedBottleBlockEntity extends BlockEntity {
                 if (state.hasProperty(PlacedBottleBlock.FILLED)) {
                     boolean isFilled = !this.getItem(0).isEmpty();
                     if (state.getValue(PlacedBottleBlock.FILLED) != isFilled) {
-                        BlockState newState = state.setValue(PlacedBottleBlock.FILLED, isFilled);
-                        PlacedBottleBlockEntity.this.level.setBlock(PlacedBottleBlockEntity.this.worldPosition, newState, 3);
+                        state = state.setValue(PlacedBottleBlock.FILLED, isFilled);
+                        PlacedBottleBlockEntity.this.level.setBlock(PlacedBottleBlockEntity.this.worldPosition, state, 3);
                     }
                 }
                 PlacedBottleBlockEntity.this.level.sendBlockUpdated(PlacedBottleBlockEntity.this.worldPosition, state, state, 3);
