@@ -17,6 +17,11 @@ public class AlembicScreen extends AbstractContainerScreen<AlembicMenu> {
     private static final Identifier EMPTY_FIRE = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/empty_fire.png");
     private static final Identifier FULL_FIRE = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/full_fire.png");
 
+    private static final int ARROW_WIDTH = 68;
+    private static final int ARROW_HEIGHT = 14;
+    private static final int GAP_START = 25;
+    private static final int GAP_END = 42;
+
     public AlembicScreen(AlembicMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
@@ -52,10 +57,29 @@ public class AlembicScreen extends AbstractContainerScreen<AlembicMenu> {
         }
 
         // Draw progress arrow (left to right)
-        if (this.menu.getProgress() > 0 && this.menu.getMaxProgress() > 0) {
-            int arrowWidth = (int) (68.0F * ((float) this.menu.getProgress() / this.menu.getMaxProgress()));
-            if (arrowWidth > 0) {
-                pGraphics.blit(RenderPipelines.GUI_TEXTURED, ARROW_TEXTURE, x + 63, y + 35, 0f, 0f, arrowWidth, 14, 68, 14);
+        int progress = this.menu.getProgress();
+        int maxProgress = this.menu.getMaxProgress();
+
+        if (progress > 0 && maxProgress > 0) {
+            int arrowX = 63;
+            int arrowY = 35;
+
+            int gapSize = GAP_END - GAP_START;
+            int activeWidth = ARROW_WIDTH - gapSize;
+            int activePixels = (int) (((float) progress / maxProgress) * activeWidth);
+
+            if (activePixels > 0) {
+                if (activePixels <= GAP_START) {
+                    pGraphics.blit(RenderPipelines.GUI_TEXTURED, ARROW_TEXTURE, x + arrowX, y + arrowY, 0f, 0f,
+                            activePixels, ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
+                } else {
+                    pGraphics.blit(RenderPipelines.GUI_TEXTURED, ARROW_TEXTURE, x + arrowX, y + arrowY, 0f, 0f, GAP_START,
+                            ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
+
+                    int remainingPixels = activePixels - GAP_START;
+                    pGraphics.blit(RenderPipelines.GUI_TEXTURED, ARROW_TEXTURE, x + arrowX + GAP_END, y + arrowY,
+                            (float) GAP_END, 0f, remainingPixels, ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
+                }
             }
         }
 
