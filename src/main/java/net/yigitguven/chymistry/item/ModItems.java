@@ -78,6 +78,17 @@ public class ModItems {
     public static final DeferredItem<Item> VULCANIZED_RUBBER = ITEMS.registerSimpleItem("vulcanized_rubber");
     public static final DeferredItem<Item> REINFORCED_GLASS_BOTTLE = ITEMS.registerSimpleItem("reinforced_glass_bottle");
 
+    public static final DeferredItem<Item> ALCOHOL_BOTTLE = ITEMS.registerItem("alcohol_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> CREOSOTE_OIL = ITEMS.registerItem("creosote_oil", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> DEFOLIANT_POTION = ITEMS.registerItem("defoliant_potion", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> EXPLOSIVE_LIQUID = ITEMS.registerSimpleItem("explosive_liquid");
+    public static final DeferredItem<Item> GOLD_SOLVENT_BOTTLE = ITEMS.registerItem("gold_solvent_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> HYDROCHLORIC_ACID_BOTTLE = ITEMS.registerItem("hydrochloric_acid_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> NITRIC_ACID_BOTTLE = ITEMS.registerItem("nitric_acid_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> PLASTIC_BLOCK = ITEMS.registerSimpleItem("plastic_block");
+    public static final DeferredItem<Item> SULFURIC_ACID_BOTTLE = ITEMS.registerItem("sulfuric_acid_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> VIGOR_POTION = ITEMS.registerItem("vigor_potion", properties -> new Item(properties.stacksTo(1)));
+
 
 
     public static final DeferredItem<BlockItem> MORTAR = ITEMS.registerSimpleBlockItem("mortar", ModBlocks.MORTAR);

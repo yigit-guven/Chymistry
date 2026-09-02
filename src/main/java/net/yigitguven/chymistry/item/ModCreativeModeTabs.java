@@ -41,8 +41,17 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.REINFORCED_GLASS_BOTTLE.get());
                 output.accept(ModItems.ELIXIR_OF_VITRIOL.get());
                 output.accept(ModItems.BERRY_ESSENCE.get());
-                output.accept(ModItems.THERMOMETER.get());
-                        output.accept(ModItems.BATTERY.get());
+                output.accept(ModItems.ALCOHOL_BOTTLE.get());
+                output.accept(ModItems.CREOSOTE_OIL.get());
+                output.accept(ModItems.DEFOLIANT_POTION.get());
+                output.accept(ModItems.EXPLOSIVE_LIQUID.get());
+                output.accept(ModItems.GOLD_SOLVENT_BOTTLE.get());
+                output.accept(ModItems.HYDROCHLORIC_ACID_BOTTLE.get());
+                output.accept(ModItems.NITRIC_ACID_BOTTLE.get());
+                output.accept(ModItems.PLASTIC_BLOCK.get());
+                output.accept(ModItems.SULFURIC_ACID_BOTTLE.get());
+                output.accept(ModItems.VIGOR_POTION.get());
+
                         output.accept(ModItems.BLAST_PROOF_CEMENT.get());
                         output.accept(ModItems.BRASS_INGOT.get());
                         output.accept(ModItems.DYNAMITE.get());
