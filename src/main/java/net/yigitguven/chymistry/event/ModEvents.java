@@ -1,6 +1,7 @@
 package net.yigitguven.chymistry.event;
 
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -144,6 +145,39 @@ public class ModEvents {
             net.minecraft.world.item.ItemStack stack = player.getInventory().getItem(i);
             if (stack.is(net.yigitguven.chymistry.item.ModItems.IRON_TONGS.get())) {
                 net.yigitguven.chymistry.item.IronTongsItem.tickCustom(stack, player.level(), player);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockPlace(net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        if (event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+            ItemStack main = player.getMainHandItem();
+            ItemStack off = player.getOffhandItem();
+            if (event.getLevel() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                if (net.yigitguven.chymistry.wood.TreatedWoodHelper.isTreated(main) || net.yigitguven.chymistry.wood.TreatedWoodHelper.isTreated(off)) {
+                    net.yigitguven.chymistry.wood.TreatedBlockData.get(serverLevel).add(event.getPos());
+                } else {
+                    net.yigitguven.chymistry.wood.TreatedBlockData.get(serverLevel).remove(event.getPos());
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockDrops(net.neoforged.neoforge.event.level.BlockDropsEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        if (event.getLevel() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            net.minecraft.core.BlockPos pos = event.getPos();
+            if (net.yigitguven.chymistry.wood.TreatedBlockData.isTreated(serverLevel, pos)) {
+                net.yigitguven.chymistry.wood.TreatedBlockData.get(serverLevel).remove(pos);
+                for (net.minecraft.world.entity.item.ItemEntity drop : event.getDrops()) {
+                    ItemStack dropStack = drop.getItem();
+                    if (net.yigitguven.chymistry.wood.TreatedWoodHelper.isWoodMaterial(dropStack)) {
+                        drop.setItem(net.yigitguven.chymistry.wood.TreatedWoodHelper.makeTreated(dropStack, dropStack.getCount()));
+                    }
+                }
             }
         }
     }

@@ -57,4 +57,7 @@ public class ModRecipes {
                     return "alembic";
                 }
             });
+
+    public static final Supplier<RecipeSerializer<net.yigitguven.chymistry.wood.TreatedWoodRecipe>> TREATED_WOOD_SERIALIZER =
+            SERIALIZERS.register("crafting_special_treated_wood", () -> new RecipeSerializer<>(net.yigitguven.chymistry.wood.TreatedWoodRecipe.CODEC, net.yigitguven.chymistry.wood.TreatedWoodRecipe.STREAM_CODEC));
 }

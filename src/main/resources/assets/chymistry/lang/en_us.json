@@ -78,5 +78,6 @@
     "item.chymistry.vulcanized_rubber": "Vulcanized Rubber",
     "item.chymistry.silver_sludge": "Silver Sludge",
     "item.chymistry.plastic_pellets": "Plastic Pellets",
-    "item.chymistry.storm_powder": "Storm Powder"
+    "item.chymistry.storm_powder": "Storm Powder",
+    "text.chymistry.treated_prefix": "Treated %s"
 }

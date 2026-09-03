@@ -23,6 +23,39 @@ public class FireBlockMixin {
 
     @Inject(
             method = "checkBurnOut(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/util/RandomSource;ILnet/minecraft/core/Direction;)V",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void chymistry$preventTreatedBurnOut(Level level, BlockPos pos, int chance, RandomSource random, int age, Direction face, CallbackInfo ci) {
+        if (level instanceof ServerLevel serverLevel && net.yigitguven.chymistry.wood.TreatedBlockData.isTreated(serverLevel, pos)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(
+            method = "canCatchFire(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void chymistry$preventTreatedCanCatchFire(net.minecraft.world.level.BlockGetter level, BlockPos pos, Direction direction, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (level instanceof ServerLevel serverLevel && net.yigitguven.chymistry.wood.TreatedBlockData.isTreated(serverLevel, pos)) {
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(
+            method = "getIgniteOdds(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)I",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void chymistry$preventTreatedIgniteOdds(net.minecraft.world.level.LevelReader level, BlockPos pos, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Integer> cir) {
+        if (level instanceof ServerLevel serverLevel && net.yigitguven.chymistry.wood.TreatedBlockData.isTreated(serverLevel, pos)) {
+            cir.setReturnValue(0);
+        }
+    }
+
+    @Inject(
+            method = "checkBurnOut(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/util/RandomSource;ILnet/minecraft/core/Direction;)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/Level;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z"
