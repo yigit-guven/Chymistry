@@ -1,0 +1,17 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "chymistry:berry_essence",
+      "count": 1
+    }
+  ],
+  "bottle": {
+    "ingredient": "chymistry:reinforced_glass_bottle",
+    "count": 1
+  },
+  "secondaryOutput": {
+    "id": "chymistry:alcohol_bottle"
+  },
+  "processingTime": 200
+}

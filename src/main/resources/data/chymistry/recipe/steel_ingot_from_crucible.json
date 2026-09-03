@@ -1,0 +1,21 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:charcoal",
+      "count": 1
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 30,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:steel_ingot",
+    "count": 1
+  }
+}

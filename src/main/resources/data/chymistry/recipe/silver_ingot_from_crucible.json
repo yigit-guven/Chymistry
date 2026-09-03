@@ -1,0 +1,17 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "chymistry:silver_sludge",
+      "count": 1
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:silver_ingot",
+    "count": 1
+  }
+}

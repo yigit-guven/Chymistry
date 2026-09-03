@@ -79,7 +79,7 @@ public class ModItems {
     public static final DeferredItem<Item> VULCANIZED_RUBBER = ITEMS.registerSimpleItem("vulcanized_rubber");
     public static final DeferredItem<Item> REINFORCED_GLASS_BOTTLE = ITEMS.registerSimpleItem("reinforced_glass_bottle");
 
-    public static final DeferredItem<Item> ALCOHOL_BOTTLE = ITEMS.registerItem("alcohol_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> ALCOHOL_BOTTLE = ITEMS.registerItem("alcohol_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> CREOSOTE_OIL = ITEMS.registerItem("creosote_oil", properties -> new Item(properties.stacksTo(1).craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)) {
         @Override
         public int getBurnTime(ItemStack itemStack, net.minecraft.world.item.crafting.@org.jspecify.annotations.Nullable RecipeType<?> recipeType, net.minecraft.world.level.block.entity.FuelValues fuelValues) {
