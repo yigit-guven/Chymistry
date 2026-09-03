@@ -52,6 +52,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.PLASTIC_BLOCK.get());
                 output.accept(ModItems.SULFURIC_ACID_BOTTLE.get());
                 output.accept(ModItems.VIGOR_POTION.get());
+                output.accept(ModItems.DISINFECTANT.get());
 
                         output.accept(ModItems.BLAST_PROOF_CEMENT.get());
                         output.accept(ModItems.BRASS_INGOT.get());

@@ -90,5 +90,9 @@
     "tooltip.chymistry.storm_powder.warning_cold": "Warning: Freezing climate drains heat rapidly!",
     "tooltip.chymistry.storm_powder.temp_temperate": "Requires Heat (≥ 15) or Cold (≤ -15)",
     "tooltip.chymistry.storm_powder.info_temperate": "Temperate climate maintains moderate consumption.",
-    "tooltip.chymistry.storm_powder.hint": "Combine with Creosote Oil in a Crucible to produce Localized Rain."
+    "tooltip.chymistry.storm_powder.hint": "Combine with Creosote Oil in a Crucible to produce Localized Rain.",
+    "item.chymistry.disinfectant": "Disinfectant",
+    "tooltip.chymistry.disinfectant.cure_poison": "Cures Poison",
+    "tooltip.chymistry.disinfectant.when_used": "When Applied to Zombie Villager:",
+    "tooltip.chymistry.disinfectant.cure_zombie": "Starts Villager Conversion"
 }

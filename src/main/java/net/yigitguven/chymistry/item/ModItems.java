@@ -93,6 +93,13 @@ public class ModItems {
     public static final DeferredItem<Item> NITRIC_ACID_BOTTLE = ITEMS.registerItem("nitric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> SULFURIC_ACID_BOTTLE = ITEMS.registerItem("sulfuric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> VIGOR_POTION = ITEMS.registerItem("vigor_potion", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> DISINFECTANT = ITEMS.registerItem("disinfectant", properties -> new DisinfectantItem(properties.stacksTo(1)
+            .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
+            .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
+                .animation(net.minecraft.world.item.ItemUseAnimation.DRINK)
+                .sound(net.minecraft.sounds.SoundEvents.GENERIC_DRINK)
+                .build())
+            .usingConvertsTo(net.minecraft.world.item.Items.GLASS_BOTTLE)));
 
 
 

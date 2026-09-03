@@ -1,0 +1,21 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "chymistry:alcohol_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:rotten_flesh",
+      "count": 1
+    }
+  ],
+  "bottle": {
+    "ingredient": "minecraft:glass_bottle",
+    "count": 1
+  },
+  "secondaryOutput": {
+    "id": "chymistry:disinfectant"
+  },
+  "processingTime": 200
+}
