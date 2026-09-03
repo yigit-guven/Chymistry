@@ -1,0 +1,21 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "chymistry:creosote_oil",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:sulfuric_acid_bottle",
+      "count": 1
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:plastic_pellets",
+    "count": 4
+  }
+}

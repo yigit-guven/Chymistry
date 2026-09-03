@@ -182,7 +182,11 @@ public class CrucibleBlockEntity extends BlockEntity {
                             for (int i = 0; i < 4; i++) { // Only consume from first 4 slots for materials
                                 net.minecraft.world.item.ItemStack stack = blockEntity.inventory.getItem(i);
                                 if (ingredient.test(stack)) {
-                                    stack.shrink(ingredient.count());
+                                    if (stack.getCount() == ingredient.count() && stack.getItem().getCraftingRemainder() != null) {
+                                        blockEntity.inventory.setItem(i, stack.getItem().getCraftingRemainder().create());
+                                    } else {
+                                        stack.shrink(ingredient.count());
+                                    }
                                     break;
                                 }
                             }
