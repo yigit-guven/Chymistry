@@ -1,0 +1,21 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "chymistry:gold_solvent_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:raw_gold",
+      "count": 1
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:purified_gold_dust",
+    "count": 2
+  }
+}
