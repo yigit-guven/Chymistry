@@ -215,9 +215,14 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
                             for (int i = 0; i < 4; i++) {
                                 net.minecraft.world.item.ItemStack stack = this.inventory.getItem(i);
                                 if (ingredient.ingredient().test(stack)) {
-                                    int consumed = Math.min(toConsume, stack.getCount());
-                                    stack.shrink(consumed);
-                                    toConsume -= consumed;
+                                    if (stack.getCount() == toConsume && stack.getItem().getCraftingRemainder() != null) {
+                                        this.inventory.setItem(i, stack.getItem().getCraftingRemainder().create());
+                                        toConsume = 0;
+                                    } else {
+                                        int consumed = Math.min(toConsume, stack.getCount());
+                                        stack.shrink(consumed);
+                                        toConsume -= consumed;
+                                    }
                                     if (toConsume <= 0) break;
                                 }
                             }
