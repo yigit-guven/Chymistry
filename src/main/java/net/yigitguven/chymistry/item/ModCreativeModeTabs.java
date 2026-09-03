@@ -68,6 +68,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STEEL_INGOT.get());
                         output.accept(ModItems.STORM_POWDER.get());
                         output.accept(ModItems.VULCANIZED_RUBBER.get());
+                        output.accept(ModItems.REPELLENT_BASE.get());
 
                         net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
                                 .map(ItemStack::new)

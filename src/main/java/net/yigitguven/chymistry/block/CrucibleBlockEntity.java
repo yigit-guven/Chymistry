@@ -85,6 +85,19 @@ public class CrucibleBlockEntity extends BlockEntity {
         net.minecraft.world.ContainerHelper.loadAllItems(pInput, this.inventory.getItems());
     }
 
+    public static final java.util.Map<net.minecraft.resources.ResourceKey<Level>, java.util.Set<BlockPos>> ACTIVE_REPELLENTS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        if (this.level != null && !this.level.isClientSide()) {
+            java.util.Set<BlockPos> set = ACTIVE_REPELLENTS.get(this.level.dimension());
+            if (set != null) {
+                set.remove(this.worldPosition);
+            }
+        }
+    }
+
     @Override
     public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
@@ -166,6 +179,47 @@ public class CrucibleBlockEntity extends BlockEntity {
         }
 
         if (!level.isClientSide()) {
+            boolean isRepellentBurning = false;
+            if (blockEntity.currentHeat >= 20.0f) {
+                for (int i = 0; i < 4; i++) {
+                    net.minecraft.world.item.ItemStack stack = blockEntity.inventory.getItem(i);
+                    if (!stack.isEmpty() && stack.is(net.yigitguven.chymistry.item.ModItems.REPELLENT_BASE.get())) {
+                        isRepellentBurning = true;
+
+                        blockEntity.currentHeat = Math.max(0.0f, blockEntity.currentHeat - 0.08f);
+
+                        if (level.getGameTime() % 20 == 0) {
+                            int newDamage = stack.getDamageValue() + 1;
+                            if (newDamage >= stack.getMaxDamage()) {
+                                stack.shrink(1);
+                                level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, net.minecraft.sounds.SoundSource.BLOCKS, 0.8f, 1.2f);
+                            } else {
+                                stack.setDamageValue(newDamage);
+                            }
+                            blockEntity.inventory.setChanged();
+                        }
+
+                        if (level instanceof net.minecraft.server.level.ServerLevel serverLevel && level.getGameTime() % 4 == 0) {
+                            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIMSON_SPORE, pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5, 3, 0.25, 0.2, 0.25, 0.01);
+                            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5, 2, 0.15, 0.15, 0.15, 0.02);
+                        }
+
+                        if (level.getGameTime() % 60 == 0) {
+                            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.CANDLE_AMBIENT, net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 0.8f);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            java.util.Set<BlockPos> dimensionRepellents = ACTIVE_REPELLENTS.computeIfAbsent(level.dimension(), k -> java.util.concurrent.ConcurrentHashMap.newKeySet());
+            if (isRepellentBurning) {
+                dimensionRepellents.add(pos.immutable());
+            } else {
+                dimensionRepellents.remove(pos);
+            }
+
             java.util.List<net.minecraft.world.item.ItemStack> inputStacks = new java.util.ArrayList<>();
             for (int i = 0; i < 5; i++) {
                 inputStacks.add(blockEntity.inventory.getItem(i));

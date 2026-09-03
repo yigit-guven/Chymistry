@@ -113,5 +113,7 @@ public class ModItems {
             return true;
         }
     });
+
+    public static final DeferredItem<BlockItem> REPELLENT_BASE = ITEMS.registerItem("repellent_base", properties -> new BlockItem(ModBlocks.REPELLENT_BASE.get(), properties.durability(600)));
 }
 

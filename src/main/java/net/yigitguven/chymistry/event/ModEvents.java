@@ -299,4 +299,22 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onCheckSpawn(net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck event) {
+        if (event.getLevel() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            java.util.Set<net.minecraft.core.BlockPos> repellents = net.yigitguven.chymistry.block.CrucibleBlockEntity.ACTIVE_REPELLENTS.get(serverLevel.dimension());
+            if (repellents != null && !repellents.isEmpty()) {
+                double x = event.getX();
+                double y = event.getY();
+                double z = event.getZ();
+                for (net.minecraft.core.BlockPos cruciblePos : repellents) {
+                    if (cruciblePos.distToCenterSqr(x, y, z) <= 1024.0) { // 32 blocks radius (32^2 = 1024)
+                        event.setResult(net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck.Result.FAIL);
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }
