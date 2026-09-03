@@ -10,7 +10,6 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import mezz.jei.api.registration.IIngredientAliasRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -151,18 +150,5 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 .forEach(item -> registration.registerSubtypeInterpreter(item, (stack, context) -> {
                     return net.yigitguven.chymistry.wood.TreatedWoodHelper.isTreated(stack) ? "treated" : "";
                 }));
-    }
-
-    @Override
-    public void registerIngredientAliases(IIngredientAliasRegistration registration) {
-        java.util.List<ItemStack> treated = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
-                .map(ItemStack::new)
-                .filter(net.yigitguven.chymistry.wood.TreatedWoodHelper::isWoodMaterial)
-                .map(stack -> net.yigitguven.chymistry.wood.TreatedWoodHelper.makeTreated(stack, 1))
-                .toList();
-        for (ItemStack stack : treated) {
-            registration.addAlias(stack, "chymistry");
-            registration.addAlias(stack, "Chymistry");
-        }
     }
 }
