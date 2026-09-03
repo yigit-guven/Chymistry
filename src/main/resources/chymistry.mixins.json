@@ -4,14 +4,16 @@
     "package":  "net.yigitguven.chymistry.mixin",
     "compatibilityLevel":  "JAVA_21",
     "refmap":  "chymistry.refmap.json",
+    "plugin":  "ChymistryMixinPlugin",
     "mixins":  [
                    "FireBlockMixin",
                    "AbstractFurnaceBlockEntityMixin",
+                   "ItemMixin",
                    "client.HumanoidModelMixin",
                    "client.ItemInHandRendererMixin"
                ],
     "client":  [
-
+                   "ListElementInfoMixin"
                ],
     "injectors":  {
                       "defaultRequire":  1
