@@ -19,7 +19,7 @@
   "maxHeat": 1500,
   "heatCost": 0.0,
   "output": {
-    "id": "minecraft:glass",
+    "id": "chymistry:reinforced_glass",
     "count": 1
   }
 }
