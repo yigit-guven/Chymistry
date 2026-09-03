@@ -79,5 +79,6 @@
     "item.chymistry.silver_sludge": "Silver Sludge",
     "item.chymistry.plastic_pellets": "Plastic Pellets",
     "item.chymistry.storm_powder": "Storm Powder",
-    "text.chymistry.treated_prefix": "Treated %s"
+    "text.chymistry.treated_prefix": "Treated %s",
+    "jei.chymistry.treated_wood": "Wood Treatment"
 }

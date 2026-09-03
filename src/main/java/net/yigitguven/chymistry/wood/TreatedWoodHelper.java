@@ -41,7 +41,6 @@ public class TreatedWoodHelper {
             stack.is(ItemTags.WOODEN_STAIRS) ||
             stack.is(ItemTags.WOODEN_SLABS) ||
             stack.is(ItemTags.WOODEN_FENCES) ||
-            stack.is(ItemTags.FENCE_GATES) ||
             stack.is(ItemTags.WOODEN_DOORS) ||
             stack.is(ItemTags.WOODEN_TRAPDOORS) ||
             stack.is(ItemTags.WOODEN_PRESSURE_PLATES) ||
@@ -49,7 +48,18 @@ public class TreatedWoodHelper {
             return true;
         }
         if (stack.getItem() instanceof BlockItem bi) {
-            return bi.getBlock().defaultBlockState().getSoundType() == SoundType.WOOD;
+            net.minecraft.world.level.block.Block block = bi.getBlock();
+            if (block.defaultBlockState().getSoundType() == SoundType.WOOD) {
+                return stack.is(ItemTags.FENCE_GATES) ||
+                       block instanceof net.minecraft.world.level.block.StairBlock ||
+                       block instanceof net.minecraft.world.level.block.SlabBlock ||
+                       block instanceof net.minecraft.world.level.block.FenceBlock ||
+                       block instanceof net.minecraft.world.level.block.FenceGateBlock ||
+                       block instanceof net.minecraft.world.level.block.DoorBlock ||
+                       block instanceof net.minecraft.world.level.block.TrapDoorBlock ||
+                       block instanceof net.minecraft.world.level.block.ButtonBlock ||
+                       block instanceof net.minecraft.world.level.block.PressurePlateBlock;
+            }
         }
         return false;
     }

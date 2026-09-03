@@ -68,7 +68,11 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STORM_POWDER.get());
                         output.accept(ModItems.VULCANIZED_RUBBER.get());
 
-
+                        net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
+                                .map(ItemStack::new)
+                                .filter(net.yigitguven.chymistry.wood.TreatedWoodHelper::isWoodMaterial)
+                                .map(stack -> net.yigitguven.chymistry.wood.TreatedWoodHelper.makeTreated(stack, 1))
+                                .forEach(output::accept);
             })
             .build());
 }

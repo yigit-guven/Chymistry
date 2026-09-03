@@ -42,6 +42,9 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.AlembicRecipe>> ALEMBIC =
             mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "alembic", (Class)net.minecraft.world.item.crafting.RecipeHolder.class);
 
+    public static final mezz.jei.api.recipe.RecipeType<TreatedWoodJeiRecipe> TREATED_WOOD =
+            mezz.jei.api.recipe.RecipeType.create(Chymistry.MODID, "treated_wood", TreatedWoodJeiRecipe.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -55,6 +58,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new ProductionComposterRecipeCategory(guiHelper));
         registration.addRecipeCategories(new CrucibleRecipeCategory(guiHelper));
         registration.addRecipeCategories(new AlembicRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new TreatedWoodRecipeCategory(guiHelper));
     }
 
     @Override
@@ -89,6 +93,13 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 .toList();
             registration.addRecipes(ALEMBIC, alembicRecipes);
         }
+
+        java.util.List<TreatedWoodJeiRecipe> treatedWoodRecipes = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
+                .map(ItemStack::new)
+                .filter(net.yigitguven.chymistry.wood.TreatedWoodHelper::isWoodMaterial)
+                .map(woodStack -> new TreatedWoodJeiRecipe(woodStack, net.yigitguven.chymistry.wood.TreatedWoodHelper.makeTreated(woodStack, 8)))
+                .toList();
+        registration.addRecipes(TREATED_WOOD, treatedWoodRecipes);
     }
 
     @Override
@@ -101,6 +112,8 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.DEEPSLATE_CRUCIBLE.get()));
         registration.addCraftingStation(CRUCIBLE, new ItemStack(ModBlocks.NETHERITE_CRUCIBLE.get()));
         registration.addCraftingStation(ALEMBIC, new ItemStack(ModBlocks.ALEMBIC.get()));
+        registration.addCraftingStation(TREATED_WOOD, new ItemStack(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE));
+        registration.addCraftingStation(TREATED_WOOD, new ItemStack(net.yigitguven.chymistry.item.ModItems.CREOSOTE_OIL.get()));
     }
 
     @Override
