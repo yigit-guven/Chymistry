@@ -94,8 +94,14 @@ public class ChymistryJeiPlugin implements IModPlugin {
                                     new ItemStack(net.yigitguven.chymistry.item.ModItems.ASH.get()),
                                     new ItemStack(net.yigitguven.chymistry.item.ModItems.NITER_DUST.get())
                             ),
-                            new ItemStack(net.yigitguven.chymistry.item.ModItems.SUPER_FERTILIZER.get()),
-                            "jei.chymistry.production_composting.super_fertilizer.tooltip"
+                            new ItemStack(net.yigitguven.chymistry.item.ModItems.SUPER_FERTILIZER.get())
+                    ),
+                    new ProductionComposterJeiRecipe(
+                            java.util.List.of(
+                                    new ItemStack(net.yigitguven.chymistry.item.ModItems.ALCOHOL_BOTTLE.get()),
+                                    new ItemStack(net.minecraft.world.item.Items.RAW_COPPER)
+                            ),
+                            new ItemStack(net.minecraft.world.item.Items.DYE.cyan(), 2)
                     )
             ));
 

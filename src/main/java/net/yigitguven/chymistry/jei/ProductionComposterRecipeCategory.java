@@ -79,7 +79,7 @@ public final class ProductionComposterRecipeCategory implements IRecipeCategory<
         int textX = (composterX + 8) - textWidth / 2;
 
         if (mouseX >= textX && mouseX <= textX + textWidth && mouseY >= 30 && mouseY <= 39) {
-            tooltip.add(Component.translatable(recipe.tooltipKey()).withStyle(net.minecraft.ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("jei.chymistry.production_composting.tooltip").withStyle(net.minecraft.ChatFormatting.GRAY));
         }
     }
 
@@ -98,7 +98,7 @@ public final class ProductionComposterRecipeCategory implements IRecipeCategory<
                     .setOutputSlotBackground()
                     .addItemStack(recipe.output());
         } else {
-            int startX = 3;
+            int startX = recipe.inputs().size() == 2 ? 14 : 3;
             for (int i = 0; i < recipe.inputs().size(); i++) {
                 builder.addInputSlot(startX + i * 18, 12)
                         .setStandardSlotBackground()

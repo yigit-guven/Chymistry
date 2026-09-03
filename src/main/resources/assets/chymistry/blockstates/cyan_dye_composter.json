@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "alcohol=true,raw_copper=true": {
+      "model": "chymistry:block/cyan_dye_composter"
+    },
+    "alcohol=true,raw_copper=false": {
+      "model": "minecraft:block/composter_contents"
+    },
+    "alcohol=false,raw_copper=true": {
+      "model": "minecraft:block/composter_contents"
+    },
+    "alcohol=false,raw_copper=false": {
+      "model": "minecraft:block/composter_contents"
+    }
+  }
+}

@@ -62,7 +62,7 @@
     "jei.chymistry.burning.chance": "Chance: %s%%",
     "jei.chymistry.production_composting": "Production Composting",
     "jei.chymistry.production_composting.level": "Level 7",
-    "jei.chymistry.production_composting.tooltip": "Requires a completely full Composter (Level 7) right before it produces Bone Meal.",
+    "jei.chymistry.production_composting.tooltip": "Requires a completely full Composter (Level 7 or 8).",
     "item.chymistry.dynamite": "Dynamite",
     "item.chymistry.freezing_powder": "Freezing Powder",
     "item.chymistry.silver_ingot": "Silver Ingot",
@@ -84,7 +84,7 @@
     "jei.chymistry.cauldron": "Cauldron",
     "jei.chymistry.cauldron.water_cost": "Consumes %s level(s) of fluid",
     "item.chymistry.super_fertilizer": "Super Fertilizer",
-    "jei.chymistry.production_composting.super_fertilizer.tooltip": "Requires combining Bone Meal, Ash, and Niter Dust in a full Composter.",
     "block.chymistry.repellent_base": "Repellent Base",
-    "item.chymistry.repellent_base": "Repellent Base"
+    "item.chymistry.repellent_base": "Repellent Base",
+    "block.chymistry.cyan_dye_composter": "Cyan Dye Composter"
 }

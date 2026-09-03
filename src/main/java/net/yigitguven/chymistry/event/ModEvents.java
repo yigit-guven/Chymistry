@@ -88,6 +88,32 @@ public class ModEvents {
                         event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
                         return;
                     }
+
+                    boolean hasAlcohol = stack.is(net.yigitguven.chymistry.item.ModItems.ALCOHOL_BOTTLE.get());
+                    boolean hasRawCopper = stack.is(net.minecraft.world.item.Items.RAW_COPPER);
+
+                    if (hasAlcohol || hasRawCopper) {
+                        if (!level.isClientSide()) {
+                            if (!event.getEntity().isCreative()) {
+                                stack.shrink(1);
+                                if (hasAlcohol) {
+                                    net.minecraft.world.item.ItemStack bottle = new net.minecraft.world.item.ItemStack(net.yigitguven.chymistry.item.ModItems.REINFORCED_GLASS_BOTTLE.get());
+                                    if (!event.getEntity().getInventory().add(bottle)) {
+                                        event.getEntity().drop(bottle, false);
+                                    }
+                                }
+                            }
+                            net.minecraft.world.level.block.state.BlockState composterState = net.yigitguven.chymistry.block.ModBlocks.CYAN_DYE_COMPOSTER.get().defaultBlockState()
+                                    .setValue(net.yigitguven.chymistry.block.CyanDyeComposterBlock.ALCOHOL, hasAlcohol)
+                                    .setValue(net.yigitguven.chymistry.block.CyanDyeComposterBlock.RAW_COPPER, hasRawCopper);
+
+                            level.setBlock(pos, composterState, 3);
+                            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.SAND_PLACE, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+                        }
+                        event.setCanceled(true);
+                        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                        return;
+                    }
                 }
             }
         }
