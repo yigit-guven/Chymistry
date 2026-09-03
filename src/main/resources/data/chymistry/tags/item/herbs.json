@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:flowers",
+    "minecraft:fern",
+    "minecraft:large_fern",
+    "minecraft:short_grass",
+    "minecraft:tall_grass",
+    "minecraft:sweet_berries",
+    "minecraft:glow_berries",
+    "minecraft:kelp",
+    "minecraft:seagrass",
+    "minecraft:hanging_roots",
+    "minecraft:torchflower",
+    "minecraft:pitcher_plant"
+  ]
+}

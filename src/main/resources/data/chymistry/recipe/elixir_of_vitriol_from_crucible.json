@@ -1,0 +1,30 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "#chymistry:herbs",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:alcohol_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:sulfuric_acid_bottle",
+      "count": 1
+    }
+  ],
+  "container": {
+    "ingredient": "chymistry:tinted_glass_bottle",
+    "count": 1
+  },
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 50,
+  "heatCost": 0.0,
+  "overheat": "toxic_cloud",
+  "output": {
+    "id": "chymistry:elixir_of_vitriol",
+    "count": 1
+  }
+}

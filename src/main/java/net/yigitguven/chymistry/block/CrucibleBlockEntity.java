@@ -11,6 +11,7 @@ public class CrucibleBlockEntity extends BlockEntity {
     public float currentHeat = 0.0f;
     public int progress = 0;
     public int maxProgress = 0;
+    public int overheatTicks = 0;
 
     private final net.minecraft.world.item.crafting.RecipeManager.CachedCheck<net.yigitguven.chymistry.recipe.CrucibleRecipeInput, net.yigitguven.chymistry.recipe.CrucibleRecipe> quickCheck = 
             net.minecraft.world.item.crafting.RecipeManager.createCheck(net.yigitguven.chymistry.recipe.ModRecipes.CRUCIBLE_TYPE.get());
@@ -70,6 +71,7 @@ public class CrucibleBlockEntity extends BlockEntity {
         pOutput.putFloat("heat", this.currentHeat);
         pOutput.putInt("progress", this.progress);
         pOutput.putInt("maxProgress", this.maxProgress);
+        pOutput.putInt("overheatTicks", this.overheatTicks);
         net.minecraft.world.ContainerHelper.saveAllItems(pOutput, this.inventory.getItems());
     }
 
@@ -79,6 +81,7 @@ public class CrucibleBlockEntity extends BlockEntity {
         this.currentHeat = pInput.getFloatOr("heat", 0.0f);
         this.progress = pInput.getIntOr("progress", 0);
         this.maxProgress = pInput.getIntOr("maxProgress", 0);
+        this.overheatTicks = pInput.getIntOr("overheatTicks", 0);
         net.minecraft.world.ContainerHelper.loadAllItems(pInput, this.inventory.getItems());
     }
 
@@ -174,6 +177,7 @@ public class CrucibleBlockEntity extends BlockEntity {
             if (match.isPresent()) {
                 net.yigitguven.chymistry.recipe.CrucibleRecipe recipe = match.get().value();
                 if (blockEntity.currentHeat >= recipe.minHeat() && blockEntity.currentHeat <= recipe.maxHeat()) {
+                    blockEntity.overheatTicks = Math.max(0, blockEntity.overheatTicks - 1);
                     blockEntity.maxProgress = recipe.processingTime();
                     blockEntity.progress++;
                     if (blockEntity.progress >= blockEntity.maxProgress) {
@@ -224,12 +228,56 @@ public class CrucibleBlockEntity extends BlockEntity {
                     }
                     blockEntity.setChanged();
                 } else {
+                    if (blockEntity.currentHeat > recipe.maxHeat() && recipe.overheat().isPresent()) {
+                        blockEntity.overheatTicks++;
+                        if (level instanceof net.minecraft.server.level.ServerLevel serverLevel && blockEntity.overheatTicks % 5 == 0) {
+                            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 4, 0.15, 0.1, 0.15, 0.02);
+                        }
+                        if (blockEntity.overheatTicks >= 40) {
+                            String hazard = recipe.overheat().get();
+                            if ("toxic_cloud".equals(hazard)) {
+                                net.minecraft.world.entity.AreaEffectCloud cloud = new net.minecraft.world.entity.AreaEffectCloud(level, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
+                                cloud.setRadius(3.0F);
+                                cloud.setDuration(160);
+                                cloud.setWaitTime(0);
+                                cloud.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON, 140, 1));
+                                cloud.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.NAUSEA, 140, 0));
+                                level.addFreshEntity(cloud);
+
+                                if (level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                                    serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 12, 0.3, 0.2, 0.3, 0.05);
+                                }
+                                level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 0.8F);
+                            } else if ("explosion".equals(hazard)) {
+                                level.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 2.0F, Level.ExplosionInteraction.BLOCK);
+                            }
+
+                            for (int i = 0; i < 4; i++) {
+                                net.minecraft.world.item.ItemStack stack = blockEntity.inventory.getItem(i);
+                                if (!stack.isEmpty()) {
+                                    if (stack.getItem().getCraftingRemainder() != null) {
+                                        blockEntity.inventory.setItem(i, stack.getItem().getCraftingRemainder().create());
+                                    } else {
+                                        blockEntity.inventory.setItem(i, net.minecraft.world.item.ItemStack.EMPTY);
+                                    }
+                                }
+                            }
+                            blockEntity.progress = 0;
+                            blockEntity.maxProgress = 0;
+                            blockEntity.overheatTicks = 0;
+                            blockEntity.setChanged();
+                        }
+                    } else {
+                        blockEntity.overheatTicks = Math.max(0, blockEntity.overheatTicks - 1);
+                    }
+
                     if (blockEntity.progress > 0) {
                         blockEntity.progress = Math.max(0, blockEntity.progress - 2); // Cool down progress
                         blockEntity.setChanged();
                     }
                 }
             } else {
+                blockEntity.overheatTicks = 0;
                 if (blockEntity.progress > 0) {
                     blockEntity.progress = 0;
                     blockEntity.maxProgress = 0;

@@ -18,7 +18,11 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.Optional;
 
-public record CrucibleRecipe(List<SizedIngredient> inputs, Optional<SizedIngredient> container, ItemStackTemplate output, int processingTime, int minHeat, int maxHeat, float heatCost) implements Recipe<CrucibleRecipeInput> {
+public record CrucibleRecipe(List<SizedIngredient> inputs, Optional<SizedIngredient> container, ItemStackTemplate output, int processingTime, int minHeat, int maxHeat, float heatCost, Optional<String> overheat) implements Recipe<CrucibleRecipeInput> {
+
+    public CrucibleRecipe(List<SizedIngredient> inputs, Optional<SizedIngredient> container, ItemStackTemplate output, int processingTime, int minHeat, int maxHeat, float heatCost) {
+        this(inputs, container, output, processingTime, minHeat, maxHeat, heatCost, Optional.empty());
+    }
 
     public static final MapCodec<CrucibleRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             SizedIngredient.CODEC.listOf().fieldOf("inputs").forGetter(CrucibleRecipe::inputs),
@@ -27,7 +31,8 @@ public record CrucibleRecipe(List<SizedIngredient> inputs, Optional<SizedIngredi
             Codec.INT.fieldOf("processingTime").forGetter(CrucibleRecipe::processingTime),
             Codec.INT.fieldOf("minHeat").forGetter(CrucibleRecipe::minHeat),
             Codec.INT.fieldOf("maxHeat").forGetter(CrucibleRecipe::maxHeat),
-            Codec.FLOAT.fieldOf("heatCost").forGetter(CrucibleRecipe::heatCost)
+            Codec.FLOAT.fieldOf("heatCost").forGetter(CrucibleRecipe::heatCost),
+            Codec.STRING.optionalFieldOf("overheat").forGetter(CrucibleRecipe::overheat)
     ).apply(inst, CrucibleRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CrucibleRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -38,6 +43,7 @@ public record CrucibleRecipe(List<SizedIngredient> inputs, Optional<SizedIngredi
             ByteBufCodecs.INT, CrucibleRecipe::minHeat,
             ByteBufCodecs.INT, CrucibleRecipe::maxHeat,
             ByteBufCodecs.FLOAT, CrucibleRecipe::heatCost,
+            ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8), CrucibleRecipe::overheat,
             CrucibleRecipe::new
     );
 
