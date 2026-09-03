@@ -12,4 +12,7 @@ public class ModMobEffects {
 
     public static final DeferredHolder<MobEffect, MobEffect> VITRIOL_IMMUNITY = MOB_EFFECTS.register("vitriol_immunity",
             () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0x8B008B) {});
+
+    public static final DeferredHolder<MobEffect, MobEffect> VIGOR = MOB_EFFECTS.register("vigor",
+            () -> new VigorMobEffect(MobEffectCategory.BENEFICIAL, 0x00C4B4));
 }

@@ -94,5 +94,7 @@
     "item.chymistry.disinfectant": "Disinfectant",
     "tooltip.chymistry.disinfectant.cure_poison": "Cures Poison",
     "tooltip.chymistry.disinfectant.when_used": "When Applied to Zombie Villager:",
-    "tooltip.chymistry.disinfectant.cure_zombie": "Starts Villager Conversion"
+    "tooltip.chymistry.disinfectant.cure_zombie": "Starts Villager Conversion",
+    "effect.chymistry.vigor": "Vigor",
+    "tooltip.chymistry.vigor.desc": "Regenerates Max Health over 10s"
 }

@@ -92,7 +92,28 @@ public class ModItems {
     public static final DeferredItem<Item> HYDROCHLORIC_ACID_BOTTLE = ITEMS.registerItem("hydrochloric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> NITRIC_ACID_BOTTLE = ITEMS.registerItem("nitric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> SULFURIC_ACID_BOTTLE = ITEMS.registerItem("sulfuric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
-    public static final DeferredItem<Item> VIGOR_POTION = ITEMS.registerItem("vigor_potion", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> VIGOR_POTION = ITEMS.registerItem("vigor_potion", properties -> new Item(properties.stacksTo(1)
+            .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
+            .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
+                .animation(net.minecraft.world.item.ItemUseAnimation.DRINK)
+                .sound(net.minecraft.sounds.SoundEvents.GENERIC_DRINK)
+                .onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(new net.minecraft.world.effect.MobEffectInstance(net.yigitguven.chymistry.effect.ModMobEffects.VIGOR, 200, 0), 1.0f))
+                .build())
+            .usingConvertsTo(TINTED_GLASS_BOTTLE.get())) {
+        @Override
+        public Component getName(ItemStack pStack) {
+            return super.getName(pStack).copy().withStyle(style -> style.withColor(0x00C4B4));
+        }
+
+        @Override
+        public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, java.util.function.Consumer<Component> pTooltipComponents, net.minecraft.world.item.TooltipFlag pTooltipFlag) {
+            super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable(net.yigitguven.chymistry.effect.ModMobEffects.VIGOR.value().getDescriptionId()).append(" (0:10)").withStyle(net.minecraft.ChatFormatting.BLUE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.empty());
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("potion.whenDrank").withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.vigor.desc").withStyle(net.minecraft.ChatFormatting.BLUE));
+        }
+    });
     public static final DeferredItem<Item> DISINFECTANT = ITEMS.registerItem("disinfectant", properties -> new DisinfectantItem(properties.stacksTo(1)
             .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
             .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
