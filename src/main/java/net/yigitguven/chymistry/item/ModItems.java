@@ -88,7 +88,7 @@ public class ModItems {
     });
     public static final DeferredItem<Item> DEFOLIANT_POTION = ITEMS.registerItem("defoliant_potion", properties -> new Item(properties.stacksTo(1)));
     public static final DeferredItem<Item> EXPLOSIVE_LIQUID = ITEMS.registerSimpleItem("explosive_liquid");
-    public static final DeferredItem<Item> GOLD_SOLVENT_BOTTLE = ITEMS.registerItem("gold_solvent_bottle", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> GOLD_SOLVENT_BOTTLE = ITEMS.registerItem("gold_solvent_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> HYDROCHLORIC_ACID_BOTTLE = ITEMS.registerItem("hydrochloric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> NITRIC_ACID_BOTTLE = ITEMS.registerItem("nitric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> SULFURIC_ACID_BOTTLE = ITEMS.registerItem("sulfuric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));

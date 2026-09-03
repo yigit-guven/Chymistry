@@ -179,15 +179,23 @@ public class CrucibleBlockEntity extends BlockEntity {
                     if (blockEntity.progress >= blockEntity.maxProgress) {
                         // Consume inputs
                         for (net.yigitguven.chymistry.recipe.SizedIngredient ingredient : recipe.inputs()) {
-                            for (int i = 0; i < 4; i++) { // Only consume from first 4 slots for materials
+                            int toConsume = ingredient.count();
+                            for (int i = 0; i < 4; i++) {
                                 net.minecraft.world.item.ItemStack stack = blockEntity.inventory.getItem(i);
-                                if (ingredient.test(stack)) {
-                                    if (stack.getCount() == ingredient.count() && stack.getItem().getCraftingRemainder() != null) {
-                                        blockEntity.inventory.setItem(i, stack.getItem().getCraftingRemainder().create());
+                                if (!stack.isEmpty() && ingredient.ingredient().test(stack)) {
+                                    if (stack.getCount() <= toConsume) {
+                                        int countInSlot = stack.getCount();
+                                        if (stack.getItem().getCraftingRemainder() != null) {
+                                            blockEntity.inventory.setItem(i, stack.getItem().getCraftingRemainder().create());
+                                        } else {
+                                            stack.shrink(countInSlot);
+                                        }
+                                        toConsume -= countInSlot;
                                     } else {
-                                        stack.shrink(ingredient.count());
+                                        stack.shrink(toConsume);
+                                        toConsume = 0;
                                     }
-                                    break;
+                                    if (toConsume <= 0) break;
                                 }
                             }
                         }

@@ -43,43 +43,56 @@ public record CrucibleRecipe(List<SizedIngredient> inputs, Optional<SizedIngredi
 
     @Override
     public boolean matches(CrucibleRecipeInput pInput, Level pLevel) {
-        // pInput sizes 0-3 are main materials, index 4 is container.
-        java.util.List<ItemStack> inputItems = new java.util.ArrayList<>();
-        for (int i = 0; i < 4; i++) { // Only check first 4 slots for materials
-            ItemStack stack = pInput.getItem(i);
-            if (!stack.isEmpty()) {
-                inputItems.add(stack.copy());
+        // pInput indices 0-3 are main materials, index 4 is container.
+        ItemStack containerStack = pInput.getItem(4);
+        if (this.container.isPresent()) {
+            if (!this.container.get().test(containerStack)) {
+                return false;
             }
-        }
-
-        if (this.inputs.size() != inputItems.size()) {
-            return false;
-        }
-
-        for (SizedIngredient ingredient : this.inputs) {
-            boolean found = false;
-            for (int i = 0; i < inputItems.size(); i++) {
-                if (ingredient.test(inputItems.get(i))) {
-                    inputItems.remove(i);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
+        } else {
+            if (!containerStack.isEmpty()) {
                 return false;
             }
         }
 
-        if (!inputItems.isEmpty()) {
-            return false;
+        ItemStack[] available = new ItemStack[4];
+        boolean[] hasItem = new boolean[4];
+        for (int i = 0; i < 4; i++) {
+            ItemStack stack = pInput.getItem(i);
+            if (!stack.isEmpty()) {
+                available[i] = stack.copy();
+                hasItem[i] = true;
+            } else {
+                available[i] = ItemStack.EMPTY;
+            }
         }
 
-        ItemStack containerStack = pInput.getItem(4);
-        if (this.container.isPresent()) {
-            return this.container.get().test(containerStack);
-        } else {
-            return containerStack.isEmpty();
+        boolean[] slotContributed = new boolean[4];
+        for (SizedIngredient ingredient : this.inputs) {
+            int needed = ingredient.count();
+            for (int i = 0; i < 4; i++) {
+                if (!available[i].isEmpty() && ingredient.ingredient().test(available[i])) {
+                    int take = Math.min(needed, available[i].getCount());
+                    available[i].shrink(take);
+                    needed -= take;
+                    slotContributed[i] = true;
+                    if (needed <= 0) {
+                        break;
+                    }
+                }
+            }
+            if (needed > 0) {
+                return false;
+            }
         }
+
+        for (int i = 0; i < 4; i++) {
+            if (hasItem[i] && !slotContributed[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
