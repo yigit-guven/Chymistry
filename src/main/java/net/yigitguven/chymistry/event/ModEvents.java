@@ -64,15 +64,24 @@ public class ModEvents {
         if (state.is(net.minecraft.world.level.block.Blocks.COMPOSTER)) {
             if (state.hasProperty(net.minecraft.world.level.block.ComposterBlock.LEVEL)) {
                 int composterLevel = state.getValue(net.minecraft.world.level.block.ComposterBlock.LEVEL);
-                // "completely full but the bone meal is not ready to collect" -> Level 7
-                if (composterLevel == 7) {
+                if (composterLevel == 7 || composterLevel == 8) {
                     net.minecraft.world.item.ItemStack stack = event.getItemStack();
-                    if (stack.is(net.yigitguven.chymistry.item.ModItems.ASH.get())) {
+                    boolean hasAsh = stack.is(net.yigitguven.chymistry.item.ModItems.ASH.get());
+                    boolean hasNiter = stack.is(net.yigitguven.chymistry.item.ModItems.NITER_DUST.get());
+                    boolean hasBoneMeal = stack.is(net.minecraft.world.item.Items.BONE_MEAL);
+
+                    if (hasAsh || hasNiter || hasBoneMeal) {
                         if (!level.isClientSide()) {
                             if (!event.getEntity().isCreative()) {
                                 stack.shrink(1);
                             }
-                            level.setBlock(pos, net.yigitguven.chymistry.block.ModBlocks.NITER_SOIL_COMPOSTER.get().defaultBlockState(), 3);
+                            boolean isBoneMealReady = composterLevel == 8;
+                            net.minecraft.world.level.block.state.BlockState composterState = net.yigitguven.chymistry.block.ModBlocks.NITER_SOIL_COMPOSTER.get().defaultBlockState()
+                                    .setValue(net.yigitguven.chymistry.block.NiterSoilComposterBlock.ASH, hasAsh)
+                                    .setValue(net.yigitguven.chymistry.block.NiterSoilComposterBlock.NITER, hasNiter)
+                                    .setValue(net.yigitguven.chymistry.block.NiterSoilComposterBlock.BONEMEAL, hasBoneMeal || isBoneMealReady);
+
+                            level.setBlock(pos, composterState, 3);
                             level.playSound(null, pos, net.minecraft.sounds.SoundEvents.SAND_PLACE, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
                         }
                         event.setCanceled(true);

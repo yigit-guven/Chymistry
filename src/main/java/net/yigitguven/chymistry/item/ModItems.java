@@ -14,6 +14,7 @@ public class ModItems {
 
     public static final DeferredItem<Item> ASH = ITEMS.registerItem("ash", properties -> new Item(properties.fireResistant()));
     public static final DeferredItem<Item> NITER_DUST = ITEMS.registerSimpleItem("niter_dust");
+    public static final DeferredItem<Item> SUPER_FERTILIZER = ITEMS.registerItem("super_fertilizer", SuperFertilizerItem::new);
     public static final DeferredItem<Item> ANIMAL_FAT = ITEMS.registerSimpleItem("animal_fat");
     public static final DeferredItem<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust");
     public static final DeferredItem<Item> IRON_DUST = ITEMS.registerSimpleItem("iron_dust");

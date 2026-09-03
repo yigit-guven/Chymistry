@@ -1,6 +1,27 @@
 {
   "variants": {
-    "": {
+    "ash=true,bonemeal=true,niter=true": {
+      "model": "chymistry:block/super_fertilizer_composter"
+    },
+    "ash=true,bonemeal=true,niter=false": {
+      "model": "chymistry:block/niter_soil_composter"
+    },
+    "ash=true,bonemeal=false,niter=true": {
+      "model": "chymistry:block/niter_soil_composter"
+    },
+    "ash=true,bonemeal=false,niter=false": {
+      "model": "chymistry:block/niter_soil_composter"
+    },
+    "ash=false,bonemeal=true,niter=true": {
+      "model": "chymistry:block/niter_soil_composter"
+    },
+    "ash=false,bonemeal=true,niter=false": {
+      "model": "chymistry:block/niter_soil_composter"
+    },
+    "ash=false,bonemeal=false,niter=true": {
+      "model": "chymistry:block/niter_soil_composter"
+    },
+    "ash=false,bonemeal=false,niter=false": {
       "model": "chymistry:block/niter_soil_composter"
     }
   }

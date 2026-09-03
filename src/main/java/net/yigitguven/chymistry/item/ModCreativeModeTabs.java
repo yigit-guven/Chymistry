@@ -22,6 +22,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.REINFORCED_GLASS.get());
                 output.accept(ModItems.ASH.get());
                 output.accept(ModItems.NITER_DUST.get());
+                output.accept(ModItems.SUPER_FERTILIZER.get());
                 output.accept(ModItems.ANIMAL_FAT.get());
                 output.accept(ModItems.COPPER_DUST.get());
                 output.accept(ModItems.IRON_DUST.get());
