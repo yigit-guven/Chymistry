@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "chymistry:iron_dust",
+    "chymistry:iron_dust",
+    "chymistry:copper_dust",
+    "chymistry:copper_dust"
+  ],
+  "result": {
+    "id": "chymistry:green_crystal",
+    "count": 2
+  }
+}

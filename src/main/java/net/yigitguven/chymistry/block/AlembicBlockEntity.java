@@ -144,9 +144,9 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
             // If we have fuel, check output capacity
             if (this.fuelTime > 0) {
                 net.minecraft.world.item.ItemStack outputStack = this.inventory.getItem(5);
-                net.minecraft.world.item.ItemStack recipeOutput = recipe.output().create();
+                net.minecraft.world.item.ItemStack recipeOutput = recipe.output().map(net.minecraft.world.item.ItemStackTemplate::create).orElse(net.minecraft.world.item.ItemStack.EMPTY);
                 
-                boolean canOutputItem = outputStack.isEmpty() || (net.minecraft.world.item.ItemStack.isSameItemSameComponents(outputStack, recipeOutput) && outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize());
+                boolean canOutputItem = recipeOutput.isEmpty() || outputStack.isEmpty() || (net.minecraft.world.item.ItemStack.isSameItemSameComponents(outputStack, recipeOutput) && outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize());
                 
                 boolean hasAvailableBottle = false;
                 net.minecraft.core.Direction targetBottleDir = null;
@@ -224,10 +224,12 @@ public class AlembicBlockEntity extends BlockEntity implements MenuProvider {
                         }
 
                         // Add output
-                        if (outputStack.isEmpty()) {
-                            this.inventory.setItem(5, recipeOutput.copy());
-                        } else {
-                            outputStack.grow(recipeOutput.getCount());
+                        if (!recipeOutput.isEmpty()) {
+                            if (outputStack.isEmpty()) {
+                                this.inventory.setItem(5, recipeOutput.copy());
+                            } else {
+                                outputStack.grow(recipeOutput.getCount());
+                            }
                         }
                         
                         // Handle secondary output (liquid)

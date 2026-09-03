@@ -182,9 +182,11 @@ public final class AlembicRecipeCategory implements IRecipeCategory<RecipeHolder
                 .setStandardSlotBackground()
                 .addItemStacks(getFuelStacks());
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 118, 34)
-                .setOutputSlotBackground()
-                .addItemStack(recipe.output().create());
+        if (recipe.output().isPresent()) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 118, 34)
+                    .setOutputSlotBackground()
+                    .addItemStack(recipe.output().get().create());
+        }
 
         if (recipe.secondaryOutput().isPresent()) {
             if (recipe.bottle().isPresent()) {

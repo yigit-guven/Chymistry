@@ -19,12 +19,12 @@ import net.yigitguven.chymistry.block.ModBlocks;
 import java.util.List;
 import java.util.Optional;
 
-public record AlembicRecipe(List<SizedIngredient> inputs, Optional<SizedIngredient> bottle, ItemStackTemplate output, Optional<ItemStackTemplate> secondaryOutput, int processingTime) implements Recipe<AlembicRecipeInput> {
+public record AlembicRecipe(List<SizedIngredient> inputs, Optional<SizedIngredient> bottle, Optional<ItemStackTemplate> output, Optional<ItemStackTemplate> secondaryOutput, int processingTime) implements Recipe<AlembicRecipeInput> {
 
     public static final MapCodec<AlembicRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             SizedIngredient.CODEC.listOf().fieldOf("inputs").forGetter(AlembicRecipe::inputs),
             SizedIngredient.CODEC.optionalFieldOf("bottle").forGetter(AlembicRecipe::bottle),
-            ItemStackTemplate.CODEC.fieldOf("output").forGetter(AlembicRecipe::output),
+            ItemStackTemplate.CODEC.optionalFieldOf("output").forGetter(AlembicRecipe::output),
             ItemStackTemplate.CODEC.optionalFieldOf("secondaryOutput").forGetter(AlembicRecipe::secondaryOutput),
             Codec.INT.fieldOf("processingTime").forGetter(AlembicRecipe::processingTime)
     ).apply(inst, AlembicRecipe::new));
@@ -32,7 +32,7 @@ public record AlembicRecipe(List<SizedIngredient> inputs, Optional<SizedIngredie
     public static final StreamCodec<RegistryFriendlyByteBuf, AlembicRecipe> STREAM_CODEC = StreamCodec.composite(
             SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), AlembicRecipe::inputs,
             ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC), AlembicRecipe::bottle,
-            ItemStackTemplate.STREAM_CODEC, AlembicRecipe::output,
+            ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC), AlembicRecipe::output,
             ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC), AlembicRecipe::secondaryOutput,
             ByteBufCodecs.INT, AlembicRecipe::processingTime,
             AlembicRecipe::new
@@ -71,7 +71,7 @@ public record AlembicRecipe(List<SizedIngredient> inputs, Optional<SizedIngredie
 
     @Override
     public ItemStack assemble(AlembicRecipeInput pInput) {
-        return this.output.create();
+        return this.output.map(ItemStackTemplate::create).orElse(ItemStack.EMPTY);
     }
 
     @Override

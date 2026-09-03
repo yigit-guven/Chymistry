@@ -1,0 +1,20 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "chymistry:green_crystal",
+      "count": 1
+    }
+  ],
+  "bottle": {
+    "ingredient": "chymistry:reinforced_glass_bottle",
+    "count": 1
+  },
+  "output": {
+    "id": "chymistry:rust_powder"
+  },
+  "secondaryOutput": {
+    "id": "chymistry:sulfuric_acid_bottle"
+  },
+  "processingTime": 200
+}
