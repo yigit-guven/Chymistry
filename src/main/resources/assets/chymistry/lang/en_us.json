@@ -48,7 +48,7 @@
     "item.chymistry.thermometer": "Thermometer",
     "tooltip.chymistry.thermometer.desc": "Used to measure the heat of Crucibles and other heat sources.",
     "effect.chymistry.vitriol_immunity": "Vitriol Immunity",
-    "tooltip.chymistry.vitriol_immunity.modifier": "Poison \u0026 Wither Immunity",
+    "tooltip.chymistry.vitriol_immunity.modifier": "Poison & Wither Immunity",
     "jei.chymistry.mortar.clicks": "%sx",
     "jei.chymistry.mortar.speed.fast": "Fast",
     "jei.chymistry.mortar.speed.slow": "Slow",
