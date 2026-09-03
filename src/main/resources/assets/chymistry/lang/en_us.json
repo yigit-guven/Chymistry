@@ -96,5 +96,8 @@
     "tooltip.chymistry.disinfectant.when_used": "When Applied to Zombie Villager:",
     "tooltip.chymistry.disinfectant.cure_zombie": "Starts Villager Conversion",
     "effect.chymistry.vigor": "Vigor",
-    "tooltip.chymistry.vigor.desc": "Regenerates Max Health over 10s"
+    "tooltip.chymistry.vigor.desc": "Regenerates Max Health over 10s",
+    "tooltip.chymistry.defoliant.effect": "Defoliation",
+    "tooltip.chymistry.defoliant.when_used": "When Applied to Soil:",
+    "tooltip.chymistry.defoliant.desc": "Removes all leaves, grass & herbs in a 20x20x20 area"
 }
