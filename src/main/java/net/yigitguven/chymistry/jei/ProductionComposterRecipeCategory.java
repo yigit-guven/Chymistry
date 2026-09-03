@@ -21,7 +21,7 @@ public final class ProductionComposterRecipeCategory implements IRecipeCategory<
     public ProductionComposterRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(110, 40);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(Blocks.COMPOSTER));
-        this.arrow = guiHelper.getRecipeArrow();
+        this.arrow = guiHelper.createAnimatedRecipeArrow(40);
     }
 
     @Override

@@ -16,14 +16,16 @@ import net.yigitguven.chymistry.Chymistry;
 
 public final class BurningRecipeCategory implements IRecipeCategory<net.minecraft.world.item.crafting.RecipeHolder<BurningRecipe>> {
 
+    private static final Identifier FIRE_ARROW = Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/fire_arrow.png");
+
     private final IDrawable background;
     private final IDrawable icon;
-    private final IDrawable arrow;
+    private final IDrawable emptyArrow;
 
     public BurningRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(100, 50);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(Items.FLINT_AND_STEEL));
-        this.arrow = guiHelper.drawableBuilder(Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/fire_arrow.png"), 0, 0, 21, 16).setTextureSize(21, 16).build();
+        this.emptyArrow = guiHelper.drawableBuilder(Identifier.fromNamespaceAndPath(Chymistry.MODID, "textures/gui/empty_fire_arrow.png"), 0, 0, 21, 16).setTextureSize(21, 16).build();
     }
 
     @Override
@@ -57,7 +59,14 @@ public final class BurningRecipeCategory implements IRecipeCategory<net.minecraf
     @Override
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<BurningRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         BurningRecipe recipe = recipeHolder.value();
-        this.arrow.draw(guiGraphics, 36, 12);
+        this.emptyArrow.draw(guiGraphics, 36, 12);
+
+        long time = System.currentTimeMillis();
+        double cycle = (time % 2000L) / 2000.0;
+        int activePixels = (int) (cycle * 21);
+        if (activePixels > 0) {
+            guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, FIRE_ARROW, 36, 12, 0f, 0f, activePixels, 16, 21, 16);
+        }
         
         net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
         net.minecraft.network.chat.Component chanceText = net.minecraft.network.chat.Component.translatable("jei.chymistry.burning.chance", recipe.chance());

@@ -24,6 +24,10 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
     private final IDrawable arrow2;
     private final IDrawable meshIcon;
 
+    private static final net.minecraft.resources.Identifier FULL_ARROW = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/mortar_full_arrow.png");
+    private static final net.minecraft.resources.Identifier FULL_ARROW_1 = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/mortar_full_arrow_1.png");
+    private static final net.minecraft.resources.Identifier FULL_ARROW_2 = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/mortar_full_arrow_2.png");
+
     public MortarRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(111, 58);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.MORTAR.get()));
@@ -78,6 +82,14 @@ public final class MortarRecipeCategory implements IRecipeCategory<net.minecraft
             this.arrow2.draw(guiGraphics, 33, 9);
         } else {
             this.arrow.draw(guiGraphics, 33, 9);
+        }
+
+        long time = System.currentTimeMillis();
+        double cycle = (time % 4000L) / 4000.0;
+        int activePixels = (int) (cycle * 45);
+        if (activePixels > 0) {
+            net.minecraft.resources.Identifier fullTex = (inputCount == 1) ? FULL_ARROW_1 : (inputCount == 2) ? FULL_ARROW_2 : FULL_ARROW;
+            guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, fullTex, 33, 9, 0f, 0f, activePixels, 39, 45, 39);
         }
         
         net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;

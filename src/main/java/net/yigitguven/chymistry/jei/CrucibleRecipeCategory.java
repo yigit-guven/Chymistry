@@ -77,22 +77,36 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         return this.icon;
     }
 
+    private static final net.minecraft.resources.Identifier FULL_ARROW_1 = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucible_arrow_full_1.png");
+    private static final net.minecraft.resources.Identifier FULL_ARROW_2 = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucible_arrow_full_2.png");
+    private static final net.minecraft.resources.Identifier FULL_ARROW_3 = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucible_arrow_full_3.png");
+    private static final net.minecraft.resources.Identifier FULL_ARROW = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/crucible_arrow_full.png");
     private static final net.minecraft.resources.Identifier FIRE_EMPTY = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/empty_fire.png");
     private static final net.minecraft.resources.Identifier FIRE_FULL = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/full_fire.png");
     private static final net.minecraft.resources.Identifier SNOW_EMPTY = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/empty_snow.png");
     private static final net.minecraft.resources.Identifier SNOW_FULL = net.minecraft.resources.Identifier.fromNamespaceAndPath(net.yigitguven.chymistry.Chymistry.MODID, "textures/gui/full_snow.png");
 
+    private static final int ARROW_WIDTH = 109;
+    private static final int ARROW_HEIGHT = 14;
+    private static final int GAP_START = 68;
+    private static final int GAP_END = 91;
+
     @Override
     public void draw(net.minecraft.world.item.crafting.RecipeHolder<CrucibleRecipe> recipeHolder, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         int inputs = recipeHolder.value().inputs().size();
+        net.minecraft.resources.Identifier fullArrowTex;
         if (inputs == 1) {
             emptyArrow1.draw(guiGraphics, 8, 20);
+            fullArrowTex = FULL_ARROW_1;
         } else if (inputs == 2) {
             emptyArrow2.draw(guiGraphics, 8, 20);
+            fullArrowTex = FULL_ARROW_2;
         } else if (inputs == 3) {
             emptyArrow3.draw(guiGraphics, 8, 20);
+            fullArrowTex = FULL_ARROW_3;
         } else {
             emptyArrow4.draw(guiGraphics, 8, 20);
+            fullArrowTex = FULL_ARROW;
         }
 
         int minHeat = recipeHolder.value().minHeat();
@@ -102,6 +116,24 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         double cycle = (time % 4000L) / 4000.0;
         double progress = (Math.sin(cycle * Math.PI * 2) + 1.0) / 2.0;
         float currentHeat = (float) (minHeat + (maxHeat - minHeat) * progress);
+
+        int gapSize = GAP_END - GAP_START;
+        int activeWidth = ARROW_WIDTH - gapSize;
+        int activePixels = (int) (cycle * activeWidth);
+
+        if (activePixels > 0) {
+            if (activePixels <= GAP_START) {
+                guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, fullArrowTex, 8, 20, 0f, 0f,
+                        activePixels, ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
+            } else {
+                guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, fullArrowTex, 8, 20, 0f, 0f, GAP_START,
+                        ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
+
+                int remainingPixels = activePixels - GAP_START;
+                guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, fullArrowTex, 8 + GAP_END, 20,
+                        (float) GAP_END, 0f, remainingPixels, ARROW_HEIGHT, ARROW_WIDTH, ARROW_HEIGHT);
+            }
+        }
 
         int heatIndicatorX = 80;
         int heatIndicatorY = 20;
