@@ -1,6 +1,16 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "chymistry:item/creosote_oil"
+    "model": "chymistry:item/creosote_oil",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14017259
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
   }
 }

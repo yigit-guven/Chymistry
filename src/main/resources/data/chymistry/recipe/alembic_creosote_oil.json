@@ -1,0 +1,20 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "minecraft:charcoal",
+      "count": 2
+    }
+  ],
+  "bottle": {
+    "ingredient": "minecraft:glass_bottle",
+    "count": 1
+  },
+  "output": {
+    "id": "chymistry:ash"
+  },
+  "secondaryOutput": {
+    "id": "chymistry:creosote_oil"
+  },
+  "processingTime": 200
+}
