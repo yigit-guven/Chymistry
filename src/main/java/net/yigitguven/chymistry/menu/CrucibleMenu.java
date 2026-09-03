@@ -1,5 +1,6 @@
 package net.yigitguven.chymistry.menu;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,8 +18,16 @@ public class CrucibleMenu extends AbstractContainerMenu {
     private final ContainerData data;
     private final ContainerLevelAccess access;
 
+    public BlockPos blockPos = null;
+
     public CrucibleMenu(int pContainerId, Inventory pPlayerInventory, FriendlyByteBuf extraData) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(6), new SimpleContainerData(5), ContainerLevelAccess.NULL);
+        this(pContainerId, pPlayerInventory, new SimpleContainer(6), new SimpleContainerData(5), 
+                extraData != null && extraData.readableBytes() > 0 ? extraData.readBlockPos() : (BlockPos) null);
+    }
+
+    public CrucibleMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData, BlockPos pPos) {
+        this(pContainerId, pPlayerInventory, pContainer, pData, pPos != null ? ContainerLevelAccess.create(pPlayerInventory.player.level(), pPos) : ContainerLevelAccess.NULL);
+        this.blockPos = pPos;
     }
 
     public CrucibleMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData, ContainerLevelAccess pAccess) {
@@ -110,5 +119,9 @@ public class CrucibleMenu extends AbstractContainerMenu {
 
     public float getMinHeat() {
         return this.data.get(4) / 10.0f;
+    }
+
+    public boolean isCrucibleSlot(Slot slot) {
+        return slot != null && slot.container == this.crucible;
     }
 }

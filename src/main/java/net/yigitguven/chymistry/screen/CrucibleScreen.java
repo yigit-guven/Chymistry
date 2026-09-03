@@ -46,6 +46,10 @@ public class CrucibleScreen extends AbstractContainerScreen<CrucibleMenu> {
         super.init();
     }
 
+    public net.minecraft.world.inventory.Slot getHoveredSlot() {
+        return this.hoveredSlot;
+    }
+
     @Override
     public void extractBackground(GuiGraphicsExtractor pGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.extractBackground(pGraphics, pMouseX, pMouseY, pPartialTick);

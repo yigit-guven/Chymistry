@@ -1,0 +1,19 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "chymistry:sea_salt",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:niter_dust",
+      "count": 1
+    }
+  ],
+  "clickType": "fast",
+  "presses": 4,
+  "output": {
+    "id": "chymistry:storm_powder",
+    "count": 2
+  }
+}

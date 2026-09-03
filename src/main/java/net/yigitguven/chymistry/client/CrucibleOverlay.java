@@ -67,16 +67,16 @@ public class CrucibleOverlay implements GuiLayer {
             return;
         }
 
-        int degrees = Math.round(cachedHeat);
+        int heatVal = Math.round(cachedHeat);
         
         int baseColor = 0xAAAAAA;
         ItemStack iconStack = new ItemStack(Items.CLAY_BALL);
-        String ratioStr = degrees + "°C";
+        String ratioStr = String.valueOf(heatVal);
 
         // Lerp color based on heat intensity
         if (cachedHeat > 0) {
             iconStack = new ItemStack(Items.CAMPFIRE);
-            ratioStr = degrees + " / " + cachedMaxHeat + "°C";
+            ratioStr = heatVal + " / " + cachedMaxHeat;
             // Blend from Gray (0xAAAAAA) to Red (0xFF5555) based on percentage
             float percentage = Math.min(1f, cachedHeat / Math.max(1f, cachedMaxHeat));
             int r = (int)(0xAA + (0xFF - 0xAA) * percentage);
@@ -85,7 +85,7 @@ public class CrucibleOverlay implements GuiLayer {
             baseColor = (r << 16) | (g << 8) | b;
         } else if (cachedHeat < 0) {
             iconStack = new ItemStack(Items.SNOWBALL);
-            ratioStr = degrees + " / " + cachedMinHeat + "°C";
+            ratioStr = heatVal + " / " + cachedMinHeat;
             // Blend from Gray (0xAAAAAA) to Aqua (0x55FFFF)
             float percentage = Math.min(1f, cachedHeat / Math.min(-1f, cachedMinHeat));
             int r = (int)(0xAA - (0xAA - 0x55) * percentage);
@@ -93,7 +93,7 @@ public class CrucibleOverlay implements GuiLayer {
             int b = (int)(0xAA + (0xFF - 0xAA) * percentage);
             baseColor = (r << 16) | (g << 8) | b;
         } else {
-            ratioStr = "0°C";
+            ratioStr = "0";
         }
 
         int screenWidth = guiGraphics.guiWidth();

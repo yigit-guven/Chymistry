@@ -124,7 +124,7 @@ public class CrucibleBlock extends Block implements SimpleWaterloggedBlock, Enti
 
                     @Override
                     public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int pContainerId, net.minecraft.world.entity.player.Inventory pInventory, net.minecraft.world.entity.player.Player pPlayer) {
-                        return new net.yigitguven.chymistry.menu.CrucibleMenu(pContainerId, pInventory, crucible.inventory, crucible.data, net.minecraft.world.inventory.ContainerLevelAccess.create(level, pos));
+                        return new net.yigitguven.chymistry.menu.CrucibleMenu(pContainerId, pInventory, crucible.inventory, crucible.data, pos);
                     }
                 }, pos);
             }
