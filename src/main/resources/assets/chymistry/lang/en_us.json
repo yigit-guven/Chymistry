@@ -80,5 +80,7 @@
     "item.chymistry.plastic_pellets": "Plastic Pellets",
     "item.chymistry.storm_powder": "Storm Powder",
     "text.chymistry.treated_prefix": "Treated %s",
-    "jei.chymistry.treated_wood": "Wood Treatment"
+    "jei.chymistry.treated_wood": "Wood Treatment",
+    "jei.chymistry.cauldron": "Cauldron",
+    "jei.chymistry.cauldron.water_cost": "Consumes %s level(s) of fluid"
 }

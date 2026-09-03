@@ -83,6 +83,31 @@ public class ModEvents {
             }
         }
 
+        if (state.getBlock() instanceof net.minecraft.world.level.block.AbstractCauldronBlock) {
+            net.minecraft.world.item.ItemStack held = event.getItemStack();
+            if (!held.isEmpty()) {
+                net.yigitguven.chymistry.recipe.CauldronRecipeInput input = new net.yigitguven.chymistry.recipe.CauldronRecipeInput(held, state);
+                if (level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                    if (serverLevel.getServer().getRecipeManager().getRecipeFor(net.yigitguven.chymistry.recipe.ModRecipes.CAULDRON_TYPE.get(), input, serverLevel).isPresent()) {
+                        net.minecraft.world.item.ItemStack dropped = held.split(1);
+                        net.minecraft.world.entity.item.ItemEntity itemEntity = new net.minecraft.world.entity.item.ItemEntity(
+                                level, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, dropped
+                        );
+                        itemEntity.setDeltaMovement(0, 0, 0);
+                        level.addFreshEntity(itemEntity);
+                        level.playSound(null, pos, net.minecraft.sounds.SoundEvents.ITEM_PICKUP, net.minecraft.sounds.SoundSource.PLAYERS, 0.4F, 1.0F);
+                        event.setCanceled(true);
+                        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                        return;
+                    }
+                } else {
+                    event.setCanceled(true);
+                    event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+                    return;
+                }
+            }
+        }
+
         if (event.getItemStack().is(net.minecraft.world.item.Items.GLASS_BOTTLE) || event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.TINTED_GLASS_BOTTLE.get()) || event.getItemStack().is(net.yigitguven.chymistry.item.ModItems.REINFORCED_GLASS_BOTTLE.get())) {
             net.minecraft.world.phys.BlockHitResult hitResult = event.getHitVec();
             net.minecraft.world.item.context.UseOnContext useOnContext = new net.minecraft.world.item.context.UseOnContext(event.getEntity(), event.getHand(), hitResult);
@@ -110,6 +135,90 @@ public class ModEvents {
                     return;
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Post event) {
+        if (!(event.getEntity() instanceof net.minecraft.world.entity.item.ItemEntity itemEntity) || itemEntity.level().isClientSide()) {
+            return;
+        }
+        if (itemEntity.isRemoved() || itemEntity.getItem().isEmpty()) {
+            return;
+        }
+
+        net.minecraft.world.level.Level level = itemEntity.level();
+        net.minecraft.core.BlockPos pos = itemEntity.blockPosition();
+        net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+
+        if (!(state.getBlock() instanceof net.minecraft.world.level.block.AbstractCauldronBlock)) {
+            net.minecraft.core.BlockPos below = pos.below();
+            net.minecraft.world.level.block.state.BlockState belowState = level.getBlockState(below);
+            if (belowState.getBlock() instanceof net.minecraft.world.level.block.AbstractCauldronBlock && itemEntity.getY() - below.getY() <= 1.25) {
+                pos = below;
+                state = belowState;
+            } else {
+                if (itemEntity.getPersistentData().contains("chymistry_cauldron_ticks")) {
+                    itemEntity.getPersistentData().remove("chymistry_cauldron_ticks");
+                }
+                return;
+            }
+        }
+
+        double relX = itemEntity.getX() - pos.getX();
+        double relZ = itemEntity.getZ() - pos.getZ();
+        if (relX < 0.05 || relX > 0.95 || relZ < 0.05 || relZ > 0.95) {
+            if (itemEntity.getPersistentData().contains("chymistry_cauldron_ticks")) {
+                itemEntity.getPersistentData().remove("chymistry_cauldron_ticks");
+            }
+            return;
+        }
+
+        net.minecraft.server.level.ServerLevel serverLevel = (net.minecraft.server.level.ServerLevel) level;
+        net.yigitguven.chymistry.recipe.CauldronRecipeInput input = new net.yigitguven.chymistry.recipe.CauldronRecipeInput(itemEntity.getItem(), state);
+        var optionalRecipe = serverLevel.getServer().getRecipeManager().getRecipeFor(net.yigitguven.chymistry.recipe.ModRecipes.CAULDRON_TYPE.get(), input, serverLevel);
+        if (optionalRecipe.isEmpty()) {
+            if (itemEntity.getPersistentData().contains("chymistry_cauldron_ticks")) {
+                itemEntity.getPersistentData().remove("chymistry_cauldron_ticks");
+            }
+            return;
+        }
+
+        net.yigitguven.chymistry.recipe.CauldronRecipe recipe = optionalRecipe.get().value();
+        int ticks = itemEntity.getPersistentData().getInt("chymistry_cauldron_ticks").orElse(0) + 1;
+
+        if (ticks % 10 == 0) {
+            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.BUBBLE, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5, 4, 0.15, 0.1, 0.15, 0.02);
+            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.SPLASH, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5, 2, 0.15, 0.1, 0.15, 0.02);
+        }
+
+        if (ticks >= recipe.processingTime()) {
+            itemEntity.getPersistentData().remove("chymistry_cauldron_ticks");
+            net.minecraft.world.item.ItemStack resultStack = recipe.assemble(input);
+
+            itemEntity.getItem().shrink(1);
+            if (itemEntity.getItem().isEmpty()) {
+                itemEntity.discard();
+            }
+
+            net.minecraft.world.entity.item.ItemEntity resultEntity = new net.minecraft.world.entity.item.ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, resultStack);
+            resultEntity.setDeltaMovement(0, 0.1, 0);
+            level.addFreshEntity(resultEntity);
+
+            if (recipe.levelCost() > 0 && state.hasProperty(net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL)) {
+                int currentLevel = state.getValue(net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL);
+                int newLevel = currentLevel - recipe.levelCost();
+                if (newLevel <= 0) {
+                    level.setBlockAndUpdate(pos, net.minecraft.world.level.block.Blocks.CAULDRON.defaultBlockState());
+                } else {
+                    level.setBlockAndUpdate(pos, state.setValue(net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL, newLevel));
+                }
+            }
+
+            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.BREWING_STAND_BREW, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+            serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.SPLASH, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 20, 0.2, 0.2, 0.2, 0.1);
+        } else {
+            itemEntity.getPersistentData().putInt("chymistry_cauldron_ticks", ticks);
         }
     }
 

@@ -1,0 +1,12 @@
+{
+  "type": "chymistry:cauldron",
+  "cauldron": "minecraft:water_cauldron",
+  "min_level": 1,
+  "level_cost": 1,
+  "processing_time": 200,
+  "input": "minecraft:iron_ingot",
+  "output": {
+    "id": "chymistry:rust_powder",
+    "count": 1
+  }
+}

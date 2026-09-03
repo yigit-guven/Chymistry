@@ -58,6 +58,17 @@ public class ModRecipes {
                 }
             });
 
+    public static final Supplier<RecipeSerializer<CauldronRecipe>> CAULDRON_SERIALIZER =
+            SERIALIZERS.register("cauldron", () -> new RecipeSerializer<>(CauldronRecipe.CODEC, CauldronRecipe.STREAM_CODEC));
+
+    public static final Supplier<RecipeType<CauldronRecipe>> CAULDRON_TYPE =
+            TYPES.register("cauldron", () -> new RecipeType<CauldronRecipe>() {
+                @Override
+                public String toString() {
+                    return "cauldron";
+                }
+            });
+
     public static final Supplier<RecipeSerializer<net.yigitguven.chymistry.wood.TreatedWoodRecipe>> TREATED_WOOD_SERIALIZER =
             SERIALIZERS.register("crafting_special_treated_wood", () -> new RecipeSerializer<>(net.yigitguven.chymistry.wood.TreatedWoodRecipe.CODEC, net.yigitguven.chymistry.wood.TreatedWoodRecipe.STREAM_CODEC));
 }

@@ -46,6 +46,10 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<TreatedWoodJeiRecipe> TREATED_WOOD = mezz.jei.api.recipe.RecipeType
             .create(Chymistry.MODID, "treated_wood", TreatedWoodJeiRecipe.class);
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CauldronRecipe>> CAULDRON = mezz.jei.api.recipe.RecipeType
+            .create(Chymistry.MODID, "cauldron", (Class) net.minecraft.world.item.crafting.RecipeHolder.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -60,6 +64,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new CrucibleRecipeCategory(guiHelper));
         registration.addRecipeCategories(new AlembicRecipeCategory(guiHelper));
         registration.addRecipeCategories(new TreatedWoodRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new CauldronRecipeCategory(guiHelper));
     }
 
     @Override
@@ -97,6 +102,13 @@ public class ChymistryJeiPlugin implements IModPlugin {
                     .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.AlembicRecipe>) (Object) holder)
                     .toList();
             registration.addRecipes(ALEMBIC, alembicRecipes);
+
+            java.util.List<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CauldronRecipe>> cauldronRecipes = manager
+                    .getRecipes().stream()
+                    .filter(holder -> holder.value() instanceof net.yigitguven.chymistry.recipe.CauldronRecipe)
+                    .map(holder -> (net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CauldronRecipe>) (Object) holder)
+                    .toList();
+            registration.addRecipes(CAULDRON, cauldronRecipes);
         }
 
         java.util.List<TreatedWoodJeiRecipe> treatedWoodRecipes = net.minecraft.core.registries.BuiltInRegistries.ITEM
@@ -124,6 +136,10 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 new ItemStack(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE));
         registration.addCraftingStation(TREATED_WOOD,
                 new ItemStack(net.yigitguven.chymistry.item.ModItems.CREOSOTE_OIL.get()));
+        registration.addCraftingStation(CAULDRON,
+                new ItemStack(net.minecraft.world.level.block.Blocks.CAULDRON));
+        registration.addCraftingStation(CAULDRON,
+                new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
     }
 
     @Override
