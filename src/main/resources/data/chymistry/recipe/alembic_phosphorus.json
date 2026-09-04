@@ -1,0 +1,18 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "chymistry:sulfuric_acid_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:bone_meal",
+      "count": 16
+    }
+  ],
+  "output": {
+    "id": "chymistry:phosphorus",
+    "count": 1
+  },
+  "processingTime": 200
+}
