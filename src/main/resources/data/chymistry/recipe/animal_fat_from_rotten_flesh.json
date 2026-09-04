@@ -1,0 +1,15 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "minecraft:rotten_flesh",
+      "count": 2
+    }
+  ],
+  "clickType": "any",
+  "presses": 4,
+  "output": {
+    "id": "chymistry:animal_fat",
+    "count": 1
+  }
+}

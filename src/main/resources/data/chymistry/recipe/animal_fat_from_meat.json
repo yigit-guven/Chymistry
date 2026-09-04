@@ -1,0 +1,22 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": [
+        "minecraft:beef",
+        "minecraft:mutton",
+        "minecraft:chicken",
+        "minecraft:rabbit",
+        "minecraft:cod",
+        "minecraft:salmon"
+      ],
+      "count": 1
+    }
+  ],
+  "clickType": "any",
+  "presses": 4,
+  "output": {
+    "id": "chymistry:animal_fat",
+    "count": 1
+  }
+}
