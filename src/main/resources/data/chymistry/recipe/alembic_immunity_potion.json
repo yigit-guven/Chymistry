@@ -1,0 +1,17 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "chymistry:soap",
+      "count": 1
+    }
+  ],
+  "bottle": {
+    "ingredient": "minecraft:glass_bottle",
+    "count": 1
+  },
+  "secondaryOutput": {
+    "id": "chymistry:immunity_potion"
+  },
+  "processingTime": 200
+}

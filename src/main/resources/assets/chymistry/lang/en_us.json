@@ -123,5 +123,8 @@
     "tooltip.chymistry.vigor.desc": "Regenerates Max Health over 10s",
     "tooltip.chymistry.defoliant.effect": "Defoliation",
     "tooltip.chymistry.defoliant.when_used": "When Applied to Soil:",
-    "tooltip.chymistry.defoliant.desc": "Removes all leaves, grass & herbs in a 20x20x20 area"
+    "tooltip.chymistry.defoliant.desc": "Removes all leaves, grass & herbs in a 20x20x20 area",
+    "item.chymistry.immunity_potion": "Potion of Immunity",
+    "effect.chymistry.immunity": "Immunity",
+    "tooltip.chymistry.immunity.desc": "Prevents all other status effects"
 }

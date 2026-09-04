@@ -15,4 +15,7 @@ public class ModMobEffects {
 
     public static final DeferredHolder<MobEffect, MobEffect> VIGOR = MOB_EFFECTS.register("vigor",
             () -> new VigorMobEffect(MobEffectCategory.BENEFICIAL, 0x00C4B4));
+
+    public static final DeferredHolder<MobEffect, MobEffect> IMMUNITY = MOB_EFFECTS.register("immunity",
+            () -> new ImmunityMobEffect(MobEffectCategory.BENEFICIAL, 0x70E8E8));
 }

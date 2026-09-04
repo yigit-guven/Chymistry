@@ -47,6 +47,7 @@ public class ClientSetup {
                             if (stored.is(net.yigitguven.chymistry.item.ModItems.NITRIC_ACID_BOTTLE.get())) return 0xFFE67E22;
                             if (stored.is(net.yigitguven.chymistry.item.ModItems.SULFURIC_ACID_BOTTLE.get())) return 0xFFF1C40F;
                             if (stored.is(net.yigitguven.chymistry.item.ModItems.VIGOR_POTION.get())) return 0xFF00C4B4;
+                            if (stored.is(net.yigitguven.chymistry.item.ModItems.IMMUNITY_POTION.get())) return 0xFF70E8E8;
 
                             return 0xFF385DC6;
                         }

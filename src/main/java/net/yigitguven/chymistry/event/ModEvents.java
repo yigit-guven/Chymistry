@@ -13,8 +13,15 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onEffectApplicable(MobEffectEvent.Applicable event) {
-        if (event.getEffectInstance().getEffect().equals(MobEffects.POISON) || 
-            event.getEffectInstance().getEffect().equals(MobEffects.WITHER)) {
+        if (event.getEntity().hasEffect(ModMobEffects.IMMUNITY)) {
+            if (event.getEffectInstance() != null && !event.getEffectInstance().is(ModMobEffects.IMMUNITY)) {
+                event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                return;
+            }
+        }
+
+        if (event.getEffectInstance() != null && (event.getEffectInstance().getEffect().equals(MobEffects.POISON) || 
+            event.getEffectInstance().getEffect().equals(MobEffects.WITHER))) {
             
             if (event.getEntity().hasEffect(ModMobEffects.VITRIOL_IMMUNITY)) {
                 event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
@@ -24,7 +31,19 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onEffectAdded(MobEffectEvent.Added event) {
-        if (event.getEffectInstance().getEffect().equals(ModMobEffects.VITRIOL_IMMUNITY)) {
+        if (event.getEffectInstance() != null && event.getEffectInstance().is(ModMobEffects.IMMUNITY)) {
+            java.util.List<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>> toRemove = new java.util.ArrayList<>();
+            for (net.minecraft.world.effect.MobEffectInstance inst : event.getEntity().getActiveEffects()) {
+                if (!inst.is(ModMobEffects.IMMUNITY)) {
+                    toRemove.add(inst.getEffect());
+                }
+            }
+            for (net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect : toRemove) {
+                event.getEntity().removeEffect(effect);
+            }
+        }
+
+        if (event.getEffectInstance() != null && event.getEffectInstance().getEffect().equals(ModMobEffects.VITRIOL_IMMUNITY)) {
             event.getEntity().removeEffect(MobEffects.POISON);
             event.getEntity().removeEffect(MobEffects.WITHER);
         }

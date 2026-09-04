@@ -130,6 +130,28 @@ public class ModItems {
             pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.vigor.desc").withStyle(net.minecraft.ChatFormatting.BLUE));
         }
     });
+    public static final DeferredItem<Item> IMMUNITY_POTION = ITEMS.registerItem("immunity_potion", properties -> new Item(properties.stacksTo(1)
+            .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
+            .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
+                .animation(net.minecraft.world.item.ItemUseAnimation.DRINK)
+                .sound(net.minecraft.sounds.SoundEvents.GENERIC_DRINK)
+                .onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(new net.minecraft.world.effect.MobEffectInstance(net.yigitguven.chymistry.effect.ModMobEffects.IMMUNITY, 3600, 0), 1.0f))
+                .build())
+            .usingConvertsTo(net.minecraft.world.item.Items.GLASS_BOTTLE)) {
+        @Override
+        public Component getName(ItemStack pStack) {
+            return super.getName(pStack).copy().withStyle(style -> style.withColor(0x70E8E8));
+        }
+
+        @Override
+        public void appendHoverText(ItemStack pStack, net.minecraft.world.item.Item.TooltipContext pContext, net.minecraft.world.item.component.TooltipDisplay pTooltipDisplay, java.util.function.Consumer<Component> pTooltipComponents, net.minecraft.world.item.TooltipFlag pTooltipFlag) {
+            super.appendHoverText(pStack, pContext, pTooltipDisplay, pTooltipComponents, pTooltipFlag);
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable(net.yigitguven.chymistry.effect.ModMobEffects.IMMUNITY.value().getDescriptionId()).append(" (3:00)").withStyle(net.minecraft.ChatFormatting.BLUE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.empty());
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("potion.whenDrank").withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+            pTooltipComponents.accept(net.minecraft.network.chat.Component.translatable("tooltip.chymistry.immunity.desc").withStyle(net.minecraft.ChatFormatting.BLUE));
+        }
+    });
     public static final DeferredItem<Item> DISINFECTANT = ITEMS.registerItem("disinfectant", properties -> new DisinfectantItem(properties.stacksTo(1)
             .component(net.minecraft.core.component.DataComponents.FOOD, new net.minecraft.world.food.FoodProperties.Builder().alwaysEdible().build())
             .component(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder()
