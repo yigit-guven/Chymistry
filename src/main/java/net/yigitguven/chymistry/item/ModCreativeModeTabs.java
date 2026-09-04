@@ -77,6 +77,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RED_MATCH.get());
                         output.accept(ModItems.BLACK_MATCH.get());
                         output.accept(ModItems.PHOSPHORUS.get());
+                        output.accept(ModItems.PHOSPHORUS_TORCH.get());
                         output.accept(ModItems.PLASTIC_PELLETS.get());
                         output.accept(ModItems.SILVER_INGOT.get());
                         output.accept(ModItems.SILVER_SLUDGE.get());

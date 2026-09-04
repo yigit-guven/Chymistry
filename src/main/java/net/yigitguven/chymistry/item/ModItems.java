@@ -159,5 +159,9 @@ public class ModItems {
     });
 
     public static final DeferredItem<BlockItem> REPELLENT_BASE = ITEMS.registerItem("repellent_base", properties -> new BlockItem(ModBlocks.REPELLENT_BASE.get(), properties.durability(600)));
+
+    public static final DeferredItem<Item> PHOSPHORUS_TORCH = ITEMS.registerItem("phosphorus_torch",
+        properties -> new net.minecraft.world.item.StandingAndWallBlockItem(ModBlocks.PHOSPHORUS_TORCH.get(), ModBlocks.PHOSPHORUS_WALL_TORCH.get(), net.minecraft.core.Direction.DOWN, properties));
 }
+
 
