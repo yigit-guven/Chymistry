@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:stick",
+    "#c:storage_blocks/sulfur",
+    "chymistry:phosphorus",
+    "minecraft:black_dye"
+  ],
+  "result": {
+    "id": "chymistry:black_match",
+    "count": 4
+  }
+}

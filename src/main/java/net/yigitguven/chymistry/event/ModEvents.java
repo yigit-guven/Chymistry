@@ -291,6 +291,84 @@ public class ModEvents {
                 net.yigitguven.chymistry.item.IronTongsItem.tickCustom(stack, player.level(), player);
             }
         }
+
+        // 4. Mobile Match Lighting & Ticking
+        boolean hasLitMatch = false;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            net.minecraft.world.item.ItemStack stack = player.getInventory().getItem(i);
+            if (stack.getItem() instanceof net.yigitguven.chymistry.item.MatchItem matchItem && net.yigitguven.chymistry.item.MatchItem.isLit(stack)) {
+                hasLitMatch = true;
+                matchItem.tickCustom(stack, player.level(), player);
+            }
+        }
+
+        net.minecraft.world.level.Level level = player.level();
+        java.util.UUID playerId = player.getUUID();
+        net.minecraft.core.BlockPos currentLightPos = PLAYER_LIGHTS.get(playerId);
+
+        if (hasLitMatch && player.isAlive()) {
+            net.minecraft.core.BlockPos headPos = player.blockPosition().above();
+            net.minecraft.core.BlockPos feetPos = player.blockPosition();
+            net.minecraft.core.BlockPos targetPos = null;
+
+            if (level.getBlockState(headPos).isAir() || level.getBlockState(headPos).is(net.minecraft.world.level.block.Blocks.LIGHT)) {
+                targetPos = headPos;
+            } else if (level.getBlockState(feetPos).isAir() || level.getBlockState(feetPos).is(net.minecraft.world.level.block.Blocks.LIGHT)) {
+                targetPos = feetPos;
+            } else if (level.getBlockState(headPos).is(net.minecraft.world.level.block.Blocks.WATER)) {
+                targetPos = headPos;
+            } else if (level.getBlockState(feetPos).is(net.minecraft.world.level.block.Blocks.WATER)) {
+                targetPos = feetPos;
+            }
+
+            if (targetPos != null) {
+                if (currentLightPos != null && !currentLightPos.equals(targetPos)) {
+                    removeLight(level, currentLightPos);
+                }
+
+                net.minecraft.world.level.block.state.BlockState targetState = level.getBlockState(targetPos);
+                if (targetState.isAir()) {
+                    level.setBlockAndUpdate(targetPos, net.minecraft.world.level.block.Blocks.LIGHT.defaultBlockState()
+                            .setValue(net.minecraft.world.level.block.LightBlock.LEVEL, 15));
+                    PLAYER_LIGHTS.put(playerId, targetPos);
+                } else if (targetState.is(net.minecraft.world.level.block.Blocks.WATER)) {
+                    level.setBlockAndUpdate(targetPos, net.minecraft.world.level.block.Blocks.LIGHT.defaultBlockState()
+                            .setValue(net.minecraft.world.level.block.LightBlock.LEVEL, 15)
+                            .setValue(net.minecraft.world.level.block.LightBlock.WATERLOGGED, true));
+                    PLAYER_LIGHTS.put(playerId, targetPos);
+                } else if (targetState.is(net.minecraft.world.level.block.Blocks.LIGHT)) {
+                    PLAYER_LIGHTS.put(playerId, targetPos);
+                }
+            } else if (currentLightPos != null) {
+                removeLight(level, currentLightPos);
+                PLAYER_LIGHTS.remove(playerId);
+            }
+        } else if (currentLightPos != null) {
+            removeLight(level, currentLightPos);
+            PLAYER_LIGHTS.remove(playerId);
+        }
+    }
+
+    private static final java.util.Map<java.util.UUID, net.minecraft.core.BlockPos> PLAYER_LIGHTS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static void removeLight(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos) {
+        net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+        if (state.is(net.minecraft.world.level.block.Blocks.LIGHT)) {
+            if (state.hasProperty(net.minecraft.world.level.block.LightBlock.WATERLOGGED) && state.getValue(net.minecraft.world.level.block.LightBlock.WATERLOGGED)) {
+                level.setBlockAndUpdate(pos, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState());
+            } else {
+                level.removeBlock(pos, false);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedOut(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {
+        net.minecraft.world.entity.player.Player player = event.getEntity();
+        net.minecraft.core.BlockPos pos = PLAYER_LIGHTS.remove(player.getUUID());
+        if (pos != null) {
+            removeLight(player.level(), pos);
+        }
     }
 
     @SubscribeEvent

@@ -12,6 +12,7 @@ credits="Thanks to all community contributors for their fixes, and to Curseforge
 description='''
 A comprehensive Chymistry mod for Minecraft.
 '''
+logoFile="logo.png"
 
 [[mixins]]
 config="chymistry.mixins.json"

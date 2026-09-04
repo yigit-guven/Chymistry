@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:stick",
+    "#c:storage_blocks/sulfur",
+    "chymistry:phosphorus",
+    "minecraft:cyan_dye"
+  ],
+  "result": {
+    "id": "chymistry:cyan_match",
+    "count": 4
+  }
+}
