@@ -89,7 +89,7 @@ public class ModItems {
     public static final DeferredItem<Item> PLASTIC_PELLETS = ITEMS.registerSimpleItem("plastic_pellets");
     public static final DeferredItem<Item> SILVER_INGOT = ITEMS.registerSimpleItem("silver_ingot");
     public static final DeferredItem<Item> SILVER_SLUDGE = ITEMS.registerSimpleItem("silver_sludge");
-    public static final DeferredItem<Item> SOAP = ITEMS.registerSimpleItem("soap");
+    public static final DeferredItem<Item> SOAP = ITEMS.registerItem("soap", properties -> new SoapItem(properties.durability(64)));
     public static final DeferredItem<Item> STEEL_INGOT = ITEMS.registerSimpleItem("steel_ingot");
     public static final DeferredItem<Item> STORM_POWDER = ITEMS.registerSimpleItem("storm_powder");
     public static final DeferredItem<Item> VULCANIZED_RUBBER = ITEMS.registerSimpleItem("vulcanized_rubber");

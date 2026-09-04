@@ -1,0 +1,21 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "chymistry:animal_fat",
+      "count": 2
+    },
+    {
+      "ingredient": "chymistry:ash",
+      "count": 2
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:soap",
+    "count": 2
+  }
+}

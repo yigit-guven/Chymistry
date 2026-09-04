@@ -50,6 +50,9 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<net.minecraft.world.item.crafting.RecipeHolder<net.yigitguven.chymistry.recipe.CauldronRecipe>> CAULDRON = mezz.jei.api.recipe.RecipeType
             .create(Chymistry.MODID, "cauldron", (Class) net.minecraft.world.item.crafting.RecipeHolder.class);
 
+    public static final mezz.jei.api.recipe.RecipeType<SoapJeiRecipe> SOAP_BLEACHING = mezz.jei.api.recipe.RecipeType
+            .create(Chymistry.MODID, "soap_bleaching", SoapJeiRecipe.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -65,6 +68,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new AlembicRecipeCategory(guiHelper));
         registration.addRecipeCategories(new TreatedWoodRecipeCategory(guiHelper));
         registration.addRecipeCategories(new CauldronRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new SoapRecipeCategory(guiHelper));
     }
 
     @Override
@@ -135,6 +139,8 @@ public class ChymistryJeiPlugin implements IModPlugin {
                         net.yigitguven.chymistry.wood.TreatedWoodHelper.makeTreated(woodStack, 8)))
                 .toList();
         registration.addRecipes(TREATED_WOOD, treatedWoodRecipes);
+
+        registration.addRecipes(SOAP_BLEACHING, net.yigitguven.chymistry.util.SoapCleaningHelper.getJeiRecipes());
     }
 
     @Override
@@ -156,6 +162,10 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 new ItemStack(net.minecraft.world.level.block.Blocks.CAULDRON));
         registration.addCraftingStation(CAULDRON,
                 new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+        registration.addCraftingStation(SOAP_BLEACHING,
+                new ItemStack(net.yigitguven.chymistry.item.ModItems.SOAP.get()));
+        registration.addCraftingStation(SOAP_BLEACHING,
+                new ItemStack(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE));
     }
 
     @Override

@@ -71,4 +71,8 @@ public class ModRecipes {
 
     public static final Supplier<RecipeSerializer<net.yigitguven.chymistry.wood.TreatedWoodRecipe>> TREATED_WOOD_SERIALIZER =
             SERIALIZERS.register("crafting_special_treated_wood", () -> new RecipeSerializer<>(net.yigitguven.chymistry.wood.TreatedWoodRecipe.CODEC, net.yigitguven.chymistry.wood.TreatedWoodRecipe.STREAM_CODEC));
+
+    public static final Supplier<RecipeSerializer<SoapBleachingRecipe>> SOAP_BLEACHING_SERIALIZER =
+            SERIALIZERS.register("soap_bleaching", () -> SoapBleachingRecipe.SERIALIZER);
 }
+
