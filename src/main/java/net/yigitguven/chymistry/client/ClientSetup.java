@@ -16,6 +16,12 @@ public class ClientSetup {
     }
 
     @SubscribeEvent
+    public static void registerEntityRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(net.yigitguven.chymistry.entity.ModEntities.THROWN_EXPLOSIVE_LIQUID.get(), net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+        event.registerEntityRenderer(net.yigitguven.chymistry.entity.ModEntities.THROWN_DYNAMITE.get(), net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+    }
+
+    @SubscribeEvent
     public static void registerBlockColors(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.BlockTintSources event) {
         event.register(java.util.List.of(new net.minecraft.client.color.block.BlockTintSource() {
             @Override

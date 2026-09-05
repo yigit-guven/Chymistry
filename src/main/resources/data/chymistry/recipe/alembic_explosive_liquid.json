@@ -1,0 +1,25 @@
+{
+  "type": "chymistry:alembic",
+  "inputs": [
+    {
+      "ingredient": "chymistry:sulfuric_acid_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:nitric_acid_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:animal_fat",
+      "count": 1
+    }
+  ],
+  "bottle": {
+    "ingredient": "chymistry:tinted_glass_bottle",
+    "count": 1
+  },
+  "secondaryOutput": {
+    "id": "chymistry:explosive_liquid"
+  },
+  "processingTime": 200
+}

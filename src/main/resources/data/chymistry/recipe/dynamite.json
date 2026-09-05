@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:string",
+    "#minecraft:sand",
+    "chymistry:explosive_liquid"
+  ],
+  "result": {
+    "count": 2,
+    "id": "chymistry:dynamite"
+  }
+}

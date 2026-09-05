@@ -64,7 +64,7 @@ public class ModItems {
     public static final DeferredItem<Item> BATTERY = ITEMS.registerSimpleItem("battery");
     public static final DeferredItem<BlockItem> BLAST_PROOF_CEMENT = ITEMS.registerItem("blast_proof_cement", properties -> new BlastProofCementItem(net.yigitguven.chymistry.block.ModBlocks.BLAST_PROOF_CEMENT.get(), properties));
     public static final DeferredItem<Item> BRASS_INGOT = ITEMS.registerSimpleItem("brass_ingot");
-    public static final DeferredItem<Item> DYNAMITE = ITEMS.registerSimpleItem("dynamite");
+    public static final DeferredItem<Item> DYNAMITE = ITEMS.registerItem("dynamite", properties -> new DynamiteItem(properties.stacksTo(16)));
     public static final DeferredItem<Item> FREEZING_POWDER = ITEMS.registerItem("freezing_powder", FreezingPowderItem::new);
     public static final DeferredItem<Item> GREEN_CRYSTAL = ITEMS.registerSimpleItem("green_crystal");
     public static final DeferredItem<Item> INCENDIARY_DUST = ITEMS.registerSimpleItem("incendiary_dust");
@@ -103,7 +103,7 @@ public class ModItems {
         }
     });
     public static final DeferredItem<Item> DEFOLIANT_POTION = ITEMS.registerItem("defoliant_potion", properties -> new DefoliantPotionItem(properties.stacksTo(1)));
-    public static final DeferredItem<Item> EXPLOSIVE_LIQUID = ITEMS.registerSimpleItem("explosive_liquid");
+    public static final DeferredItem<Item> EXPLOSIVE_LIQUID = ITEMS.registerItem("explosive_liquid", properties -> new ExplosiveLiquidItem(properties.stacksTo(16).craftRemainder(TINTED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> GOLD_SOLVENT_BOTTLE = ITEMS.registerItem("gold_solvent_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> HYDROCHLORIC_ACID_BOTTLE = ITEMS.registerItem("hydrochloric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));
     public static final DeferredItem<Item> NITRIC_ACID_BOTTLE = ITEMS.registerItem("nitric_acid_bottle", properties -> new Item(properties.stacksTo(1).craftRemainder(REINFORCED_GLASS_BOTTLE.get())));

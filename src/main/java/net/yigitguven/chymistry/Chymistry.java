@@ -29,6 +29,7 @@ public class Chymistry {
         ModRecipes.SERIALIZERS.register(modEventBus);
         ModRecipes.TYPES.register(modEventBus);
         net.yigitguven.chymistry.effect.ModMobEffects.MOB_EFFECTS.register(modEventBus);
+        net.yigitguven.chymistry.entity.ModEntities.ENTITY_TYPES.register(modEventBus);
 
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER, ChymistryServerConfig.SPEC);
 
