@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:water_bucket",
+    "#minecraft:sand",
+    "#minecraft:sand",
+    "#minecraft:sand",
+    "#minecraft:sand",
+    "chymistry:quicklime",
+    "chymistry:quicklime",
+    "chymistry:quicklime",
+    "chymistry:quicklime"
+  ],
+  "result": {
+    "count": 8,
+    "id": "chymistry:blast_proof_cement"
+  }
+}

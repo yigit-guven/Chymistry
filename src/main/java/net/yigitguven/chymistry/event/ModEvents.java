@@ -50,6 +50,37 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void onEntityInteract(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
+        if (event.getTarget() instanceof net.minecraft.world.entity.item.PrimedTnt tnt) {
+            if (event.getItemStack().is(net.yigitguven.chymistry.block.ModBlocks.BLAST_PROOF_CEMENT.asItem())) {
+                net.minecraft.world.level.Level level = event.getLevel();
+                if (!level.isClientSide()) {
+                    net.minecraft.core.BlockPos pos = tnt.blockPosition();
+                    tnt.discard();
+                    level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.2f);
+                    level.playSound(null, pos, net.minecraft.sounds.SoundEvents.STONE_PLACE, net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 0.8f);
+
+                    if (level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                        serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE, tnt.getX(), tnt.getY() + 0.5, tnt.getZ(), 10, 0.2, 0.2, 0.2, 0.05);
+                        serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.CLOUD, tnt.getX(), tnt.getY() + 0.5, tnt.getZ(), 10, 0.2, 0.2, 0.2, 0.05);
+                    }
+
+                    net.minecraft.world.entity.item.ItemEntity defusedTnt = new net.minecraft.world.entity.item.ItemEntity(
+                        level, tnt.getX(), tnt.getY(), tnt.getZ(), new ItemStack(net.minecraft.world.level.block.Blocks.TNT)
+                    );
+                    level.addFreshEntity(defusedTnt);
+
+                    if (!event.getEntity().getAbilities().instabuild) {
+                        event.getItemStack().shrink(1);
+                    }
+                }
+                event.setCanceled(true);
+                event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onRightClickItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem event) {
         if (event.getItemStack().is(net.minecraft.world.item.Items.BUCKET)) {
             net.minecraft.world.phys.BlockHitResult hitResult = net.minecraft.world.item.Item.getPlayerPOVHitResult(event.getLevel(), event.getEntity(), net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY);

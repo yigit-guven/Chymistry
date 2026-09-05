@@ -62,7 +62,7 @@ public class ModItems {
             .craftRemainder(net.minecraft.world.item.Items.GLASS_BOTTLE)));
 
     public static final DeferredItem<Item> BATTERY = ITEMS.registerSimpleItem("battery");
-    public static final DeferredItem<Item> BLAST_PROOF_CEMENT = ITEMS.registerSimpleItem("blast_proof_cement");
+    public static final DeferredItem<BlockItem> BLAST_PROOF_CEMENT = ITEMS.registerItem("blast_proof_cement", properties -> new BlastProofCementItem(net.yigitguven.chymistry.block.ModBlocks.BLAST_PROOF_CEMENT.get(), properties));
     public static final DeferredItem<Item> BRASS_INGOT = ITEMS.registerSimpleItem("brass_ingot");
     public static final DeferredItem<Item> DYNAMITE = ITEMS.registerSimpleItem("dynamite");
     public static final DeferredItem<Item> FREEZING_POWDER = ITEMS.registerItem("freezing_powder", FreezingPowderItem::new);

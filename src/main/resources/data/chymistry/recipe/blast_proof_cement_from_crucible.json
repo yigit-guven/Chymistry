@@ -1,0 +1,25 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "minecraft:water_bucket",
+      "count": 1
+    },
+    {
+      "ingredient": "#minecraft:sand",
+      "count": 2
+    },
+    {
+      "ingredient": "chymistry:quicklime",
+      "count": 2
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": 20,
+  "maxHeat": 1500,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:blast_proof_cement",
+    "count": 4
+  }
+}

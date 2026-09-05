@@ -32,6 +32,12 @@ public class ModBlocks {
     public static final DeferredBlock<Block> PLASTIC_BLOCK = BLOCKS.registerBlock("plastic_block", Block::new, () -> BlockBehaviour.Properties.of().strength(1.5F, 1200.0F).sound(net.minecraft.world.level.block.SoundType.WOOD));
     public static final DeferredBlock<Block> REPELLENT_BASE = BLOCKS.registerBlock("repellent_base", Block::new, () -> BlockBehaviour.Properties.of().strength(1.5F).sound(net.minecraft.world.level.block.SoundType.NETHER_WART));
     public static final DeferredBlock<Block> CYAN_DYE_COMPOSTER = BLOCKS.registerBlock("cyan_dye_composter", CyanDyeComposterBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COMPOSTER));
+    public static final DeferredBlock<Block> BLAST_PROOF_CEMENT = BLOCKS.registerBlock("blast_proof_cement",
+        BlastProofCementBlock::new,
+        () -> BlockBehaviour.Properties.of()
+            .strength(3.5F, 1200.0F)
+            .sound(net.minecraft.world.level.block.SoundType.STONE)
+            .requiresCorrectToolForDrops());
 
     public static final DeferredBlock<Block> PHOSPHORUS_TORCH = BLOCKS.registerBlock("phosphorus_torch",
         PhosphorusTorchBlock::new,
