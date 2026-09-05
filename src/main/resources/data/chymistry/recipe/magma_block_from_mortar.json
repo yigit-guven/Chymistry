@@ -1,0 +1,19 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "chymistry:incendiary_dust",
+      "count": 1
+    }
+  ],
+  "clickType": "any",
+  "presses": 4,
+  "output": {
+    "id": "minecraft:magma_block",
+    "count": 1
+  }
+}

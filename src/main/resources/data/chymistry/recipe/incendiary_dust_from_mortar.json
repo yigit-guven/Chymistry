@@ -1,0 +1,19 @@
+{
+  "type": "chymistry:mortar",
+  "inputs": [
+    {
+      "ingredient": "chymistry:rust_powder",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:gunpowder",
+      "count": 1
+    }
+  ],
+  "clickType": "any",
+  "presses": 4,
+  "output": {
+    "id": "chymistry:incendiary_dust",
+    "count": 2
+  }
+}
