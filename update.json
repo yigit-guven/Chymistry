@@ -1,10 +1,11 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/chymistry/",
   "promos": {
-    "26.2-latest": "1.0.2-alpha",
-    "26.2-recommended": "1.0.2-alpha"
+    "26.2-latest": "1.1.0",
+    "26.2-recommended": "1.1.0"
   },
   "26.2": {
+    "1.1.0": "- First official full release of Chymistry!\n- Added Alembic Distillation Station with custom UI, dynamic bottle placement, and boiling particle effects\n- Added Cauldron Chemistry system, Super Fertilizer composting, and Soap Bleaching mechanics with JEI support\n- Added Treated Wood crafting and fireproofing, Creosote Oil fuel, Plastic Blocks, and Blast-Proof Cement\n- Added functional alchemical brews: Vigor Potion, Potion of Immunity, and Defoliant Potion\n- Added throwable explosives (Dynamite, Liquid Explosive), Colored Matches with dynamic lighting, and Phosphorus Torches\n- Added Storm Powder rain-summoning ritual and Freezing Powder block conversion\n- Overhauled Crucible and Mortar JEI categories with animated GUI indicators and comprehensive tooltips\n- Removed alpha warning disclaimer on world load",
     "1.0.2-alpha": "- Added Thermometer item and HUD overlay to view heat\n- Overhauled Crucible mechanics with configurable heat limits\n- Added fully functional Iron Tongs with targeting logic, environmental heat calculation, and background inventory ticking\n- Added portable Crucible UI accessible via Iron Tongs with real-time data syncing\n- Added Crucible custom crafting recipe system and JEI support\n- Added 16 new crafting materials and refreshed item textures\n- Added Sea Salt smelting from Sea Water Bucket\n- Enhanced tooltips for Tongs, Crucibles, and Thermometer",
     "1.0.1-alpha": "- Added Iron Tongs with custom two-handed holding and swinging animations\n- Added Crucible block variants\n- Added Rust Powder item\n- Added Niter Soil Composter block workflow and JEI category\n- Fixed mortar state reset, button packet dispatching, and output stack limits (thanks Spagles!)\n- Fixed mortar JEI recipe category width alignment\n- Massive updates to wiki documentation, CI workflows, and issue templates",
     "1.0.0-alpha": "Initial Alpha Release for Chymistry"

@@ -11,7 +11,7 @@ Required information:
 ## Code Contributions
 
 ### Workspace Setup
-Requirement: Java 21
+Requirement: Java 25
 
 ```bash
 git clone https://github.com/yigit-guven/Chymistry.git

@@ -1,5 +1,9 @@
-# Potions
+# Potions & Brews
 
-Consumable brews and elixirs.
+Alchemical brews, elixirs, and functional potions synthesized in Chymistry.
 
-* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/elixir_of_vitriol.png" width="32" height="32" style="image-rendering: pixelated;"> **[Elixir of Vitriol](Elixir-of-Vitriol)**
+* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/elixir_of_vitriol.png" width="24" height="24" style="image-rendering: pixelated; vertical-align: middle;"> **[Elixir of Vitriol](Elixir-of-Vitriol)**: Potent tonic granting Vitriol Immunity against poison and wither at the expense of temporary slowness.
+* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/vigor_potion.png" width="24" height="24" style="image-rendering: pixelated; vertical-align: middle;"> **[Vigor Potion](Vigor-Potion)**: Refreshing herbal brew granting the Vigor effect to continuously regenerate maximum health.
+* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/immunity_potion.png" width="24" height="24" style="image-rendering: pixelated; vertical-align: middle;"> **[Potion of Immunity](Potion-of-Immunity)**: Absolute protection brew conferring total immunity to all status effects for 3 minutes.
+* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/defoliant_potion.png" width="24" height="24" style="image-rendering: pixelated; vertical-align: middle;"> **[Defoliant Potion](Defoliant-Potion)**: Concentrated herbicide which strips foliage, leaves, and vegetation in an expansive 20x20x20 cubic area when applied to soil.
+* <img src="https://raw.githubusercontent.com/yigit-guven/Chymistry/26.2-neoforge/src/main/resources/assets/chymistry/textures/item/disinfectant.png" width="24" height="24" style="image-rendering: pixelated; vertical-align: middle;"> **[Disinfectant](Disinfectant)**: Medical antiseptic that cures Poison when consumed and triggers instant conversion when used on Zombie Villagers.
