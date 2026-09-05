@@ -53,6 +53,9 @@ public class ChymistryJeiPlugin implements IModPlugin {
     public static final mezz.jei.api.recipe.RecipeType<SoapJeiRecipe> SOAP_BLEACHING = mezz.jei.api.recipe.RecipeType
             .create(Chymistry.MODID, "soap_bleaching", SoapJeiRecipe.class);
 
+    public static final mezz.jei.api.recipe.RecipeType<FreezingPowderJeiRecipe> FREEZING_CONVERSION = mezz.jei.api.recipe.RecipeType
+            .create(Chymistry.MODID, "freezing_conversion", FreezingPowderJeiRecipe.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(Chymistry.MODID, "jei_plugin");
@@ -69,6 +72,7 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new TreatedWoodRecipeCategory(guiHelper));
         registration.addRecipeCategories(new CauldronRecipeCategory(guiHelper));
         registration.addRecipeCategories(new SoapRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new FreezingPowderRecipeCategory(guiHelper));
     }
 
     @Override
@@ -141,6 +145,11 @@ public class ChymistryJeiPlugin implements IModPlugin {
         registration.addRecipes(TREATED_WOOD, treatedWoodRecipes);
 
         registration.addRecipes(SOAP_BLEACHING, net.yigitguven.chymistry.util.SoapCleaningHelper.getJeiRecipes());
+
+        registration.addRecipes(FREEZING_CONVERSION, java.util.List.of(
+                new FreezingPowderJeiRecipe(new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET), new ItemStack(net.minecraft.world.level.block.Blocks.BLUE_ICE)),
+                new FreezingPowderJeiRecipe(new ItemStack(net.minecraft.world.item.Items.LAVA_BUCKET), new ItemStack(net.minecraft.world.level.block.Blocks.OBSIDIAN))
+        ));
     }
 
     @Override
@@ -166,6 +175,8 @@ public class ChymistryJeiPlugin implements IModPlugin {
                 new ItemStack(net.yigitguven.chymistry.item.ModItems.SOAP.get()));
         registration.addCraftingStation(SOAP_BLEACHING,
                 new ItemStack(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE));
+        registration.addCraftingStation(FREEZING_CONVERSION,
+                new ItemStack(net.yigitguven.chymistry.item.ModItems.FREEZING_POWDER.get()));
     }
 
     @Override

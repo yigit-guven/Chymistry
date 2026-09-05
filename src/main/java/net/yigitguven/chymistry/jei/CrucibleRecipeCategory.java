@@ -140,7 +140,7 @@ public final class CrucibleRecipeCategory implements IRecipeCategory<net.minecra
         int HEAT_WIDTH = 14;
         int HEAT_HEIGHT = 14;
 
-        if (maxHeat >= 0) {
+        if (maxHeat > 0) {
             guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, FIRE_EMPTY, heatIndicatorX, heatIndicatorY, 0f, 0f, HEAT_WIDTH, HEAT_HEIGHT, HEAT_WIDTH, HEAT_HEIGHT);
             if (currentHeat > 0) {
                 float fillRatio = Math.min(1.0f, currentHeat / 999.0f);

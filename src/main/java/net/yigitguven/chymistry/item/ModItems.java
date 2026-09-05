@@ -65,7 +65,7 @@ public class ModItems {
     public static final DeferredItem<Item> BLAST_PROOF_CEMENT = ITEMS.registerSimpleItem("blast_proof_cement");
     public static final DeferredItem<Item> BRASS_INGOT = ITEMS.registerSimpleItem("brass_ingot");
     public static final DeferredItem<Item> DYNAMITE = ITEMS.registerSimpleItem("dynamite");
-    public static final DeferredItem<Item> FREEZING_POWDER = ITEMS.registerSimpleItem("freezing_powder");
+    public static final DeferredItem<Item> FREEZING_POWDER = ITEMS.registerItem("freezing_powder", FreezingPowderItem::new);
     public static final DeferredItem<Item> GREEN_CRYSTAL = ITEMS.registerSimpleItem("green_crystal");
     public static final DeferredItem<Item> INCENDIARY_DUST = ITEMS.registerSimpleItem("incendiary_dust");
     public static final DeferredItem<Item> WHITE_MATCH = ITEMS.registerItem("white_match", properties -> new MatchItem(net.minecraft.world.item.DyeColor.WHITE, properties));

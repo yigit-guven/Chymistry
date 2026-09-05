@@ -1,0 +1,21 @@
+{
+  "type": "chymistry:crucible",
+  "inputs": [
+    {
+      "ingredient": "minecraft:snowball",
+      "count": 4
+    },
+    {
+      "ingredient": "chymistry:niter_dust",
+      "count": 1
+    }
+  ],
+  "processingTime": 200,
+  "minHeat": -64,
+  "maxHeat": 0,
+  "heatCost": 0.0,
+  "output": {
+    "id": "chymistry:freezing_powder",
+    "count": 2
+  }
+}

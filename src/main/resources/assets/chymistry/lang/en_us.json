@@ -126,5 +126,8 @@
     "tooltip.chymistry.defoliant.desc": "Removes all leaves, grass & herbs in a 20x20x20 area",
     "item.chymistry.immunity_potion": "Potion of Immunity",
     "effect.chymistry.immunity": "Immunity",
-    "tooltip.chymistry.immunity.desc": "Prevents all other status effects"
+    "tooltip.chymistry.immunity.desc": "Prevents all other status effects",
+    "tooltip.chymistry.freezing_powder.desc": "Solidifies water sources into Blue Ice and lava sources into Obsidian.",
+    "jei.chymistry.freezing_conversion": "Freezing Conversion",
+    "jei.chymistry.freezing_conversion.desc": "Right-click a water source to freeze it into Blue Ice, or a lava source to solidify it into Obsidian."
 }
